@@ -17,7 +17,7 @@ class InhumacioneResource extends Resource
 {
     protected static ?string $model = Inhumacione::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-exclamation-circle';
 
     public static function form(Form $form): Form
     {
@@ -129,7 +129,15 @@ class InhumacioneResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('nombre_difunto')
+                ->label('Nombre Difunto')
+                ->sortable()
+                ->searchable(),
+
+            Tables\Columns\TextColumn::make('nombre_apellido_solicitante')
+                ->label('Nombre y Apellido del Solicitante')
+                ->sortable()
+                ->searchable(),
             ])
             ->filters([
                 //
