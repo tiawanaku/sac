@@ -29,9 +29,6 @@ class ExhumacionResource extends Resource
                 Forms\Components\TextInput::make('costo_formulario')
                     ->label('Costo de Formulario')
                     ->required(),
-                Forms\Components\TextInput::make('costo_servicio')
-                    ->label('Costo del Servicio')
-                    ->required(),
                 Forms\Components\TextInput::make('costo_total')
                     ->label('Costo Total')
                     ->required(),
