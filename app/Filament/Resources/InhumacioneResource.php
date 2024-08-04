@@ -91,6 +91,20 @@ class InhumacioneResource extends Resource
                     Forms\Components\Textarea::make('descripcion_nicho')
                         ->label('Descripción de Nicho')
                         ->required(),
+                    Forms\Components\Select::make('ubicacion')
+                        ->searchable()
+                        ->relationship('ubicacion', 'nombre')
+                        ->createOptionForm([
+                            Forms\Components\TextInput::make('fila')
+                                    ->label('ingrese el numero de fila')
+                                    ->required()
+                                    ->maxLength(255),
+                            Forms\Components\TextInput::make('columna')
+                                    ->label('ingrese el numero de columna')
+                                    ->required()
+                                    ->maxLength(255),
+                        ])
+                        ->relationship('ubicacion', 'nombre')
                 ]),
     
             Forms\Components\Section::make('Información del Solicitante')

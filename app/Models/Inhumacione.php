@@ -10,7 +10,7 @@ class Inhumacione extends Model
     use HasFactory;
 
     // Tabla asociada al modelo
-    protected $table = 'inhumaciones';
+    //protected $table = 'inhumaciones';
 
     // Los atributos que son asignables en masa
     protected $fillable = [
@@ -34,6 +34,7 @@ class Inhumacione extends Model
         'direccion',
         'numero',
         'zona',
+        'ubicacion_id', // Agregada columna para la relación
     ];
 
     // Los atributos que deberían ser tratados como fechas
@@ -64,5 +65,12 @@ class Inhumacione extends Model
         'direccion' => 'required|string|max:255',
         'numero' => 'required|string|max:255',
         'zona' => 'required|string|max:255',
+        'ubicacion_id' => 'nullable|exists:ubicaciones,id', // Validación para la relación
     ];
+
+    // Definir la relación con el modelo Ubicacion
+    public function ubicacion()
+    {
+        return $this->belongsTo(Ubicacion::class);
+    }
 }

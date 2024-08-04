@@ -33,7 +33,13 @@ return new class extends Migration
             $table->string('direccion');
             $table->string('numero');
             $table->string('zona');
+            $table->unsignedBigInteger('id'); // Agrega la columna 'ubicacion_id'
+            $table->string('fila')->nullable(); // Agrega la columna 'fila'
+            $table->string('columna')->nullable(); // Agrega la columna 'columna'
             $table->timestamps(); // Agrega las columnas created_at y updated_at
+
+            // Define la clave foránea para 'ubicacion_id'
+            $table->foreign('id')->references('id')->on('ubicaciones')->onDelete('cascade');
         });
     }
 
@@ -42,6 +48,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('inhumaciones', function (Blueprint $table) {
+            // Elimina la clave foránea antes de eliminar la columna
+            $table->dropForeign(['ubicacion_id']);
+        });
+
         Schema::dropIfExists('inhumaciones');
     }
 };
