@@ -22,7 +22,7 @@
 			  	<div class="collapse navbar-collapse" id="navbarText">
 			    	<ul class="navbar-nav ml-auto">
 			      		<li class="nav-item">
-			        		<a class="nav-link" href="#Welcome">Administracion</a>
+			        		<a class="nav-link" href="/admin">Administracion</a>
 			      		</li>
 					    <!--- <li class="nav-item">
 					    	<a class="nav-link" href="#Restaurant">Restaurant</a>
