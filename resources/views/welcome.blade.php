@@ -23,6 +23,7 @@
 			    	<ul class="navbar-nav ml-auto">
 			      		<li class="nav-item">
 			        		<a class="nav-link" href="/admin">Administracion</a>
+							<a class="nav-link" href="/consulta">Consulta</a>
 			      		</li>
 					    <!--- <li class="nav-item">
 					    	<a class="nav-link" href="#Restaurant">Restaurant</a>
