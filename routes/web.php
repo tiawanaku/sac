@@ -15,7 +15,7 @@ Route::post('/enviar-datos', function (\Illuminate\Http\Request $request) {
     $apellido = $request->input('apellido');
 
     // Configurar la URL y el token
-    $url = 'http://localhost:9999/consulta';
+    $url = 'http://64.225.54.113:9053/consulta';
     $token = '3l4Lt02024';
 
     // Datos a enviar
