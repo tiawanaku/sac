@@ -6,13 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('inhumaciones', function (Blueprint $table) {
-            $table->id(); // Agrega una columna id auto-incremental
+            $table->id();
             $table->string('nombre_difunto');
             $table->enum('sexo', ['masculino', 'femenino']);
             $table->integer('edad')->unsigned();
@@ -33,26 +30,20 @@ return new class extends Migration
             $table->string('direccion');
             $table->string('numero');
             $table->string('zona');
-            $table->unsignedBigInteger('id'); // Agrega la columna 'ubicacion_id'
-            $table->string('fila')->nullable(); // Agrega la columna 'fila'
-            $table->string('columna')->nullable(); // Agrega la columna 'columna'
-            $table->timestamps(); // Agrega las columnas created_at y updated_at
+            // Nuevos campos con valores nulos permitidos
+            $table->string('fila_ubicacion')->nullable();
+            $table->string('sector_ubicacion')->nullable();
+            $table->string('nro_ubicacion')->nullable();
+            $table->timestamps();
 
-            // Define la clave foránea para 'ubicacion_id'
-            $table->foreign('id')->references('id')->on('ubicaciones')->onDelete('cascade');
+            // Si tienes una relación con otra tabla, añade la clave foránea aquí
+            // $table->foreign('ubicacion_id')->references('id')->on('ubicaciones')->onDelete('cascade');
+            // $table->unsignedBigInteger('ubicacion_id');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::table('inhumaciones', function (Blueprint $table) {
-            // Elimina la clave foránea antes de eliminar la columna
-            $table->dropForeign(['ubicacion_id']);
-        });
-
         Schema::dropIfExists('inhumaciones');
     }
 };

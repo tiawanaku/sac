@@ -34,7 +34,9 @@ class Inhumacione extends Model
         'direccion',
         'numero',
         'zona',
-        'ubicacion_id', // Agregada columna para la relación
+        'fila_ubicacion',
+        'sector_ubicacion',
+        'nro_ubicacion',
     ];
 
     // Los atributos que deberían ser tratados como fechas

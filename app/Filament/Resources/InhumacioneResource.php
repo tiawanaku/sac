@@ -28,7 +28,7 @@ class InhumacioneResource extends Resource
                     Forms\Components\TextInput::make('nombre_difunto')
                         ->label('Nombre Difunto')
                         ->required(),
-    
+        
                     Forms\Components\Select::make('sexo')
                         ->label('Sexo')
                         ->options([
@@ -36,12 +36,12 @@ class InhumacioneResource extends Resource
                             'femenino' => 'Femenino',
                         ])
                         ->required(),
-    
+        
                     Forms\Components\TextInput::make('edad')
                         ->label('Edad')
                         ->required()
                         ->numeric(),
-    
+        
                     Forms\Components\Select::make('estado_civil')
                         ->label('Estado Civil')
                         ->options([
@@ -51,92 +51,95 @@ class InhumacioneResource extends Resource
                             'viudo' => 'Viudo(a)',
                         ])
                         ->required(),
-    
+        
                     Forms\Components\TextInput::make('nacionalidad')
                         ->label('Nacionalidad')
                         ->required(),
-    
+        
                     Forms\Components\TextInput::make('diagnostico_fallecimiento')
                         ->label('Diagnóstico Fallecimiento')
                         ->required(),
-    
+        
                     Forms\Components\TextInput::make('medico')
                         ->label('Médico')
                         ->required(),
-    
+        
                     Forms\Components\TextInput::make('orc')
                         ->label('ORC')
                         ->required(),
-    
+        
                     Forms\Components\TextInput::make('libro')
                         ->label('Libro')
                         ->required(),
-    
+        
                     Forms\Components\TextInput::make('folio')
                         ->label('Folio')
                         ->required(),
-    
+        
                     Forms\Components\DatePicker::make('fecha_inhumacion')
                         ->label('Fecha Inhumación')
                         ->required(),
-    
+        
                     Forms\Components\DatePicker::make('fecha_vencimiento')
                         ->label('Fecha Vencimiento')
                         ->required(),
-    
+        
                     Forms\Components\TextInput::make('dia')
                         ->label('Día')
                         ->required(),
-    
+        
                     Forms\Components\Textarea::make('descripcion_nicho')
                         ->label('Descripción de Nicho')
                         ->required(),
-                    Forms\Components\Select::make('ubicacion')
-                        ->searchable()
-                        ->relationship('ubicacion', 'nombre')
-                        ->createOptionForm([
-                            Forms\Components\TextInput::make('fila')
-                                    ->label('ingrese el numero de fila')
-                                    ->required()
-                                    ->maxLength(255),
-                            Forms\Components\TextInput::make('columna')
-                                    ->label('ingrese el numero de columna')
-                                    ->required()
-                                    ->maxLength(255),
-                        ])
-                        ->relationship('ubicacion', 'nombre')
                 ]),
-    
+        
+            Forms\Components\Section::make('Ubicación')
+                ->schema([
+                    Forms\Components\TextInput::make('fila_ubicacion')
+                        ->label('Fila Ubicación')
+                        ->required()
+                        ->maxLength(255),
+        
+                    Forms\Components\TextInput::make('sector_ubicacion')
+                        ->label('Sector Ubicación')
+                        ->required()
+                        ->maxLength(255),
+        
+                    Forms\Components\TextInput::make('nro_ubicacion')
+                        ->label('Número Ubicación')
+                        ->required()
+                        ->maxLength(255),
+                ]),
+        
             Forms\Components\Section::make('Información del Solicitante')
                 ->schema([
                     Forms\Components\TextInput::make('nombre_apellido_solicitante')
                         ->label('Nombre y Apellido del Solicitante')
                         ->required(),
-    
+        
                     Forms\Components\TextInput::make('carnet_identidad')
                         ->label('Carnet Identidad')
                         ->required(),
-    
+        
                     Forms\Components\TextInput::make('celular')
                         ->label('Celular')
                         ->required()
                         ->numeric(),
-    
+        
                     Forms\Components\TextInput::make('direccion')
                         ->label('Dirección')
                         ->required(),
-    
+        
                     Forms\Components\TextInput::make('numero')
                         ->label('Número')
                         ->required(),
-    
+        
                     Forms\Components\TextInput::make('zona')
                         ->label('Zona')
                         ->required(),
                 ]),
         ]);
-    
-    
+        
     }
 
     public static function table(Table $table): Table
