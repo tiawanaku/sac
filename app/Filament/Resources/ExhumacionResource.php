@@ -26,13 +26,31 @@ class ExhumacionResource extends Resource
                 Forms\Components\TextInput::make('motivo_exhumacion')
                     ->label('Motivo de Exhumación')
                     ->required(),
+
+                Forms\Components\TextInput::make('nombre_servicio')
+                    ->label('Nombre del Servicio')
+                    ->default('Exhumación')
+                    ->disabled(), // Deshabilitado para que no pueda ser editado.
+
                 Forms\Components\TextInput::make('costo_formulario')
                     ->label('Costo de Formulario')
-                    ->required(),
-                Forms\Components\TextInput::make('costo_total')
-                    ->label('Costo Total')
-                    ->required(),
-                Forms\Components\DateTimePicker::make('fecha_exhumacion'),
+                    ->required()
+                    ->numeric(), // Asegura que el campo sólo acepte valores numéricos.
+
+                Forms\Components\TextInput::make('costo_servicio')
+                    ->label('Costo Servicio')
+                    ->required()
+                    ->numeric(), // Asegura que el campo sólo acepte valores numéricos.
+
+                Forms\Components\FileUpload::make('comprobante_pdf')
+                    ->label('Documento PDF')
+                    ->disk('public') // Asegura que el archivo se guarde en el disco 'public'
+                    ->directory('pdfs') // Directorio donde se guardarán los archivos PDF
+                    ->acceptedFileTypes(['application/pdf']) // Acepta solo archivos PDF
+                    ->required(), // Marca el campo como requerido si es necesario
+
+                Forms\Components\DateTimePicker::make('fecha_exhumacion')
+                    ->label('Fecha de Exhumación'),
             ]);
     }
 
@@ -46,8 +64,9 @@ class ExhumacionResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('costo_servicio')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('costo_total')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('comprobante_pdf')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('fecha_exhumacion')
                     ->dateTime()
                     ->sortable()
