@@ -26,6 +26,8 @@ class InhumacioneResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-exclamation-circle';
 
+    //protected ?string $maxWidth = 'full';
+
     public static function form(Form $form): Form
     {
         return $form->schema([
