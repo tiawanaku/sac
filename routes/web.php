@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FileUploadController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,7 +34,7 @@ Route::post('/enviar-datos', function (\Illuminate\Http\Request $request) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         'Content-Type: application/json',
-        'Token: ' . $token 
+        'Token: ' . $token
     ]);
 
     // Ejecutar la solicitud y obtener la respuesta
@@ -49,3 +50,6 @@ Route::post('/enviar-datos', function (\Illuminate\Http\Request $request) {
 
     return view('consulta.index', ['responseMessage' => $responseMessage]);
 });
+
+// Ruta para la carga de archivos
+Route::post('/test-upload', [FileUploadController::class, 'testUpload']);
