@@ -10,15 +10,13 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Columns\TextColumn;
+use Illuminate\Support\Facades\Date;
 use Filament\Forms\Components\Wizard;
-
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Textarea;
-
 
 class InhumacioneResource extends Resource
 {
@@ -147,6 +145,54 @@ class InhumacioneResource extends Resource
                     ]),
             ])
         ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('nombre_difunto')
+                    ->label('Nombre Difunto')
+                    ->searchable()
+                    ->sortable(),
+                
+                TextColumn::make('sexo')
+                    ->label('Sexo')
+                    ->sortable(),
+                
+                TextColumn::make('edad')
+                    ->label('Edad')
+                    ->sortable(),
+                
+                TextColumn::make('estado_civil')
+                    ->label('Estado Civil')
+                    ->sortable(),
+                
+                TextColumn::make('nacionalidad')
+                    ->label('Nacionalidad'),
+                
+                TextColumn::make('fecha_inhumacion')
+                    ->label('Fecha Inhumación')
+                    ->formatStateUsing(fn ($state) => Date::parse($state)->format('d/m/Y'))
+                    ->sortable(),
+                
+                TextColumn::make('fecha_vencimiento')
+                    ->label('Fecha Vencimiento')
+                    ->formatStateUsing(fn ($state) => Date::parse($state)->format('d/m/Y')),
+                
+                // Add more columns as needed...
+            ])
+            ->filters([
+                // Add filters if needed...
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                // Add other actions if needed...
+            ])
+            ->bulkActions([
+                Tables\Actions\DeleteBulkAction::make(),
+                // Add other bulk actions if needed...
+            ]);
     }
 
     public static function getRelations(): array
