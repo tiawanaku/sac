@@ -145,7 +145,7 @@
                     <div class="card-body">
                         <h5 class="card-title">~ Inhumacion ~</h5>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Requisito1</li>
+                            <li class="list-group-item">Requisito de prueba</li>
                             <li class="list-group-item">Requisito2</li>
                             <li class="list-group-item">Requisito3</li>
                             <li class="list-group-item">Requisito4</li>
