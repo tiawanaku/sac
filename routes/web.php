@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DonwloadPdfController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileUploadController;
 
@@ -53,3 +54,10 @@ Route::post('/enviar-datos', function (\Illuminate\Http\Request $request) {
 
 // Ruta para la carga de archivos
 Route::post('/test-upload', [FileUploadController::class, 'testUpload']);
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// Ruta corregida para la descarga del PDF
+Route::get('/{record}/pdf/download', [DonwloadPdfController::class, 'donwload'])->name('inhumacion.pdf.download');

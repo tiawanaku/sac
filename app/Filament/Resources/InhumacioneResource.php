@@ -17,6 +17,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Textarea;
+use Filament\Tables\Actions\Action;
 
 class InhumacioneResource extends Resource
 {
@@ -187,6 +188,10 @@ class InhumacioneResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Action::make('Download Pdf')
+                ->icon('heroicon-o-exclamation-circle') // Usa un icono válido de Heroicons
+                ->url(fn (Inhumacione $record) => route('inhumacion.pdf.download', $record->id)) // Asegúrate de pasar el ID del registro
+                ->openUrlInNewTab(),
                 // Add other actions if needed...
             ])
             ->bulkActions([
