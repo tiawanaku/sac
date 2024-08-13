@@ -64,19 +64,29 @@ class ExhumacionResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('costo_servicio')
                     ->searchable(),
+                // Elimina 'dateTime' para 'comprobante_pdf'
                 Tables\Columns\TextColumn::make('comprobante_pdf')
-                    ->searchable()
+                    ->label('Ver PDF')
+                    ->url(fn($record) => route('exhumacion.verPdf', $record->id))
+                    ->openUrlInNewTab() // Abre el PDF en una nueva pestaña
+                    ->icon('heroicon-o-document-text') // Puedes usar un icono de Heroicons u otro
+                    ->color('primary') // Personaliza el color del botón
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('fecha_exhumacion')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                //
-            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                // Acción personalizada para ver el PDF
+                Tables\Actions\Action::make('ver_pdf')
+                    ->label('Ver PDF')
+                    ->url(fn($record) => route('exhumacion.verPdf', $record->id))
+                    ->openUrlInNewTab() // Abre el PDF en una nueva pestaña
+                    ->icon('heroicon-o-document-text') // Puedes usar un icono de Heroicons u otro
+                    ->color('primary'), // Puedes personalizar el color del botón
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -84,6 +94,7 @@ class ExhumacionResource extends Resource
                 ]),
             ]);
     }
+
 
     public static function getRelations(): array
     {
