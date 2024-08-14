@@ -185,11 +185,12 @@ class InhumacioneResource extends Resource
                     ->label('Fecha Vencimiento')
                     ->formatStateUsing(fn ($state) => Date::parse($state)->format('d/m/Y')),
                 
-                IconColumn::make('status')
-                    ->icon(fn (string $state): string => match ($state) {
-                        'draft' => 'heroicon-o-pencil',
-                        'reviewing' => 'heroicon-o-clock',
-                        'published' => 'heroicon-o-x-circle',
+                TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'draft' => 'gray',
+                        'reviewing' => 'success',
+                        'published' => 'warning',
                     })
                     ->label('Estado')
                     ->sortable(),
