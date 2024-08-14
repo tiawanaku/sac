@@ -37,6 +37,7 @@ class Inhumacione extends Model
         'fila_ubicacion',
         'sector_ubicacion',
         'nro_ubicacion',
+        'comprobante_pdf', // Agregado
     ];
 
     // Los atributos que deberían ser tratados como fechas
@@ -67,12 +68,18 @@ class Inhumacione extends Model
         'direccion' => 'required|string|max:255',
         'numero' => 'required|string|max:255',
         'zona' => 'required|string|max:255',
+        'comprobante_pdf' => 'nullable|string|max:100', // Agregado
         'ubicacion_id' => 'nullable|exists:ubicaciones,id', // Validación para la relación
     ];
+    
 
     // Definir la relación con el modelo Ubicacion
     public function ubicacion()
     {
         return $this->belongsTo(Ubicacion::class);
+    }
+    public function getPdfUrlAttribute()
+    {
+        return asset('storage/' . $this->comprobante_pdf);
     }
 }

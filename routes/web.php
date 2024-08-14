@@ -4,7 +4,7 @@ use App\Http\Controllers\DonwloadPdfController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\ExhumacionController;
-
+use App\Http\Controllers\InhumacionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -64,3 +64,4 @@ Route::get('/', function () {
 // Ruta corregida para la descarga del PDF
 Route::get('/{record}/pdf/download', [DonwloadPdfController::class, 'donwload'])->name('inhumacion.pdf.download');
 Route::get('/exhumacion/{id}/ver-pdf', [ExhumacionController::class, 'verPdf'])->name('exhumacion.verPdf');
+Route::get('/inhumacion/{id}/ver-pdf', [InhumacionController::class, 'verPdf'])->name('inhumacion.verPdf');
