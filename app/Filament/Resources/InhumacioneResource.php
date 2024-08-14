@@ -10,11 +10,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
-<<<<<<< HEAD
-=======
-use Filament\Tables\Columns\IconColumn;
-use Illuminate\Support\Facades\Date;
->>>>>>> 6342c273f24f106ba5de4757ee6d4163ee41cac5
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
@@ -168,71 +163,47 @@ class InhumacioneResource extends Resource
                 TextColumn::make('nombre_difunto')
                     ->label('Nombre Difunto')
                     ->searchable()
-<<<<<<< HEAD
                     ->sortable(),
-                // ...otras columnas
-                Tables\Columns\TextColumn::make('comprobante_pdf')
-                ->label('Ver PDF')
-                ->url(fn($record) => route('exhumacion.verPdf', $record->id))
-                ->openUrlInNewTab() // Abre el PDF en una nueva pestaña
-                ->icon('heroicon-o-document-text') // Puedes usar un icono de Heroicons u otro
-                ->color('primary') // Personaliza el color del botón
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
-=======
-                    ->sortable()
-                    ->toggleable(),
-                
+
                 TextColumn::make('sexo')
                     ->label('Sexo')
                     ->sortable(),
-                
+
                 TextColumn::make('edad')
                     ->label('Edad')
                     ->sortable(),
-                
+
                 TextColumn::make('estado_civil')
                     ->label('Estado Civil')
                     ->sortable(),
-                
+
                 TextColumn::make('nacionalidad')
                     ->label('Nacionalidad'),
-                
+
                 TextColumn::make('fecha_inhumacion')
                     ->label('Fecha Inhumación')
-                    ->formatStateUsing(fn ($state) => Date::parse($state)->format('d/m/Y'))
+                    ->formatStateUsing(fn($state) => \Illuminate\Support\Facades\Date::parse($state)->format('d/m/Y'))
                     ->sortable(),
-                
+
                 TextColumn::make('fecha_vencimiento')
                     ->label('Fecha Vencimiento')
-                    ->formatStateUsing(fn ($state) => Date::parse($state)->format('d/m/Y')),
-                
-                IconColumn::make('status')
-                    ->icon(fn (string $state): string => match ($state) {
-                        'draft' => 'heroicon-o-pencil',
-                        'reviewing' => 'heroicon-o-clock',
-                        'published' => 'heroicon-o-x-circle',
-                    })
-                    ->label('Estado')
-                    ->sortable(),
-            ])
-            ->filters([
-                // Add filters if needed...
->>>>>>> 6342c273f24f106ba5de4757ee6d4163ee41cac5
+                    ->formatStateUsing(fn($state) => \Illuminate\Support\Facades\Date::parse($state)->format('d/m/Y')),
+
+                TextColumn::make('comprobante_pdf')
+                    ->label('Ver PDF')
+                    ->url(fn($record) => route('exhumacion.verPdf', $record->id))
+                    ->openUrlInNewTab()
+                    ->icon('heroicon-o-document-text')
+                    ->color('primary')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Action::make('Download Pdf')
-<<<<<<< HEAD
                     ->icon('heroicon-o-exclamation-circle')
-                    ->url(fn (Inhumacione $record) => route('inhumacion.pdf.download', $record->id))
+                    ->url(fn(Inhumacione $record) => route('inhumacion.pdf.download', $record->id))
                     ->openUrlInNewTab(),
-=======
-                    ->icon('heroicon-o-exclamation-circle') // Usa un icono válido de Heroicons
-                    ->url(fn (Inhumacione $record) => route('inhumacion.pdf.download', $record->id)) // Asegúrate de pasar el ID del registro
-                    ->openUrlInNewTab(),
-                // Add other actions if needed...
->>>>>>> 6342c273f24f106ba5de4757ee6d4163ee41cac5
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

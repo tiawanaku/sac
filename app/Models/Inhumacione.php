@@ -71,20 +71,12 @@ class Inhumacione extends Model
         'comprobante_pdf' => 'nullable|string|max:100', // Agregado
         'ubicacion_id' => 'nullable|exists:ubicaciones,id', // Validación para la relación
     ];
-    
 
     // Definir la relación con el modelo Ubicacion
     public function ubicacion()
     {
         return $this->belongsTo(Ubicacion::class);
     }
-<<<<<<< HEAD
-    public function getPdfUrlAttribute()
-    {
-        return asset('storage/' . $this->comprobante_pdf);
-    }
-}
-=======
 
     // Método para obtener el estado basado en las fechas
     public function getStatusAttribute(): string
@@ -92,7 +84,7 @@ class Inhumacione extends Model
         $currentDate = now();
         $fechaInhumacion = $this->fecha_inhumacion;
         $fechaVencimiento = $this->fecha_vencimiento;
-        
+
         if ($currentDate->lessThanOrEqualTo($fechaVencimiento)) {
             if ($currentDate->diffInYears($fechaInhumacion) <= 3) {
                 return 'reviewing'; // El ícono de reloj
@@ -104,4 +96,3 @@ class Inhumacione extends Model
         }
     }
 }
->>>>>>> 6342c273f24f106ba5de4757ee6d4163ee41cac5
