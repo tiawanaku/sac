@@ -22,8 +22,10 @@ use Filament\Tables\Actions\Action;
 class InhumacioneResource extends Resource
 {
     protected static ?string $model = Inhumacione::class;
+    protected static ?string $navigationLabel = 'Inhumaciones';
 
     protected static ?string $navigationIcon = 'heroicon-o-exclamation-circle';
+    protected static ?string $navigationGroup = 'Servicios';
 
     public static function form(Form $form): Form
     {
@@ -155,7 +157,8 @@ class InhumacioneResource extends Resource
                 TextColumn::make('nombre_difunto')
                     ->label('Nombre Difunto')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 
                 TextColumn::make('sexo')
                     ->label('Sexo')
