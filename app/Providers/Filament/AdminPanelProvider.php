@@ -31,6 +31,11 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->colors([
                 'primary' => Color::Blue,
+                'danger' => Color::Rose,
+                'gray' => Color::Gray,
+                'info' => Color::Amber,
+                'success' => Color::Emerald,
+                'warning' => Color::Orange,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -56,6 +61,7 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->plugin(FilamentSpatieRolesPermissionsPlugin::make()); // Añadir el plugin aquí
+            ->plugin(FilamentSpatieRolesPermissionsPlugin::make()) // Añadir el plugin aquí
+            ->registration();
     }
 }
