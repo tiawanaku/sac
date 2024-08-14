@@ -14,4 +14,9 @@ class Exhumacion extends Model
         'fecha_exhumacion',
         'comprobante_pdf',
     ];
+    // Accessor para obtener la URL completa del PDF
+    public function getPdfUrlAttribute()
+    {
+        return asset('storage/' . $this->comprobante_pdf);
+    }
 }
