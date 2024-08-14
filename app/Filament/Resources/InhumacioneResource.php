@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
 use Illuminate\Support\Facades\Date;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Components\TextInput;
@@ -184,7 +185,14 @@ class InhumacioneResource extends Resource
                     ->label('Fecha Vencimiento')
                     ->formatStateUsing(fn ($state) => Date::parse($state)->format('d/m/Y')),
                 
-                // Add more columns as needed...
+                IconColumn::make('status')
+                    ->icon(fn (string $state): string => match ($state) {
+                        'draft' => 'heroicon-o-pencil',
+                        'reviewing' => 'heroicon-o-clock',
+                        'published' => 'heroicon-o-x-circle',
+                    })
+                    ->label('Estado')
+                    ->sortable(),
             ])
             ->filters([
                 // Add filters if needed...
@@ -192,9 +200,9 @@ class InhumacioneResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Action::make('Download Pdf')
-                ->icon('heroicon-o-exclamation-circle') // Usa un icono válido de Heroicons
-                ->url(fn (Inhumacione $record) => route('inhumacion.pdf.download', $record->id)) // Asegúrate de pasar el ID del registro
-                ->openUrlInNewTab(),
+                    ->icon('heroicon-o-exclamation-circle') // Usa un icono válido de Heroicons
+                    ->url(fn (Inhumacione $record) => route('inhumacion.pdf.download', $record->id)) // Asegúrate de pasar el ID del registro
+                    ->openUrlInNewTab(),
                 // Add other actions if needed...
             ])
             ->bulkActions([
