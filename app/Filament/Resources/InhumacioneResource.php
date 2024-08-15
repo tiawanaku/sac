@@ -191,7 +191,7 @@ class InhumacioneResource extends Resource
 
                 TextColumn::make('comprobante_pdf')
                     ->label('Ver PDF')
-                    ->url(fn($record) => route('exhumacion.verPdf', $record->id))
+                    ->url(fn($record) => route('inhumacion.verPdf', $record->id))
                     ->openUrlInNewTab()
                     ->icon('heroicon-o-document-text')
                     ->color('primary')
