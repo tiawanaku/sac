@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\EditProfile;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -29,6 +30,10 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->profile(EditProfile::class)
+            //->emailVerification()
+            ->brandName('Sistema Administracion de Cementerios GAMEA')
+            ->brandLogo(asset('images/logo-alcaldia.png'))
             ->colors([
                 'primary' => Color::Blue,
                 'danger' => Color::Rose,
