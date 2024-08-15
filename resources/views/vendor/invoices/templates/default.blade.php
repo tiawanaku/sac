@@ -371,6 +371,7 @@
             {{ __('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
         </p>
 
+
         <script type="text/php">
             if (isset($pdf) && $PAGE_COUNT > 1) {
                 $text = "{{ __('invoices::invoice.page') }} {PAGE_NUM} / {PAGE_COUNT}";

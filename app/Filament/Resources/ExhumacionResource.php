@@ -12,48 +12,25 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Actions\Action;
+use App\Http\Livewire\VerPdfModal;
+use Livewire\Component;
+use Illuminate\Support\Facades\Storage;
 
 class ExhumacionResource extends Resource
 {
     protected static ?string $model = Exhumacion::class;
 
-    protected static ?string $navigationLabel = 'Exhumaciones';
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Servicios';
-
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('motivo_exhumacion')
-                    ->label('Motivo de Exhumación')
-                    ->required(),
-
-                Forms\Components\TextInput::make('nombre_servicio')
-                    ->label('Nombre del Servicio')
-                    ->default('Exhumación')
-                    ->disabled(), // Deshabilitado para que no pueda ser editado.
-
-                Forms\Components\TextInput::make('costo_formulario')
-                    ->label('Costo de Formulario')
-                    ->required()
-                    ->numeric(), // Asegura que el campo sólo acepte valores numéricos.
-
-                Forms\Components\TextInput::make('costo_servicio')
-                    ->label('Costo Servicio')
-                    ->required()
-                    ->numeric(), // Asegura que el campo sólo acepte valores numéricos.
-
-                Forms\Components\FileUpload::make('comprobante_pdf')
-                    ->label('Documento PDF')
-                    ->disk('public') // Asegura que el archivo se guarde en el disco 'public'
-                    ->directory('pdfs') // Directorio donde se guardarán los archivos PDF
-                    ->acceptedFileTypes(['application/pdf']) // Acepta solo archivos PDF
-                    ->required(), // Marca el campo como requerido si es necesario
-
-                Forms\Components\DateTimePicker::make('fecha_exhumacion')
-                    ->label('Fecha de Exhumación'),
+                Forms\Components\TextInput::make('motivo_exhumacion')->label('Motivo de Exhumación')->required(),
+                Forms\Components\TextInput::make('nombre_servicio')->label('Nombre del Servicio')->default('Exhumación')->disabled(),
+                Forms\Components\TextInput::make('costo_formulario')->label('Costo de Formulario')->required()->numeric(),
+                Forms\Components\TextInput::make('costo_servicio')->label('Costo Servicio')->required()->numeric(),
+                Forms\Components\FileUpload::make('comprobante_pdf')->label('Documento PDF')->disk('public')->directory('pdfs')->acceptedFileTypes(['application/pdf'])->required(),
+                Forms\Components\DateTimePicker::make('fecha_exhumacion')->label('Fecha de Exhumación'),
             ]);
     }
 
@@ -61,19 +38,18 @@ class ExhumacionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('motivo_exhumacion')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('costo_formulario')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('costo_servicio')
-                    ->searchable(),
-                // Elimina 'dateTime' para 'comprobante_pdf'
+
+                Tables\Columns\TextColumn::make('motivo_exhumacion')->searchable(),
+                Tables\Columns\TextColumn::make('costo_formulario')->searchable(),
+                Tables\Columns\TextColumn::make('costo_servicio')->searchable(),
                 Tables\Columns\TextColumn::make('comprobante_pdf')
                     ->label('Ver PDF')
-                    ->url(fn($record) => route('exhumacion.verPdf', $record->id))
-                    ->openUrlInNewTab() // Abre el PDF en una nueva pestaña
-                    ->icon('heroicon-o-document-text') // Puedes usar un icono de Heroicons u otro
-                    ->color('primary') // Personaliza el color del botón
+                    ->action(function ($record) {
+                        $pdfUrl = asset('storage/' . $record->comprobante_pdf);
+                        return [
+                            'dispatchBrowserEvent' => ['openPdfModal', ['pdfUrl' => $pdfUrl]]
+                        ];
+                    })
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('fecha_exhumacion')
@@ -83,28 +59,25 @@ class ExhumacionResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                // Acción personalizada para ver el PDF
-                Tables\Actions\Action::make('ver_pdf')
+                Action::make('ver_pdf')
                     ->label('Ver PDF')
-                    ->url(fn($record) => route('exhumacion.verPdf', $record->id))
-                    ->openUrlInNewTab() // Abre el PDF en una nueva pestaña
-                    ->icon('heroicon-o-document-text') // Puedes usar un icono de Heroicons u otro
-                    ->color('primary'), // Puedes personalizar el color del botón
+                    ->icon('heroicon-o-document-text')
+                    ->modalHeading('Ver PDF')
+                    ->modalContent(function ($record) {
+
+                        $pdfUrl = asset('storage/' . $record->comprobante_pdf);
+                        return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
+                    })
+                    ->action(function ($record) {
+                        // Acción adicional si es necesario
+                    }),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
 
     public static function getPages(): array
     {
