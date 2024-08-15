@@ -32,6 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->profile(EditProfile::class)
             //->emailVerification()
+            ->brandName('Sistema Administracion de Cementerios GAMEA')
             ->colors([
                 'primary' => Color::Blue,
                 'danger' => Color::Rose,
