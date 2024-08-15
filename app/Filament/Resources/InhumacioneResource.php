@@ -187,14 +187,16 @@ class InhumacioneResource extends Resource
 
                 TextColumn::make('fecha_vencimiento')
                     ->label('Fecha Vencimiento')
-                    ->formatStateUsing(fn ($state) => \Illuminate\Support\Facades\Date::parse($state)->format('d/m/Y')),
-                
-                TextColumn::make('status')
-                    ->badge()
-                    ->sortable(),
-            ])
-            ->filters([
-                // Add filters if needed...
+                    ->formatStateUsing(fn($state) => \Illuminate\Support\Facades\Date::parse($state)->format('d/m/Y')),
+
+                TextColumn::make('comprobante_pdf')
+                    ->label('Ver PDF')
+                    ->url(fn($record) => route('exhumacion.verPdf', $record->id))
+                    ->openUrlInNewTab()
+                    ->icon('heroicon-o-document-text')
+                    ->color('primary')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
