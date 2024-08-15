@@ -33,6 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->profile(EditProfile::class)
             //->emailVerification()
             ->brandName('Sistema Administracion de Cementerios GAMEA')
+            ->brandLogo(asset('images/logo-alcaldia.png'))
             ->colors([
                 'primary' => Color::Blue,
                 'danger' => Color::Rose,
