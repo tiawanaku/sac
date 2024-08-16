@@ -3,12 +3,18 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ExhumacionResource\Pages;
+use App\Filament\Resources\ExhumacionResource\RelationManagers;
 use App\Models\Exhumacion;
 use Filament\Forms;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\ActionGroup;
+use App\Http\Livewire\VerPdfModal;
+use Livewire\Component;
 use Illuminate\Support\Facades\Storage;
 
 class ExhumacionResource extends Resource
