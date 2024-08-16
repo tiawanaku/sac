@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->decimal('costo_servicio', 10, 2);
             $table->decimal('costo_total', 10, 2);
             $table->string('comprobante_pdf')->nullable();
+            $table->string('autorizacion_pdf')->nullable();
             $table->timestamps();
         });
     }

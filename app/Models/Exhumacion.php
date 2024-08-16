@@ -9,10 +9,12 @@ class Exhumacion extends Model
 {
     protected $fillable = [
         'motivo_exhumacion',
+        'nombre_servicio',
         'costo_formulario',
         'costo_servicio',
-        'fecha_exhumacion',
         'comprobante_pdf',
+        'autorizacion_pdf',  // Asegúrate de que este campo esté aquí
+        'fecha_exhumacion',
     ];
     // Accessor para obtener la URL completa del PDF
     public function getPdfUrlAttribute()

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\ExhumacionController;
 use App\Http\Controllers\InhumacionController;
+use App\Filament\Resources\ExhumacionResource;
 
 Route::get('/', function () {
     return view('welcome');
@@ -65,3 +66,7 @@ Route::get('/', function () {
 Route::get('/{record}/pdf/download', [DonwloadPdfController::class, 'donwload'])->name('inhumacion.pdf.download');
 Route::get('/exhumacion/{id}/ver-pdf', [ExhumacionController::class, 'verPdf'])->name('exhumacion.verPdf');
 Route::get('/inhumacion/{id}/ver-pdf', [InhumacionController::class, 'verPdf'])->name('inhumacion.verPdf');
+Route::middleware('auth')->group(function () {
+    Route::get('/filament/exhumacions/{record}/edit', [ExhumacionResource::class, 'edit'])
+        ->name('filament.resources.exhumacions.edit');
+});
