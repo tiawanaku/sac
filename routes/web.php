@@ -6,6 +6,7 @@ use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\ExhumacionController;
 use App\Http\Controllers\InhumacionController;
 use App\Filament\Resources\ExhumacionResource;
+use App\Http\Controllers\PdfController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -70,3 +71,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/filament/exhumacions/{record}/edit', [ExhumacionResource::class, 'edit'])
         ->name('filament.resources.exhumacions.edit');
 });
+
+Route::get('pdf/preview/{id}', [PdfController::class, 'preview'])->name('pdf.preview');
+Route::get('pdf/download/{id}', [PdfController::class, 'download'])->name('pdf.download');

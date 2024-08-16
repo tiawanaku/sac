@@ -72,13 +72,19 @@ class ExhumacionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('motivo_exhumacion')->searchable(),
-                Tables\Columns\TextColumn::make('costo_servicio')->searchable(),
-                Tables\Columns\TextColumn::make('costo_total')->searchable(),
+                Tables\Columns\TextColumn::make('motivo_exhumacion')
+                    ->label('Motivo de Exhumación')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('costo_servicio')
+                    ->label('Costo Servicio')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('costo_total')
+                    ->label('Costo Total')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('comprobante_pdf')
                     ->label('Ver Comprobante PDF')
                     ->action(function ($record) {
-                        $pdfUrl = asset('storage/' . $record->comprobante_pdf);
+                        $pdfUrl = route('pdf.preview', $record->id); // Ruta para vista previa
                         return [
                             'dispatchBrowserEvent' => ['openPdfModal', ['pdfUrl' => $pdfUrl]]
                         ];
@@ -88,7 +94,7 @@ class ExhumacionResource extends Resource
                 Tables\Columns\TextColumn::make('autorizacion_pdf')
                     ->label('Ver Autorización PDF')
                     ->action(function ($record) {
-                        $pdfUrl = asset('storage/' . $record->autorizacion_pdf);
+                        $pdfUrl = route('pdf.preview', $record->id); // Ruta para vista previa
                         return [
                             'dispatchBrowserEvent' => ['openPdfModal', ['pdfUrl' => $pdfUrl]]
                         ];
@@ -96,6 +102,7 @@ class ExhumacionResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('fecha_exhumacion')
+                    ->label('Fecha de Exhumación')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -106,25 +113,26 @@ class ExhumacionResource extends Resource
                     Action::make('ver_comprobante_pdf')
                         ->label('Ver Comprobante PDF')
                         ->icon('heroicon-o-document-text')
-                        ->modalHeading('Ver Comprobante PDF')
-                        ->modalContent(function ($record) {
-                            $pdfUrl = asset('storage/' . $record->comprobante_pdf);
-                            return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
-                        }),
+                        ->url(fn($record) => route('pdf.preview', $record->id))
+                        ->openUrlInNewTab(),
                     Action::make('ver_autorizacion_pdf')
                         ->label('Ver Autorización PDF')
                         ->icon('heroicon-o-document-text')
-                        ->modalHeading('Ver Autorización PDF')
-                        ->modalContent(function ($record) {
-                            $pdfUrl = asset('storage/' . $record->autorizacion_pdf);
-                            return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
-                        }),
+                        ->url(fn($record) => route('pdf.preview', $record->id))
+                        ->openUrlInNewTab(),
+                    Action::make('generar_pdf')
+                        ->label('Generar PDF')
+                        ->icon('heroicon-o-document')
+                        ->url(fn($record) => route('pdf.download', $record->id))
+                        ->openUrlInNewTab(),
                 ])
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
+
+
 
     public static function getPages(): array
     {
