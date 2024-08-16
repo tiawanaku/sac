@@ -145,12 +145,7 @@ class InhumacioneResource extends Resource
                             ->label('Zona')
                             ->required(),
 
-                        FileUpload::make('comprobante_pdf')
-                            ->label('Comprobante PDF')
-                            ->disk('public')
-                            ->directory('pdfs')
-                            ->acceptedFileTypes(['application/pdf'])
-                            ->required(),
+                        FileUpload::make('comprobante_pdf')->label('Documento PDF')->disk('public')->directory('pdfs')->acceptedFileTypes(['application/pdf'])->required(),
                     ]),
             ])
         ]);
@@ -191,19 +186,29 @@ class InhumacioneResource extends Resource
 
                 TextColumn::make('comprobante_pdf')
                     ->label('Ver PDF')
-                    ->url(fn($record) => route('exhumacion.verPdf', $record->id))
-                    ->openUrlInNewTab()
-                    ->icon('heroicon-o-document-text')
-                    ->color('primary')
+                    ->action(function ($record) {
+                        $pdfUrl = asset('storage/' . $record->comprobante_pdf);
+                        return [
+                            'dispatchBrowserEvent' => ['openPdfModal', ['pdfUrl' => $pdfUrl]]
+                        ];
+                    })
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Action::make('Download Pdf')
-                    ->icon('heroicon-o-exclamation-circle')
-                    ->url(fn(Inhumacione $record) => route('inhumacion.pdf.download', $record->id))
-                    ->openUrlInNewTab(),
+                Action::make('ver_pdf')
+                    ->label('Ver PDF')
+                    ->icon('heroicon-o-document-text')
+                    ->modalHeading('Ver PDF')
+                    ->modalContent(function ($record) {
+
+                        $pdfUrl = asset('storage/' . $record->comprobante_pdf);
+                        return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
+                    })
+                    ->action(function ($record) {
+                        // Acción adicional si es necesario
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
