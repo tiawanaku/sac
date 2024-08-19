@@ -19,6 +19,8 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Wizard\Step;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class InhumacioneResource extends Resource
 {
@@ -221,13 +223,18 @@ class InhumacioneResource extends Resource
                     ->icon('heroicon-o-document-text')
                     ->modalHeading('Ver PDF')
                     ->modalContent(function ($record) {
-
                         $pdfUrl = asset('storage/' . $record->comprobante_pdf);
                         return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
                     })
                     ->action(function ($record) {
                         // Acción adicional si es necesario
                     }),
+                Action::make('crear_pdf')
+                    ->label('Generar Comprobante')
+                    ->icon('heroicon-o-document-text')
+                    ->url(fn (): string => route('pdf.example', ['user' => Auth::user()]),
+                    shouldOpenInNewTab: true
+                ),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

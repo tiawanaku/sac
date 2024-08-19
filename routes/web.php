@@ -74,3 +74,8 @@ Route::middleware('auth')->group(function () {
 
 Route::get('pdf/preview/{id}', [PdfController::class, 'preview'])->name('pdf.preview');
 Route::get('pdf/download/{id}', [PdfController::class, 'download'])->name('pdf.download');
+
+Route::get('/comprobante/{user}', function () {
+    $pdf = Pdf::loadView('pdf.example');
+    return $pdf->download('example.pdf');
+})->name('pdf.example');
