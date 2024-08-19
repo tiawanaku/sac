@@ -65,7 +65,7 @@ Route::get('/', function () {
 
 // Ruta corregida para la descarga del PDF
 Route::get('/{record}/pdf/download', [DonwloadPdfController::class, 'donwload'])->name('inhumacion.pdf.download');
-Route::get('/exhumacion/{id}/ver-pdf', [ExhumacionController::class, 'verPdf'])->name('exhumacion.verPdf');
+Route::get('/exhumacion/{id}/ver-pdf', [ExhumacionController::class, 'verPdf'])->name('exhumacion.ver-pdf');
 Route::get('/inhumacion/{id}/ver-pdf', [InhumacionController::class, 'verPdf'])->name('inhumacion.verPdf');
 Route::middleware('auth')->group(function () {
     Route::get('/filament/exhumacions/{record}/edit', [ExhumacionResource::class, 'edit'])
