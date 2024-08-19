@@ -69,6 +69,7 @@ class Inhumacione extends Model
         'numero' => 'required|string|max:255',
         'zona' => 'required|string|max:255',
         'comprobante_pdf' => 'nullable|string|max:100', // Agregado
+        'estado' => 'Vigente', // O 'Vencido', según el caso
         'ubicacion_id' => 'nullable|exists:ubicaciones,id', // Validación para la relación
     ];
 
@@ -79,20 +80,5 @@ class Inhumacione extends Model
     }
 
     // Método para obtener el estado basado en las fechas
-    public function getStatusAttribute(): string
-    {
-        $currentDate = now();
-        $fechaInhumacion = $this->fecha_inhumacion;
-        $fechaVencimiento = $this->fecha_vencimiento;
 
-        if ($currentDate->lessThanOrEqualTo($fechaVencimiento)) {
-            if ($currentDate->diffInYears($fechaInhumacion) <= 3) {
-                return 'reviewing'; // El ícono de reloj
-            } else {
-                return 'draft'; // Un ícono diferente si es necesario
-            }
-        } else {
-            return 'published'; // El ícono de x
-        }
-    }
 }
