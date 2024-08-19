@@ -61,7 +61,7 @@ class ExhumacionResource extends Resource
             ]);
     }
 
-    public static function table(Table $table): Table
+    public static function table(Tables\Table $table): Tables\Table
     {
         return $table
             ->columns([
@@ -108,9 +108,14 @@ class ExhumacionResource extends Resource
                         })
                         ->icon('heroicon-o-document-text')
                         ->color('primary'),
+                    Tables\Actions\Action::make('descargar_pdf')
+                        ->label('Descargar PDF')
+                        ->icon('heroicon-o-printer')
+                        ->color('primary')
+                        ->url(fn($record) => route('exhumacion.pdf', $record->id)),
                 ])
                     ->label('Acciones')
-                    ->icon('heroicon-o-ellipsis-horizontal')  // Icono del menú desplegable
+                    ->icon('heroicon-o-ellipsis-horizontal'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -118,7 +123,6 @@ class ExhumacionResource extends Resource
                 ]),
             ]);
     }
-
 
     public static function getRelations(): array
     {

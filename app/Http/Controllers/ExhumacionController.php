@@ -3,25 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exhumacion;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Helpers\NumberToWords;
 
 class ExhumacionController extends Controller
 {
-    public function verPdf($id)
+    public function downloadPdf($id)
     {
-        $registro = Exhumacion::findOrFail($id);
+        $exhumacion = Exhumacion::findOrFail($id);
 
-        if ($registro && $registro->comprobante_pdf) {
-            $pdfPath = storage_path('app/public/' . $registro->comprobante_pdf);
+        // Asegúrate de pasar el costo_servicio si es un atributo del modelo
+        $motivo_exhumacion = $exhumacion->motivo_exhumacion;
+        $costo_servicio = $exhumacion->costo_servicio;
+        $costo_total = $exhumacion->costo_total;
+        $costo_total_literal = NumberToWords::convertir($costo_total);
 
-            if (file_exists($pdfPath)) {
-                return response()->file($pdfPath);
-            } else {
-                return redirect()->back()->with('error', 'Archivo PDF no encontrado.');
-            }
-        } else {
-            return redirect()->back()->with('error', 'PDF no encontrado.');
-        }
+        $pdf = Pdf::loadView('pdfs.exhumacion', [
+            'exhumacion' => $exhumacion,
+            'motivo_exhumacion' => $motivo_exhumacion,
+            'costo_servicio' => $costo_servicio,
+            'costo_total' => $costo_total, // Agrega esta línea
+            'costo_total_literal' => $costo_total_literal, // Agrega esta línea
+        ]);
+
+        return $pdf->download('exhumacion_' . $id . '.pdf');
     }
 }
