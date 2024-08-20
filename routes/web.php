@@ -74,3 +74,9 @@ Route::middleware('auth')->group(function () {
 Route::get('/exhumacion/{id}/pdf', [ExhumacionController::class, 'downloadPdf'])->name('exhumacion.pdf');
 Route::get('/exhumacion/preview/{id}', [ExhumacionController::class, 'previewPdf'])->name('exhumacion.preview');
 Route::get('pdf/download/{id}', [PdfController::class, 'download'])->name('pdf.download');
+
+//url del pdf
+Route::get('/comprobante/{user}', function () {
+    $pdf = Pdf::loadView('pdf.example');
+    return $pdf->download('example.pdf');   
+})->name('pdf.example');
