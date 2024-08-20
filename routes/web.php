@@ -72,5 +72,5 @@ Route::middleware('auth')->group(function () {
         ->name('filament.resources.exhumacions.edit');
 });
 Route::get('/exhumacion/{id}/pdf', [ExhumacionController::class, 'downloadPdf'])->name('exhumacion.pdf');
-Route::get('pdf/preview/{id}', [PdfController::class, 'preview'])->name('pdf.preview');
+Route::get('/exhumacion/{id}/preview', [ExhumacionController::class, 'previewPdf'])->name('exhumacion.preview');
 Route::get('pdf/download/{id}', [PdfController::class, 'download'])->name('pdf.download');

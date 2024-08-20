@@ -108,12 +108,15 @@ class ExhumacionResource extends Resource
                         })
                         ->icon('heroicon-o-document-text')
                         ->color('primary'),
-                    Tables\Actions\Action::make('descargar_pdf')
-                        ->label('Descargar PDF')
+
+                    Tables\Actions\Action::make('preview_pdf')
+                        ->label('Imprimir Comprovante')
                         ->icon('heroicon-o-printer')
                         ->color('primary')
-                        ->url(fn($record) => route('exhumacion.pdf', $record->id)),
+                        ->url(fn($record) => route('exhumacion.preview', $record->id)),
+
                 ])
+
                     ->label('Acciones')
                     ->icon('heroicon-o-ellipsis-horizontal'),
             ])
