@@ -18,6 +18,7 @@ class ExhumacionResource extends Resource
     protected static ?string $model = Exhumacion::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Servicios';
 
     public static function form(Form $form): Form
     {
