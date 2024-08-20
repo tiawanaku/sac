@@ -113,7 +113,11 @@ class ExhumacionResource extends Resource
                         ->label('Imprimir Comprovante')
                         ->icon('heroicon-o-printer')
                         ->color('primary')
-                        ->url(fn($record) => route('exhumacion.preview', $record->id)),
+                        ->modalHeading('Vista previa del PDF')
+                        ->modalContent(function ($record) {
+                            $pdfUrl = route('exhumacion.preview', $record->id);
+                            return view('filament.modals.view-pdf-ver', ['pdfUrl' => $pdfUrl]);
+                        })
 
                 ])
 
