@@ -2,18 +2,20 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use App\Models\Inhumacione;
 use App\Models\User;
 
 class InhumacionePolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Inhumacione');
+        return $user->can('view-any Inhumacione') || $user->hasAnyRole(['Administrador', 'Funcionario']);
     }
 
     /**
@@ -21,7 +23,7 @@ class InhumacionePolicy
      */
     public function view(User $user, Inhumacione $inhumacione): bool
     {
-        return $user->checkPermissionTo('view Inhumacione');
+        return $user->can('view Inhumacione') || $user->hasAnyRole(['Administrador', 'Funcionario']);
     }
 
     /**
@@ -29,7 +31,7 @@ class InhumacionePolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Inhumacione');
+        return $user->can('create Inhumacione') || $user->hasRole('Administrador');
     }
 
     /**
@@ -37,7 +39,7 @@ class InhumacionePolicy
      */
     public function update(User $user, Inhumacione $inhumacione): bool
     {
-        return $user->checkPermissionTo('update Inhumacione');
+        return $user->can('update Inhumacione') || $user->hasRole('Administrador');
     }
 
     /**
@@ -45,7 +47,7 @@ class InhumacionePolicy
      */
     public function delete(User $user, Inhumacione $inhumacione): bool
     {
-        return $user->checkPermissionTo('delete Inhumacione');
+        return $user->can('delete Inhumacione') || $user->hasRole('Administrador');
     }
 
     /**
@@ -53,7 +55,7 @@ class InhumacionePolicy
      */
     public function restore(User $user, Inhumacione $inhumacione): bool
     {
-        return $user->checkPermissionTo('restore Inhumacione');
+        return $user->can('restore Inhumacione') || $user->hasRole('Administrador');
     }
 
     /**
@@ -61,6 +63,6 @@ class InhumacionePolicy
      */
     public function forceDelete(User $user, Inhumacione $inhumacione): bool
     {
-        return $user->checkPermissionTo('force-delete Inhumacione');
+        return $user->can('force-delete Inhumacione') || $user->hasRole('Administrador');
     }
 }

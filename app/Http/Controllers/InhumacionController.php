@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Storage;
 
 class InhumacionController extends Controller
 {
-    public function verPdf($id)
+    public function verPdf($id, $type = 'comprobante_pdf')
     {
         $registro = Inhumacione::findOrFail($id);
 
-        if ($registro && $registro->comprobante_pdf) {
-            $pdfPath = storage_path('app/public/' . $registro->comprobante_pdf);
+        if ($registro && $registro->$type) {
+            $pdfPath = storage_path('app/public/' . $registro->$type);
 
             if (file_exists($pdfPath)) {
                 return response()->file($pdfPath);

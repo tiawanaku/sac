@@ -80,3 +80,8 @@ Route::get('/comprobante/{user}', function () {
     $pdf = Pdf::loadView('pdf.example');
     return $pdf->download('example.pdf');   
 })->name('pdf.example');
+
+//rutas de pdfs
+Route::get('inhumaciones/{id}/ver-pdf/{type}', [InhumacionController::class, 'verPdf'])
+    ->name('inhumaciones.ver_pdf')
+    ->where('type', 'comprobante_pdf|testigos_pdf|familiares_pdf');

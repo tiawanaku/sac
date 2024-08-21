@@ -37,7 +37,10 @@ class Inhumacione extends Model
         'fila_ubicacion',
         'sector_ubicacion',
         'nro_ubicacion',
-        'comprobante_pdf', // Agregado
+        'comprobante_pdf',
+        'testigos_pdf', // Nuevo campo
+        'familiares_pdf', // Nuevo campo
+        'defuncion_pdf', // Nuevo campo
     ];
 
     // Los atributos que deberían ser tratados como fechas
@@ -68,9 +71,10 @@ class Inhumacione extends Model
         'direccion' => 'required|string|max:255',
         'numero' => 'required|string|max:255',
         'zona' => 'required|string|max:255',
-        'comprobante_pdf' => 'nullable|string|max:100', // Agregado
-        'estado' => 'Vigente', // O 'Vencido', según el caso
-        'ubicacion_id' => 'nullable|exists:ubicaciones,id', // Validación para la relación
+        'comprobante_pdf' => 'nullable|string|max:100',
+        'testigos_pdf' => 'nullable|string|max:100', // Validación para el nuevo campo
+        'familiares_pdf' => 'nullable|string|max:100', // Validación para el nuevo campo
+        'defuncion_pdf' => 'nullable|string|max:100', // Validación para el nuevo campo
     ];
 
     // Definir la relación con el modelo Ubicacion
@@ -80,5 +84,4 @@ class Inhumacione extends Model
     }
 
     // Método para obtener el estado basado en las fechas
-
 }

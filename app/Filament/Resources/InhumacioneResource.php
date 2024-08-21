@@ -14,12 +14,9 @@ use Filament\Forms\Components\Wizard;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Actions\Action;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Wizard\Step;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 
 class InhumacioneResource extends Resource
@@ -28,39 +25,40 @@ class InhumacioneResource extends Resource
     protected static ?string $navigationLabel = 'Inhumaciones';
     protected static ?string $navigationIcon = 'heroicon-o-exclamation-circle';
     protected static ?string $navigationGroup = 'Servicios';
-   protected static ?string $activeNavigationIcon = 'heroicon-o-clipboard-document-check';
-   public static function getNavigationBadge(): ?string
-   {
-        return static::getModel()::count();
-   }
+    protected static ?string $activeNavigationIcon = 'heroicon-o-clipboard-document-check';
 
-   public static function getNavigationBadgeColor(): ?string
-   {
-       $count = static::getModel()::count();
-   
-       if ($count > 4) {
-           return 'success'; // Verde
-       } elseif ($count > 3) {
-           return 'warning'; // Amarillo
-       } elseif ($count > 0) {
-           return 'danger'; // Rojo
-       } else {
-           return 'primary'; // Azul por defecto si no hay registros
-       }
-   }
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        $count = static::getModel()::count();
+
+        if ($count > 4) {
+            return 'success'; // Verde
+        } elseif ($count > 3) {
+            return 'warning'; // Amarillo
+        } elseif ($count > 0) {
+            return 'danger'; // Rojo
+        } else {
+            return 'primary'; // Azul por defecto si no hay registros
+        }
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Wizard::make([
-                    Forms\Components\Wizard\Step::make('Información del Difunto')
+                Wizard::make([
+                    Step::make('Información del Difunto')
                         ->schema([
-                            Forms\Components\TextInput::make('nombre_difunto')
-                                ->label('Nombre Difunto')
+                            TextInput::make('nombre_difunto')
+                                ->label('Nombre Difunto(a)')
                                 ->required(),
                             
-                            Forms\Components\Select::make('sexo')
+                            Select::make('sexo')
                                 ->label('Sexo')
                                 ->options([
                                     'masculino' => 'Masculino',
@@ -68,12 +66,12 @@ class InhumacioneResource extends Resource
                                 ])
                                 ->required(),
                             
-                            Forms\Components\TextInput::make('edad')
+                            TextInput::make('edad')
                                 ->label('Edad')
                                 ->required()
                                 ->numeric(),
                             
-                            Forms\Components\Select::make('estado_civil')
+                            Select::make('estado_civil')
                                 ->label('Estado Civil')
                                 ->options([
                                     'soltero' => 'Soltero(a)',
@@ -83,104 +81,130 @@ class InhumacioneResource extends Resource
                                 ])
                                 ->required(),
                             
-                            Forms\Components\TextInput::make('nacionalidad')
+                            TextInput::make('nacionalidad')
                                 ->label('Nacionalidad')
                                 ->required(),
                             
-                            Forms\Components\TextInput::make('diagnostico_fallecimiento')
+                            TextInput::make('diagnostico_fallecimiento')
                                 ->label('Diagnóstico Fallecimiento')
                                 ->required(),
                             
-                            Forms\Components\TextInput::make('medico')
+                            TextInput::make('medico')
                                 ->label('Médico')
                                 ->required(),
                             
-                            Forms\Components\TextInput::make('orc')
+                            TextInput::make('orc')
                                 ->label('ORC')
                                 ->required(),
                             
-                            Forms\Components\TextInput::make('libro')
+                            TextInput::make('libro')
                                 ->label('Libro')
                                 ->required(),
                             
-                            Forms\Components\TextInput::make('folio')
+                            TextInput::make('folio')
                                 ->label('Folio')
+                                ->required(),
+                            
+                            FileUpload::make('defuncion_pdf')
+                                ->label('Defunción PDF')
+                                ->disk('public')
+                                ->directory('pdfs')
+                                ->acceptedFileTypes(['application/pdf'])
                                 ->required(),
                         ]),
                     
-                    Forms\Components\Wizard\Step::make('Detalles del Registro')
+                    Step::make('Detalles del Registro')
                         ->schema([
-                            Forms\Components\DatePicker::make('fecha_inhumacion')
+                            DatePicker::make('fecha_inhumacion')
                                 ->label('Fecha Inhumación')
                                 ->required(),
                             
-                            Forms\Components\DatePicker::make('fecha_vencimiento')
+                            DatePicker::make('fecha_vencimiento')
                                 ->label('Fecha Vencimiento')
                                 ->required(),
                             
-                            Forms\Components\TextInput::make('dia')
-                                ->label('Día')
+                            TextInput::make('dia')
+                                ->label('Monto')
                                 ->required(),
                             
-                            Forms\Components\Textarea::make('descripcion_nicho')
+                            Select::make('descripcion_nicho')
                                 ->label('Descripción de Nicho')
+                                ->options([
+                                    'nicho menor' => 'Nicho Menor hasta 70cm',
+                                    'nicho mayor' => 'Nicho Mayor mayor a 70cm',
+                                    'tumba' => 'Tumba',
+                                ])
                                 ->required(),
                         ]),
                     
-                    Forms\Components\Wizard\Step::make('Ubicación')
+                    Step::make('Ubicación')
                         ->schema([
-                            Forms\Components\TextInput::make('fila_ubicacion')
+                            TextInput::make('fila_ubicacion')
                                 ->label('Fila Ubicación')
                                 ->required()
                                 ->maxLength(255),
-                            
-                            Forms\Components\TextInput::make('sector_ubicacion')
-                                ->label('Sector Ubicación')
+
+                            TextInput::make('nro_ubicacion')
+                                ->label('Columna Ubicación')
                                 ->required()
                                 ->maxLength(255),
                             
-                            Forms\Components\TextInput::make('nro_ubicacion')
-                                ->label('Número Ubicación')
+                            TextInput::make('sector_ubicacion')
+                                ->label('Sector Ubicación')
                                 ->required()
                                 ->maxLength(255),
                         ]),
                     
-                    Forms\Components\Wizard\Step::make('Información del Solicitante')
+                    Step::make('Información del Solicitante')
                         ->schema([
-                            Forms\Components\TextInput::make('nombre_apellido_solicitante')
+                            TextInput::make('nombre_apellido_solicitante')
                                 ->label('Nombre y Apellido del Solicitante')
                                 ->required(),
                             
-                            Forms\Components\TextInput::make('carnet_identidad')
-                                ->label('Carnet Identidad o Nit')
+                            TextInput::make('carnet_identidad')
+                                ->label('Carnet Identidad o NIT')
                                 ->required(),
                             
-                            Forms\Components\TextInput::make('celular')
+                            TextInput::make('celular')
                                 ->label('Celular')
                                 ->required()
                                 ->numeric()
                                 ->minLength(8)
                                 ->maxLength(8),
                             
-                            Forms\Components\TextInput::make('direccion')
+                            TextInput::make('direccion')
                                 ->label('Dirección')
                                 ->required(),
                             
-                            Forms\Components\TextInput::make('numero')
-                                ->label('Número de domicilio')
+                            TextInput::make('numero')
+                                ->label('Número de Domicilio')
                                 ->required(),
                             
-                            Forms\Components\TextInput::make('zona')
+                            TextInput::make('zona')
                                 ->label('Zona')
                                 ->required(),
                             
-                            Forms\Components\FileUpload::make('comprobante_pdf')
-                                ->label('Documento PDF')
+                            FileUpload::make('comprobante_pdf')
+                                ->label('Carta de Solicitud')
                                 ->disk('public')
                                 ->directory('pdfs')
                                 ->acceptedFileTypes(['application/pdf'])
                                 ->required(),
-                        ])
+
+                            FileUpload::make('testigos_pdf')
+                                ->label('Fotocopia de Testigos')
+                                ->disk('public')
+                                ->directory('pdfs')
+                                ->acceptedFileTypes(['application/pdf'])
+                                ->required(),
+
+                            FileUpload::make('familiares_pdf')
+                                ->label('Fotocopia de Familiares')
+                                ->disk('public')
+                                ->directory('pdfs')
+                                ->acceptedFileTypes(['application/pdf'])
+                                ->required(),
+                        ]),
                 ])->columnSpanFull()
             ]);
     }
@@ -207,34 +231,44 @@ class InhumacioneResource extends Resource
 
                 TextColumn::make('comprobante_pdf')
                     ->label('Ver PDF')
-                    ->action(function ($record) {
-                        $pdfUrl = asset('storage/' . $record->comprobante_pdf);
-                        return [
-                            'dispatchBrowserEvent' => ['openPdfModal', ['pdfUrl' => $pdfUrl]]
-                        ];
-                    })
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Action::make('ver_pdf')
-                    ->label('Ver PDF')
+
+                Action::make('ver_comprobante_pdf')
+                    ->label('Ver Carta de Solicitud')
                     ->icon('heroicon-o-document-text')
-                    ->modalHeading('Ver PDF')
+                    ->modalHeading('Ver Carta de Solicitud')
                     ->modalContent(function ($record) {
                         $pdfUrl = asset('storage/' . $record->comprobante_pdf);
                         return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
-                    })
-                    ->action(function ($record) {
-                        // Acción adicional si es necesario
                     }),
+                
+                Action::make('ver_testigos_pdf')
+                    ->label('Ver Fotocopia de Testigos')
+                    ->icon('heroicon-o-document-text')
+                    ->modalHeading('Ver Fotocopia de Testigos')
+                    ->modalContent(function ($record) {
+                        $pdfUrl = asset('storage/' . $record->testigos_pdf);
+                        return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
+                    }),
+                
+                Action::make('ver_familiares_pdf')
+                    ->label('Ver Fotocopia de Familiares')
+                    ->icon('heroicon-o-document-text')
+                    ->modalHeading('Ver Fotocopia de Familiares')
+                    ->modalContent(function ($record) {
+                        $pdfUrl = asset('storage/' . $record->familiares_pdf);
+                        return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
+                    }),
+                
                 Action::make('crear_pdf')
                     ->label('Generar Comprobante')
                     ->icon('heroicon-o-document-text')
-                    ->url(fn (): string => route('pdf.example', ['user' => Auth::user()]),
-                    shouldOpenInNewTab: true
-                ),
+                    ->url(fn (): string => route('pdf.example', ['user' => Auth::user()]))
+                    ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

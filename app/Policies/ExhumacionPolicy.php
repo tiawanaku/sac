@@ -2,18 +2,20 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use App\Models\Exhumacion;
 use App\Models\User;
 
 class ExhumacionPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Exhumacion');
+        return $user->can('view-any Exhumacion') || $user->hasAnyRole(['Administrador', 'Funcionario']);
     }
 
     /**
@@ -21,7 +23,7 @@ class ExhumacionPolicy
      */
     public function view(User $user, Exhumacion $exhumacion): bool
     {
-        return $user->checkPermissionTo('view Exhumacion');
+        return $user->can('view Exhumacion') || $user->hasAnyRole(['Administrador', 'Funcionario']);
     }
 
     /**
@@ -29,7 +31,7 @@ class ExhumacionPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Exhumacion');
+        return $user->can('create Exhumacion') || $user->hasRole(['Administrador', 'Funcionario']);
     }
 
     /**
@@ -37,7 +39,7 @@ class ExhumacionPolicy
      */
     public function update(User $user, Exhumacion $exhumacion): bool
     {
-        return $user->checkPermissionTo('update Exhumacion');
+        return $user->can('update Exhumacion') || $user->hasRole(['Administrador', 'Funcionario']);
     }
 
     /**
@@ -45,7 +47,7 @@ class ExhumacionPolicy
      */
     public function delete(User $user, Exhumacion $exhumacion): bool
     {
-        return $user->checkPermissionTo('delete Exhumacion');
+        return $user->can('delete Exhumacion') || $user->hasRole('Administrador');
     }
 
     /**
@@ -53,7 +55,7 @@ class ExhumacionPolicy
      */
     public function restore(User $user, Exhumacion $exhumacion): bool
     {
-        return $user->checkPermissionTo('restore Exhumacion');
+        return $user->can('restore Exhumacion') || $user->hasRole('Administrador');
     }
 
     /**
@@ -61,6 +63,6 @@ class ExhumacionPolicy
      */
     public function forceDelete(User $user, Exhumacion $exhumacion): bool
     {
-        return $user->checkPermissionTo('force-delete Exhumacion');
+        return $user->can('force-delete Exhumacion') || $user->hasRole('Administrador');
     }
 }
