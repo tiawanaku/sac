@@ -72,14 +72,17 @@ class ExhumacionResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('costo_servicio')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('comprobante_pdf')
                     ->label('Ver Comprobante PDF')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('autorizacion_pdf')
                     ->label('Ver Autorización PDF')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('fecha_exhumacion')
                     ->dateTime()
                     ->sortable()
@@ -91,6 +94,7 @@ class ExhumacionResource extends Resource
                         ->label('Editar')
                         ->icon('heroicon-o-pencil')
                         ->color('primary'),
+
                     Tables\Actions\Action::make('ver_comprobante_pdf')
                         ->label('Ver Comprobante PDF')
                         ->modalHeading('Documento Comprobante PDF')
@@ -100,6 +104,7 @@ class ExhumacionResource extends Resource
                         })
                         ->icon('heroicon-o-document-text')
                         ->color('primary'),
+
                     Tables\Actions\Action::make('ver_autorizacion_pdf')
                         ->label('Ver Autorización PDF')
                         ->modalHeading('Documento Autorización PDF')
