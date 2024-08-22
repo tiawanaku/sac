@@ -12,6 +12,14 @@ return new class extends Migration {
     {
         Schema::create('exhumacions', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre_contribuayente');
+            $table->string('numero_celular');
+            $table->string('ci_nit');
+            $table->string('avenida_calle');
+            $table->string('numero_puerta');
+            $table->string('zona');
+            $table->string('nombre_difunto');
+
             $table->string('motivo_exhumacion');
             $table->timestamp('fecha_exhumacion');
             $table->decimal('costo_formulario', 10, 2);

@@ -6,7 +6,10 @@ use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\ExhumacionController;
 use App\Http\Controllers\InhumacionController;
 use App\Filament\Resources\ExhumacionResource;
+use App\Http\Controllers\PdfConstruccionController;
 use App\Http\Controllers\PdfController;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -74,11 +77,13 @@ Route::middleware('auth')->group(function () {
 Route::get('/exhumacion/{id}/pdf', [ExhumacionController::class, 'downloadPdf'])->name('exhumacion.pdf');
 Route::get('/exhumacion/preview/{id}', [ExhumacionController::class, 'previewPdf'])->name('exhumacion.preview');
 Route::get('pdf/download/{id}', [PdfController::class, 'download'])->name('pdf.download');
+Route::get('/construccion/preview/{id}', [PdfConstruccionController::class, 'previewPdfConstruccion'])->name('construccion.preview');
+
 
 //url del pdf
 Route::get('/comprobante/{user}', function () {
     $pdf = Pdf::loadView('pdf.example');
-    return $pdf->download('example.pdf');   
+    return $pdf->download('example.pdf');
 })->name('pdf.example');
 
 //rutas de pdfs

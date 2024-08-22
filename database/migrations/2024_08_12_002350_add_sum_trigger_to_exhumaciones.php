@@ -9,25 +9,35 @@ return new class extends Migration {
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        DB::unprepared('
-            CREATE TRIGGER before_exhumacions_insert
+        // Trigger para insertar nuevos registros
+        DB::statement("
+            CREATE TRIGGER actualizar_costo_total_exhumacion
             BEFORE INSERT ON exhumacions
             FOR EACH ROW
             BEGIN
-                SET NEW.costo_total = COALESCE(NEW.costo_formulario, 0) + COALESCE(NEW.costo_servicio, 0);
-            END;
-        ');
+                SET NEW.costo_total = IFNULL(NEW.costo_formulario, 0) + IFNULL(NEW.costo_servicio, 0);
+            END
+        ");
+
+        // Trigger para actualizar registros existentes
+        DB::statement("
+            CREATE TRIGGER actualizar_costo_total_exhumacion_actualizacion
+            BEFORE UPDATE ON exhumacions
+            FOR EACH ROW
+            BEGIN
+                SET NEW.costo_total = IFNULL(NEW.costo_formulario, 0) + IFNULL(NEW.costo_servicio, 0);
+            END
+        ");
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
-        DB::unprepared('
-            DROP TRIGGER IF EXISTS before_exhumacions_insert
-        ');
+        // Elimina el trigger de inserción
+        DB::statement('DROP TRIGGER IF EXISTS actualizar_costo_total_exhumacion');
+
+        // Elimina el trigger de actualización
+        DB::statement('DROP TRIGGER IF EXISTS actualizar_costo_total_exhumacion_actualizacion');
     }
 };

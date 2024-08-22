@@ -1,7 +1,5 @@
 <?php
 
-namespace App\Http\Controllers;
-
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AutorizacionConstruccionNichoResource\Pages;
@@ -26,63 +24,68 @@ class AutorizacionConstruccionNichoResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Grid::make(3) // Dividir en 3 columnas
+                Forms\Components\Card::make() // Agregar un marco con el componente Card
                     ->schema([
-                        Forms\Components\TextInput::make('nombre_contribuyente')
-                            ->required()
-                            ->label('Nombre del Contribuyente'),
+                        Forms\Components\Grid::make(3) // Dividir en 3 columnas
+                            ->schema([
+                                Forms\Components\TextInput::make('nombre_contribuyente')
+                                    ->required()
+                                    ->label('Nombre del Contribuyente'),
 
-                        Forms\Components\TextInput::make('ci_nit')
-                            ->required()
-                            ->label('CI o NIT'),
+                                Forms\Components\TextInput::make('ci_nit')
+                                    ->required()
+                                    ->label('CI o NIT'),
 
-                        Forms\Components\TextInput::make('avenida_calle')
-                            ->required()
-                            ->label('Avenida o Calle'),
+                                Forms\Components\TextInput::make('avenida_calle')
+                                    ->required()
+                                    ->label('Avenida o Calle'),
 
-                        Forms\Components\TextInput::make('numero')
-                            ->required()
-                            ->label('N.Puerta'),
+                                Forms\Components\TextInput::make('numero')
+                                    ->required()
+                                    ->label('N.Puerta'),
 
-                        Forms\Components\TextInput::make('zona')
-                            ->required()
-                            ->label('Zona'),
+                                Forms\Components\TextInput::make('zona')
+                                    ->required()
+                                    ->label('Zona'),
 
-                        Forms\Components\TextInput::make('numero_celular')
-                            ->label('Número Celular')
-                            ->nullable(), // Hacerlo opcional si es necesario
+                                Forms\Components\TextInput::make('numero_celular')
+                                    ->label('Número Celular')
+                                    ->nullable(), // Hacerlo opcional si es necesario
 
-                        Forms\Components\TextInput::make('actividad')
-                            ->required()
-                            ->label('Servicio')
-                            ->default('Autorización de Construcción de Nicho'),
+                                Forms\Components\TextInput::make('actividad')
+                                    ->required()
+                                    ->label('Servicio')
+                                    ->default('Autorización de Construcción de Nicho'),
 
-                        Forms\Components\TextInput::make('nombre_difunto')
-                            ->label('Nombre del Difunto')
-                            ->nullable(), // Hacerlo opcional si es necesario
+                                Forms\Components\TextInput::make('nombre_difunto')
+                                    ->label('Nombre del Difunto')
+                                    ->nullable(), // Hacerlo opcional si es necesario
 
-                        Forms\Components\DatePicker::make('fecha_autorizacion')
-                            ->label('Fecha de Autorización')
-                            ->required(),
+                                Forms\Components\DatePicker::make('fecha_autorizacion')
+                                    ->label('Fecha de Autorización')
+                                    ->required(),
 
-                        Forms\Components\FileUpload::make('comprobante_pdf')
-                            ->label('Comprobante PDF')
-                            ->disk('public') // Especifica el disco de almacenamiento
-                            ->directory('comprobantes') // Directorio dentro del disco
-                            ->nullable(), // Hacerlo opcional si es necesario
+                                Forms\Components\FileUpload::make('comprobante_pdf')
+                                    ->label('Comprobante PDF')
+                                    ->disk('public') // Especifica el disco de almacenamiento
+                                    ->directory('comprobantes') // Directorio dentro del disco
+                                    ->nullable(), // Hacerlo opcional si es necesario
 
-                        Forms\Components\TextInput::make('costo_formulario')
-                            ->required()
-                            ->numeric()
-                            ->label('Costo Formulario'),
+                                Forms\Components\TextInput::make('costo_formulario')
+                                    ->required()
+                                    ->numeric()
+                                    ->label('Costo Formulario'),
 
-                        Forms\Components\TextInput::make('costo')
-                            ->required()
-                            ->numeric()
-                            ->label('Costo'),
-                    ]),
+                                Forms\Components\TextInput::make('costo')
+                                    ->required()
+                                    ->numeric()
+                                    ->label('Costo'),
+                            ]),
+                    ])
+                    ->extraAttributes(['class' => 'p-4 rounded-lg shadow-sm']), // Estilo del contenedor
             ]);
     }
+
 
     public static function table(Table $table): Table
     {
@@ -171,33 +174,39 @@ class AutorizacionConstruccionNichoResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make()
+                        ->label('Editar')
+                        ->icon('heroicon-o-pencil')
+                        ->color('primary'),
 
-                Tables\Actions\Action::make('comprobante_pdf')
-                    ->label('Ver Comprobante PDF')
-                    ->modalHeading('Comprobante PDF')
-                    ->modalContent(function ($record) {
-                        $pdfUrl = asset('storage/' . $record->comprobante_pdf);
-                        return view('filament.modals.view-pdf-ver-construccion', ['pdfUrl' => $pdfUrl]);
-                    })
-                    ->icon('heroicon-o-document-text')
-                    ->color('primary'),
+                    Tables\Actions\Action::make('comprobante_pdf')
+                        ->label('Ver Comprobante PDF')
+                        ->modalHeading('Comprobante PDF')
+                        ->modalContent(function ($record) {
+                            $pdfUrl = asset('storage/' . $record->comprobante_pdf);
+                            return view('filament.modals.view-pdf-ver-construccion', ['pdfUrl' => $pdfUrl]);
+                        })
+                        ->icon('heroicon-o-document-text')
+                        ->color('primary'),
 
-                Tables\Actions\Action::make('preview_pdf')
-                    ->label('Imprimir Comprovante')
-                    ->icon('heroicon-o-printer')
-                    ->color('primary')
-                    ->modalHeading('Vista previa del PDF')
-                    ->modalContent(function ($record) {
-                        $pdfUrl = route('exhumacion.preview', $record->id);
-                        return view('filament.modals.view-pdf-ver-comprobate-construccion', ['pdfUrl' => $pdfUrl]);
-                    })
+                    Tables\Actions\Action::make('preview_pdf')
+                        ->label('Imprimir Comprobante')
+                        ->icon('heroicon-o-printer')
+                        ->color('primary')
+                        ->modalHeading('Vista previa del PDF')
+                        ->modalContent(function ($record) {
+                            $pdfUrl = route('construccion.preview', $record->id);
+                            return view('filament.modals.view-pdf-ver-comprobate-construccion', ['pdfUrl' => $pdfUrl]);
+                        })
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+
     }
 
     public static function getRelations(): array
