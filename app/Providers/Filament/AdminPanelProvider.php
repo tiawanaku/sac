@@ -36,12 +36,12 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('SAC GAMEA')
             //->brandLogo(asset('images/logo-alcaldia.png'))
             ->colors([
-                'primary' => Color::Blue,
+                'primary' => Color::Orange,
                 'danger' => Color::Rose,
                 'gray' => Color::Gray,
                 'info' => Color::Amber,
                 'success' => Color::Emerald,
-                'warning' => Color::Orange,
+                'warning' => Color::Red,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
