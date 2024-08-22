@@ -7,6 +7,7 @@ use App\Http\Controllers\ExhumacionController;
 use App\Http\Controllers\InhumacionController;
 use App\Filament\Resources\ExhumacionResource;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\RenovacionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -85,3 +86,7 @@ Route::get('/comprobante/{user}', function () {
 Route::get('inhumaciones/{id}/ver-pdf/{type}', [InhumacionController::class, 'verPdf'])
     ->name('inhumaciones.ver_pdf')
     ->where('type', 'comprobante_pdf|testigos_pdf|familiares_pdf');
+
+//Ruta para renovacion
+Route::get('/renovacion/{id}/archivo', [RenovacionController::class, 'verArchivo'])->name('renovacion.verArchivo');
+
