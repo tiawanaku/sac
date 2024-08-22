@@ -18,6 +18,7 @@ class Renovacion extends Model
         'fecha_renovacion',
         'fecha_vencimiento',
         'difunto',
-        'monto',  // Campo 'difunto' añadido
+        'monto',
+        'comprobante_renovacion',  // Añadir el campo para el archivo
     ];
 }

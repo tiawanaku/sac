@@ -22,7 +22,7 @@ class RenovacionResource extends Resource
     protected static ?string $activeNavigationIcon = 'heroicon-o-clipboard-document-check';
     public static function getNavigationBadge(): ?string
     {
-         return static::getModel()::count();
+        return static::getModel()::count();
     }
 
     public static function form(Form $form): Form
@@ -54,6 +54,12 @@ class RenovacionResource extends Resource
                     ->required(),
                 Forms\Components\DatePicker::make('fecha_vencimiento')
                     ->required(),
+                Forms\Components\FileUpload::make('comprobante_renovacion')
+                    ->label('Comprobante Renovacion')
+                    ->disk('public')
+                    ->directory('comprobantes')
+                    ->acceptedFileTypes(['application/pdf'])
+                    ->required(),
             ]);
     }
 
@@ -62,39 +68,37 @@ class RenovacionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('ci_nit')
-                    ->searchable(),
+                    
+                    ->label('C.I o Nit')->searchable(),
                 Tables\Columns\TextColumn::make('nombre_contribuyente')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('direccion')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('numero_casa')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('zona')
-                    ->searchable(),
+                    ->label('Contribuyente')->searchable(),
                 Tables\Columns\TextColumn::make('difunto')
-                    ->searchable(),
+
+                    ->label('Difunto(a)')->searchable(),
                 Tables\Columns\TextColumn::make('monto')
-                    ->searchable(),
+
+                    ->label('Monto de Renovacion')->searchable(),
                 Tables\Columns\TextColumn::make('fecha_renovacion')
                     ->date()
-                    ->sortable(),
+
+                    ->label('fecha de Renovacion')->sortable(),
                 Tables\Columns\TextColumn::make('fecha_vencimiento')
                     ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('fecha de vencimiento')->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('ver_comprobante_renovacion')
+                    ->label('Ver Comprobante Renovación')
+                    ->icon('heroicon-o-document-text')
+                    ->modalHeading('Ver Comprobante Renovación')
+                    ->modalContent(function ($record) {
+                        $fileUrl = asset('storage/' . $record->comprobante_renovacion);
+                        return view('components.file-modal', ['fileUrl' => $fileUrl]);
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

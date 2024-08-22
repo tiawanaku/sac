@@ -24,6 +24,7 @@ class CreateRenovacionsTable extends Migration
             $table->string('monto');
             $table->date('fecha_renovacion');
             $table->date('fecha_vencimiento');
+            $table->string('comprobante_renovacion')->nullable(); // Añadir la columna para el archivo
             $table->timestamps();
         });
     }

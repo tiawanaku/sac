@@ -9,10 +9,4 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateExhumacion extends CreateRecord
 {
     protected static string $resource = ExhumacionResource::class;
-
-    protected function getRedirectUrl(): string
-    {
-        return $this->getResource()::getUrl('index');
-    }
-
 }
