@@ -8,6 +8,7 @@ use App\Http\Controllers\InhumacionController;
 use App\Filament\Resources\ExhumacionResource;
 use App\Http\Controllers\PdfConstruccionController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\RenovacionController;
 
 Route::get('/', function () {
     return view('welcome');
