@@ -257,7 +257,16 @@ class InhumacioneResource extends Resource
                         $pdfUrl = Storage::url($record->testigos_pdf);
                         return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
                     }),
-                
+
+                Action::make('ver_defuncion_pdf')
+                    ->label('Ver Defunción PDF')
+                    ->icon('heroicon-o-document-text')
+                    ->modalHeading('Ver Defunción PDF')
+                    ->modalContent(function ($record) {
+                        $pdfUrl = Storage::url($record->defuncion_pdf);
+                        return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
+                    }),
+
                 Action::make('ver_familiares_pdf')
                     ->label('Ver Fotocopia de Familiares')
                     ->icon('heroicon-o-document-text')
