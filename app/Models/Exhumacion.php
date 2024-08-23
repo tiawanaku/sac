@@ -8,6 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Exhumacion extends Model
 {
     protected $fillable = [
+
+        'nombre_contribuayente',
+        'numero_celular',
+        'ci_nit',
+        'avenida_calle',
+        'numero_puerta',
+        'zona',
+        'nombre_difunto',
+
         'motivo_exhumacion',
         'nombre_servicio',
         'costo_formulario',
