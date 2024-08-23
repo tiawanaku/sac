@@ -33,7 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->profile(EditProfile::class)
             //->emailVerification()
-            ->brandName('SAC GAMEA')
+            ->brandName('SAC GAMEA Mercedario')
             //->brandLogo(asset('images/logo-alcaldia.png'))
             ->colors([
                 'primary' => Color::Orange,
