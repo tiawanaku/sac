@@ -72,37 +72,7 @@
         </a>
     </div>
     <!-- End Carousel -->
-
-    <div class="container mt-5">
-        <h1>Bienvenido a la Aplicación</h1>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalIndex">
-            Consultar
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="modalIndex" tabindex="-1" role="dialog" aria-labelledby="modalIndexLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalIndexLabel">Consulta</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Contenido del modal cargado mediante AJAX -->
-                        <div id="modalContent">
-                            <!-- Aquí se cargará el contenido de index.blade.php -->
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
     <!-- Start of Content Sections -->
     <div class="container">
         <div class="row" id="Restaurant">

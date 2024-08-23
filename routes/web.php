@@ -9,14 +9,17 @@ use App\Filament\Resources\ExhumacionResource;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\RenovacionController;
 
+// Ruta principal
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Ruta para la página de consulta
 Route::get('/consulta', function () {
     return view('consulta.index'); // Asegúrate de que este archivo esté en resources/views/consulta/index.blade.php
 });
 
+// Ruta para enviar datos mediante cURL
 Route::post('/enviar-datos', function (\Illuminate\Http\Request $request) {
     $nombre = $request->input('nombre');
     $apellido = $request->input('apellido');
@@ -60,33 +63,35 @@ Route::post('/enviar-datos', function (\Illuminate\Http\Request $request) {
 // Ruta para la carga de archivos
 Route::post('/test-upload', [FileUploadController::class, 'testUpload']);
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-// Ruta corregida para la descarga del PDF
+// Ruta para la descarga del PDF corregida
 Route::get('/{record}/pdf/download', [DonwloadPdfController::class, 'donwload'])->name('inhumacion.pdf.download');
+
+// Rutas para visualizar PDFs específicos de exhumaciones e inhumaciones
 Route::get('/exhumacion/{id}/ver-pdf', [ExhumacionController::class, 'verPdf'])->name('exhumacion.ver-pdf');
 Route::get('/inhumacion/{id}/ver-pdf', [InhumacionController::class, 'verPdf'])->name('inhumacion.verPdf');
+
+// Grupo de rutas protegidas con middleware 'auth'
 Route::middleware('auth')->group(function () {
     Route::get('/filament/exhumacions/{record}/edit', [ExhumacionResource::class, 'edit'])
         ->name('filament.resources.exhumacions.edit');
 });
+
+// Rutas adicionales para exhumaciones y PDFs
 Route::get('/exhumacion/{id}/pdf', [ExhumacionController::class, 'downloadPdf'])->name('exhumacion.pdf');
 Route::get('/exhumacion/preview/{id}', [ExhumacionController::class, 'previewPdf'])->name('exhumacion.preview');
 Route::get('pdf/download/{id}', [PdfController::class, 'download'])->name('pdf.download');
 
-//url del pdf
+// Ruta para la descarga de un PDF de ejemplo
 Route::get('/comprobante/{user}', function () {
     $pdf = Pdf::loadView('pdf.example');
     return $pdf->download('example.pdf');   
 })->name('pdf.example');
 
-//rutas de pdfs
+// Rutas para visualizar los diferentes tipos de PDFs en inhumaciones
 Route::get('inhumaciones/{id}/ver-pdf/{type}', [InhumacionController::class, 'verPdf'])
     ->name('inhumaciones.ver_pdf')
     ->where('type', 'comprobante_pdf|testigos_pdf|familiares_pdf');
 
-//Ruta para renovacion
+// Ruta para visualizar un archivo relacionado con una renovación
 Route::get('/renovacion/{id}/archivo', [RenovacionController::class, 'verArchivo'])->name('renovacion.verArchivo');
 

@@ -11,18 +11,34 @@ return new class extends Migration
         Schema::table('inhumaciones', function (Blueprint $table) {
             // Agregar la columna 'comprobante_pdf' primero
             if (!Schema::hasColumn('inhumaciones', 'comprobante_pdf')) {
-                $table->string('comprobante_pdf')->nullable()->after('nro_ubicacion');
+                $table->string('comprobante_pdf', 100)->nullable()->after('nro_ubicacion');
             }
 
             // Luego agregar las nuevas columnas para PDFs
-            $table->string('defuncion_pdf')->nullable()->after('folio');
-            $table->string('testigos_pdf')->nullable()->after('comprobante_pdf');
-            $table->string('familiares_pdf')->nullable()->after('testigos_pdf');
+            if (!Schema::hasColumn('inhumaciones', 'defuncion_pdf')) {
+                $table->string('defuncion_pdf', 100)->nullable()->after('folio');
+            }
+
+            if (!Schema::hasColumn('inhumaciones', 'testigos_pdf')) {
+                $table->string('testigos_pdf', 100)->nullable()->after('comprobante_pdf');
+            }
+
+            if (!Schema::hasColumn('inhumaciones', 'familiares_pdf')) {
+                $table->string('familiares_pdf', 100)->nullable()->after('testigos_pdf');
+            }
             
             // Modificar columnas existentes para permitir valores nulos
-            $table->string('fila_ubicacion')->nullable()->change();
-            $table->string('sector_ubicacion')->nullable()->change();
-            $table->string('nro_ubicacion')->nullable()->change();
+            if (Schema::hasColumn('inhumaciones', 'fila_ubicacion')) {
+                $table->string('fila_ubicacion')->nullable()->change();
+            }
+            
+            if (Schema::hasColumn('inhumaciones', 'sector_ubicacion')) {
+                $table->string('sector_ubicacion')->nullable()->change();
+            }
+            
+            if (Schema::hasColumn('inhumaciones', 'nro_ubicacion')) {
+                $table->string('nro_ubicacion')->nullable()->change();
+            }
         });
     }
 
@@ -44,10 +60,15 @@ return new class extends Migration
             }
 
             // Revertir cambios en las columnas existentes
-            $table->string('fila_ubicacion')->nullable(false)->change();
-            $table->string('sector_ubicacion')->nullable(false)->change();
-            $table->string('nro_ubicacion')->nullable(false)->change();
+            if (Schema::hasColumn('inhumaciones', 'fila_ubicacion')) {
+                $table->string('fila_ubicacion')->nullable(false)->change();
+            }
+            if (Schema::hasColumn('inhumaciones', 'sector_ubicacion')) {
+                $table->string('sector_ubicacion')->nullable(false)->change();
+            }
+            if (Schema::hasColumn('inhumaciones', 'nro_ubicacion')) {
+                $table->string('nro_ubicacion')->nullable(false)->change();
+            }
         });
     }
 };
-

@@ -9,9 +9,6 @@ class Inhumacione extends Model
 {
     use HasFactory;
 
-    // Tabla asociada al modelo
-    //protected $table = 'inhumaciones';
-
     // Los atributos que son asignables en masa
     protected $fillable = [
         'nombre_difunto',
@@ -38,9 +35,9 @@ class Inhumacione extends Model
         'sector_ubicacion',
         'nro_ubicacion',
         'comprobante_pdf',
-        'testigos_pdf', // Nuevo campo
-        'familiares_pdf', // Nuevo campo
-        'defuncion_pdf', // Nuevo campo
+        'testigos_pdf',
+        'familiares_pdf',
+        'defuncion_pdf',
     ];
 
     // Los atributos que deberían ser tratados como fechas
@@ -49,39 +46,19 @@ class Inhumacione extends Model
         'fecha_vencimiento',
     ];
 
-    // Las reglas de validación del modelo (si las usas en el modelo)
-    public static $rules = [
-        'nombre_difunto' => 'required|string|max:255',
-        'sexo' => 'required|in:masculino,femenino',
-        'edad' => 'required|integer|min:1|max:99',
-        'estado_civil' => 'required|in:soltero,casado,divorciado,viudo',
-        'nacionalidad' => 'required|string|max:255',
-        'diagnostico_fallecimiento' => 'required|string|max:255',
-        'medico' => 'required|string|max:255',
-        'orc' => 'required|string|max:255',
-        'libro' => 'required|string|max:255',
-        'folio' => 'required|string|max:255',
-        'fecha_inhumacion' => 'required|date',
-        'fecha_vencimiento' => 'required|date',
-        'dia' => 'required|string|max:255',
-        'descripcion_nicho' => 'required|string',
-        'nombre_apellido_solicitante' => 'required|string|max:255',
-        'carnet_identidad' => 'required|string|max:255',
-        'celular' => 'required|numeric',
-        'direccion' => 'required|string|max:255',
-        'numero' => 'required|string|max:255',
-        'zona' => 'required|string|max:255',
-        'comprobante_pdf' => 'nullable|string|max:100',
-        'testigos_pdf' => 'nullable|string|max:100', // Validación para el nuevo campo
-        'familiares_pdf' => 'nullable|string|max:100', // Validación para el nuevo campo
-        'defuncion_pdf' => 'nullable|string|max:100', // Validación para el nuevo campo
-    ];
+    // Sobrescribir el método setAttribute para convertir arrays a JSON
+    public function setAttribute($key, $value)
+    {
+        if (in_array($key, ['familiares_pdf']) && is_array($value)) {
+            $this->attributes[$key] = json_encode($value);
+        } else {
+            parent::setAttribute($key, $value);
+        }
+    }
 
     // Definir la relación con el modelo Ubicacion
     public function ubicacion()
     {
         return $this->belongsTo(Ubicacion::class);
     }
-
-    // Método para obtener el estado basado en las fechas
 }

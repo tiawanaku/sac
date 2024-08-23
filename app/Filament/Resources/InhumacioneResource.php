@@ -18,6 +18,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Wizard\Step;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class InhumacioneResource extends Resource
 {
@@ -185,25 +186,27 @@ class InhumacioneResource extends Resource
                                 ->required(),
                             
                             FileUpload::make('comprobante_pdf')
-                                ->label('Carta de Solicitud')
+                                ->label('Carta de Solicitud o comprobante')
                                 ->disk('public')
                                 ->directory('pdfs')
-                                ->acceptedFileTypes(['application/pdf'])
-                                ->required(),
+                                ->acceptedFileTypes(['application/pdf']),
 
                             FileUpload::make('testigos_pdf')
-                                ->label('Fotocopia de Testigos')
+                                ->label('Certificado medico')
                                 ->disk('public')
                                 ->directory('pdfs')
                                 ->acceptedFileTypes(['application/pdf'])
                                 ->required(),
 
                             FileUpload::make('familiares_pdf')
-                                ->label('Fotocopia de Familiares')
+                                ->label('Fotocopia de Familiares 1 o 2 pdfs')
                                 ->disk('public')
                                 ->directory('pdfs')
                                 ->acceptedFileTypes(['application/pdf'])
-                                ->required(),
+                                ->required()
+                                ->multiple() // Permite la carga de múltiples archivos
+                                ->maxFiles(2) // Limita a un máximo de 3 archivos
+                                ->minFiles(1), // Requiere al menos 1 archivo
                         ]),
                 ])->columnSpanFull()
             ]);
@@ -242,7 +245,7 @@ class InhumacioneResource extends Resource
                     ->icon('heroicon-o-document-text')
                     ->modalHeading('Ver Carta de Solicitud')
                     ->modalContent(function ($record) {
-                        $pdfUrl = asset('storage/' . $record->comprobante_pdf);
+                        $pdfUrl = Storage::url($record->comprobante_pdf);
                         return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
                     }),
                 
@@ -251,7 +254,7 @@ class InhumacioneResource extends Resource
                     ->icon('heroicon-o-document-text')
                     ->modalHeading('Ver Fotocopia de Testigos')
                     ->modalContent(function ($record) {
-                        $pdfUrl = asset('storage/' . $record->testigos_pdf);
+                        $pdfUrl = Storage::url($record->testigos_pdf);
                         return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
                     }),
                 
@@ -260,8 +263,8 @@ class InhumacioneResource extends Resource
                     ->icon('heroicon-o-document-text')
                     ->modalHeading('Ver Fotocopia de Familiares')
                     ->modalContent(function ($record) {
-                        $pdfUrl = asset('storage/' . $record->familiares_pdf);
-                        return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
+                        $pdfUrls = array_map(fn($path) => Storage::url($path), json_decode($record->familiares_pdf, true) ?? []);
+                        return view('components.pdf-modal', ['pdfUrls' => $pdfUrls]);
                     }),
                 
                 Action::make('crear_pdf')
