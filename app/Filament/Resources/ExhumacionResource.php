@@ -20,6 +20,10 @@ class ExhumacionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationGroup = 'Servicios';
+    public static function getPluralLabel(): string
+    {
+        return 'Exhumaciones';
+    }
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
