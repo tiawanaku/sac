@@ -22,16 +22,12 @@
         }
 
         .navbar-red .navbar-brand {
-            color: #FFFFFF !important;
-            /* Letras en blanco */
-            font-weight: bold;
-            /* Negrita */
-            text-transform: uppercase;
-            /* Texto en mayúsculas */
-            letter-spacing: 1px;
-            /* Espaciado entre letras */
             display: flex;
             align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-grow: 1;
+            /* Permite que la marca ocupe el espacio disponible */
         }
 
         .navbar-red .navbar-brand img {
@@ -42,16 +38,14 @@
         }
 
         .navbar-red .navbar-title {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
             color: #FFFFFF !important;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-size: 1.75rem;
             /* Tamaño de fuente aumentado */
+            white-space: nowrap;
+            /* Evita el ajuste de línea del texto */
         }
 
         .navbar-red .nav-link {
@@ -88,9 +82,6 @@
         </div>
     </nav>
     <!-- End Navigation Bar -->
-
-
-
 
 
     <!-- Start Carousel -->
