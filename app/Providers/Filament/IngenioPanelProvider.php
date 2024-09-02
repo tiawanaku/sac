@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\EditProfile;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -25,8 +26,16 @@ class IngenioPanelProvider extends PanelProvider
         return $panel
             ->id('ingenio')
             ->path('ingenio')
+            ->login()
+            ->profile(EditProfile::class)
+            ->brandName('SAC GAMEA Villa Ingenio')
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Red,
+                'danger' => Color::Rose,
+                'gray' => Color::Gray,
+                'info' => Color::Amber,
+                'success' => Color::Emerald,
+                'warning' => Color::Red,
             ])
             ->discoverResources(in: app_path('Filament/Ingenio/Resources'), for: 'App\\Filament\\Ingenio\\Resources')
             ->discoverPages(in: app_path('Filament/Ingenio/Pages'), for: 'App\\Filament\\Ingenio\\Pages')
