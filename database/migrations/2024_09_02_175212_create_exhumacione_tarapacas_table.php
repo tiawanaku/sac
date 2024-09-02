@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('exhumacione_tarapacas', function (Blueprint $table) {
             $table->id();
 
-            $table->string('nombre_contribuayente');
+            $table->string('nombre_contribuyente');
             $table->string('numero_celular');
             $table->string('ci_nit');
             $table->string('avenida_calle');
@@ -39,10 +39,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-
         // Primero elimina el trigger, si existe
-        //DB::statement("DROP TRIGGER IF EXISTS before_exhumacions_insert");
+        DB::connection('tarapaca')->statement("DROP TRIGGER IF EXISTS before_exhumacions_insert");
 
-        Schema::dropIfExists('exhumacione_tarapacas');
+        // Luego elimina la tabla
+        Schema::connection('tarapaca')->dropIfExists('exhumacione_tarapacas');
     }
 };

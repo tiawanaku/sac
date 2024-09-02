@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Storage;
 
+use Filament\Forms\Components\Section;
+
 class AutorizacionConstruccionNichoResource extends Resource
 {
     protected static ?string $model = AutorizacionConstruccionNicho::class;
@@ -45,7 +47,7 @@ class AutorizacionConstruccionNichoResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Card::make() // Agregar un marco con el componente Card
+                Section::make('')  // Agregar un marco con el componente Card
                     ->schema([
                         Forms\Components\Grid::make(3) // Dividir en 3 columnas
                             ->schema([
@@ -227,7 +229,6 @@ class AutorizacionConstruccionNichoResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-
     }
 
     public static function getRelations(): array

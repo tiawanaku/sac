@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class exhumacione_tarapaca extends Model
+class ExhumacioneTarapaca extends Model
 {
     // Especificar la conexión de base de datos para este modelo
     protected $connection = 'tarapaca';
@@ -14,7 +14,7 @@ class exhumacione_tarapaca extends Model
 
     protected $fillable = [
 
-        'nombre_contribuayente',
+        'nombre_contribuyente',
         'numero_celular',
         'ci_nit',
         'avenida_calle',

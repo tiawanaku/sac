@@ -10,6 +10,10 @@ use App\Http\Controllers\PdfConstruccionController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\RenovacionController;
 
+use App\Http\Controllers\ExhumacionTarapacaController;
+
+
+
 // Ruta principal
 Route::get('/', function () {
     return view('welcome');
@@ -98,3 +102,6 @@ Route::get('inhumaciones/{id}/ver-pdf/{type}', [InhumacionController::class, 've
 // Ruta para visualizar un archivo relacionado con una renovación
 Route::get('/renovacion/{id}/archivo', [RenovacionController::class, 'verArchivo'])->name('renovacion.verArchivo');
 
+
+// rutapara crear comprovante de exhumaciones tarapaca
+route::get('exhumacion/{id}/preview-pdf', [ExhumacionTarapacaController::class, 'previewPdf']);

@@ -13,6 +13,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use Filament\Forms\Components\Section;
+
 class ExhumacionResource extends Resource
 {
     protected static ?string $model = Exhumacion::class;
@@ -48,7 +50,7 @@ class ExhumacionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Card::make()  // Usamos un componente Card para agrupar los campos
+                Section::make('')  // Usamos un componente Card para agrupar los campos
                     ->schema([
                         Forms\Components\Grid::make(3)  // Dividimos en 3 columnas
                             ->schema([
