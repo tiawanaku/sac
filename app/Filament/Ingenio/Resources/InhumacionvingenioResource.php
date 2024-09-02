@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Ingenio\Resources;
 
-use App\Filament\Resources\InhumacioneResource\Pages;
-use App\Models\Inhumacione;
+use App\Filament\Ingenio\Resources\InhumacionvingenioResource\Pages;
+use App\Models\InhumacionVillaIngenio;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -20,9 +20,9 @@ use Filament\Forms\Components\Wizard\Step;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class InhumacioneResource extends Resource
+class InhumacionvingenioResource extends Resource
 {
-    protected static ?string $model = Inhumacione::class;
+    protected static ?string $model = InhumacionVillaIngenio::class;
     protected static ?string $navigationLabel = 'Inhumaciones';
     protected static ?string $navigationIcon = 'heroicon-o-exclamation-circle';
     protected static ?string $navigationGroup = 'Servicios';
@@ -47,7 +47,6 @@ class InhumacioneResource extends Resource
             return 'primary'; // Azul por defecto si no hay registros
         }
     }
-
     public static function form(Form $form): Form
     {
         return $form
@@ -204,9 +203,9 @@ class InhumacioneResource extends Resource
                                 ->directory('pdfs')
                                 ->acceptedFileTypes(['application/pdf'])
                                 ->required()
-                                ->multiple() // Permite la carga de múltiples archivos
-                                ->maxFiles(2) // Limita a un máximo de 3 archivos
-                                ->minFiles(1), // Requiere al menos 1 archivo
+                                ->multiple()
+                                ->maxFiles(2)
+                                ->minFiles(1),
                         ]),
                 ])->columnSpanFull()
             ]);
@@ -381,6 +380,7 @@ class InhumacioneResource extends Resource
             ]);
     }
 
+
     public static function getRelations(): array
     {
         return [];
@@ -389,9 +389,9 @@ class InhumacioneResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListInhumaciones::route('/'),
-            'create' => Pages\CreateInhumacione::route('/create'),
-            'edit' => Pages\EditInhumacione::route('/{record}/edit'),
+            'index' => Pages\ListInhumacionvingenios::route('/'),
+            'create' => Pages\CreateInhumacionvingenio::route('/create'),
+            'edit' => Pages\EditInhumacionvingenio::route('/{record}/edit'),
         ];
     }
 }

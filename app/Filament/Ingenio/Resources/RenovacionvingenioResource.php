@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Tarapaca\Resources;
+namespace App\Filament\Ingenio\Resources;
 
-use App\Filament\Tarapaca\Resources\RenovacionResource\Pages;
-use App\Filament\Tarapaca\Resources\RenovacionResource\RelationManagers;
-use App\Models\RenovacionTarapaca;
+use App\Filament\Ingenio\Resources\RenovacionvingenioResource\Pages;
+use App\Filament\Ingenio\Resources\RenovacionvingenioResource\RelationManagers;
+use App\Models\RenovacionVillaIngenio;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,14 +13,14 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class RenovacionResource extends Resource
+class RenovacionvingenioResource extends Resource
 {
-    protected static ?string $model = RenovacionTarapaca::class;
-    protected static ?string $navigationLabel = 'Renovaciones';
+    protected static ?string $model = RenovacionVillaIngenio::class;
+    protected static ?string $navigationLabel = 'Renovaciones Ingenio';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationGroup = 'Servicios';
     protected static ?string $activeNavigationIcon = 'heroicon-o-clipboard-document-check';
-    
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
@@ -56,7 +56,7 @@ class RenovacionResource extends Resource
                 Forms\Components\DatePicker::make('fecha_vencimiento')
                     ->required(),
                 Forms\Components\FileUpload::make('comprobante_renovacion')
-                    ->label('Comprobante Renovacion')
+                    ->label('Comprobante Renovación')
                     ->disk('public')
                     ->directory('comprobantes')
                     ->acceptedFileTypes(['application/pdf'])
@@ -88,15 +88,15 @@ class RenovacionResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('monto')
-                    ->label('Monto de Renovacion')->searchable(),
+                    ->label('Monto de Renovación')->searchable(),
 
                 Tables\Columns\TextColumn::make('fecha_renovacion')
                     ->date()
-                    ->label('fecha de Renovacion')->sortable(),
+                    ->label('Fecha de Renovación')->sortable(),
 
                 Tables\Columns\TextColumn::make('fecha_vencimiento')
                     ->date()
-                    ->label('fecha de vencimiento')->sortable(),
+                    ->label('Fecha de Vencimiento')->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha de Creación')
@@ -146,9 +146,9 @@ class RenovacionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRenovacions::route('/'),
-            'create' => Pages\CreateRenovacion::route('/create'),
-            'edit' => Pages\EditRenovacion::route('/{record}/edit'),
+            'index' => Pages\ListRenovacionvingenios::route('/'),
+            'create' => Pages\CreateRenovacionvingenio::route('/create'),
+            'edit' => Pages\EditRenovacionvingenio::route('/{record}/edit'),
         ];
     }
 }

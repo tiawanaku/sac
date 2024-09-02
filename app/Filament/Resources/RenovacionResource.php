@@ -68,37 +68,65 @@ class RenovacionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('ci_nit')
-                    
-                    ->label('C.I o Nit')->searchable(),
+                    ->label('C.I o Nit')->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('nombre_contribuyente')
                     ->label('Contribuyente')->searchable(),
+                
+                Tables\Columns\TextColumn::make('direccion')
+                    ->label('Dirección Contribuyente')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\TextColumn::make('zona')
+                    ->label('Zona')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('difunto')
+                    ->label('Difunto(a)')->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
-                    ->label('Difunto(a)')->searchable(),
                 Tables\Columns\TextColumn::make('monto')
-
                     ->label('Monto de Renovacion')->searchable(),
+
                 Tables\Columns\TextColumn::make('fecha_renovacion')
                     ->date()
-
                     ->label('fecha de Renovacion')->sortable(),
+
                 Tables\Columns\TextColumn::make('fecha_vencimiento')
                     ->date()
                     ->label('fecha de vencimiento')->sortable(),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Fecha de Creación')
+                    ->formatStateUsing(fn($state) => \Illuminate\Support\Facades\Date::parse($state)->format('d/m/Y H:i:s'))
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Fecha de Actualización')
+                    ->formatStateUsing(fn($state) => \Illuminate\Support\Facades\Date::parse($state)->format('d/m/Y H:i:s'))
+                    ->toggleable(isToggledHiddenByDefault: true)
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('ver_comprobante_renovacion')
-                    ->label('Ver Comprobante Renovación')
-                    ->icon('heroicon-o-document-text')
-                    ->modalHeading('Ver Comprobante Renovación')
-                    ->modalContent(function ($record) {
-                        $fileUrl = asset('storage/' . $record->comprobante_renovacion);
-                        return view('components.file-modal', ['fileUrl' => $fileUrl]);
-                    }),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make()
+                        ->label('Editar')
+                        ->icon('heroicon-o-pencil')
+                        ->color('primary'),
+            
+                    Tables\Actions\Action::make('ver_comprobante_renovacion')
+                        ->label('Ver Comprobante Renovación')
+                        ->icon('heroicon-o-document-text')
+                        ->modalHeading('Ver Comprobante Renovación')
+                        ->modalContent(function ($record) {
+                            $fileUrl = asset('storage/' . $record->comprobante_renovacion);
+                            return view('components.file-modal', ['fileUrl' => $fileUrl]);
+                        })
+                        ->color('primary'),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
