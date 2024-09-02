@@ -213,12 +213,48 @@ class InhumacionResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table          
+        return $table
             ->columns([
                 TextColumn::make('nombre_difunto')
                     ->label('Nombre Difunto')
                     ->searchable()
                     ->sortable(),
+
+                TextColumn::make('sexo')
+                    ->label('Sexo')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('edad')
+                    ->label('Edad')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('estado_civil')
+                    ->label('Estado Civil')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('nacionalidad')
+                    ->label('Nacionalidad')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('diagnostico_fallecimiento')
+                    ->label('Diagnistico de Fallecimiento')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('Medico')
+                    ->label('Medico')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('orc')
+                    ->label('Oficialia de Registro Civil')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('libro')
+                    ->label('Nro de Libro')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('folio')
+                    ->label('Nro de Folio')
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('fecha_inhumacion')
                     ->label('Fecha Inhumación')
@@ -228,6 +264,54 @@ class InhumacionResource extends Resource
                 TextColumn::make('fecha_vencimiento')
                     ->label('Fecha Vencimiento')
                     ->formatStateUsing(fn($state) => \Illuminate\Support\Facades\Date::parse($state)->format('d/m/Y')),
+
+                TextColumn::make('dia')
+                    ->label('Costo del Servicio')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('descripcion_nicho')
+                    ->label('Descripcion del Nicho')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('nombre_apellido_solicitante')
+                    ->label('Nombre del Solicitante')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('carnet_identidad')
+                    ->label('C.I. Solicitante')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('celular')
+                    ->label('Celular del Familiar')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('direccion')
+                    ->label('Direccion del Familiar')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('zona')
+                    ->label('Zona del Familiar')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('sector_ubicacion')
+                    ->label('Ubicacion del Difunto')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('created_at')
+                    ->label('fecha de creacion')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('updated_at')
+                    ->label('fecha de actualizacion')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('estado'),
 
@@ -242,37 +326,37 @@ class InhumacionResource extends Resource
                         ->label('Editar')
                         ->icon('heroicon-o-pencil')
                         ->color('primary'),
-                
+            
                     Tables\Actions\Action::make('ver_comprobante_pdf')
-                        ->label('Ver Carta de Solicitud')
+                        ->label('Ver Defuncion')
                         ->icon('heroicon-o-document-text')
-                        ->modalHeading('Ver Carta de Solicitud')
+                        ->modalHeading('Ver Defuncion')
                         ->modalContent(function ($record) {
                             $pdfUrl = Storage::url($record->comprobante_pdf);
                             return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
                         })
                         ->color('primary'),
-                    
+            
                     Tables\Actions\Action::make('ver_testigos_pdf')
-                        ->label('Ver Fotocopia de Testigos')
+                        ->label('Ver Comprobante')
                         ->icon('heroicon-o-document-text')
-                        ->modalHeading('Ver Fotocopia de Testigos')
+                        ->modalHeading('Ver Comprobante')
                         ->modalContent(function ($record) {
                             $pdfUrl = Storage::url($record->testigos_pdf);
                             return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
                         })
                         ->color('primary'),
-
+            
                     Tables\Actions\Action::make('ver_defuncion_pdf')
-                        ->label('Ver Defunción PDF')
+                        ->label('Ver Certificado Medico')
                         ->icon('heroicon-o-document-text')
-                        ->modalHeading('Ver Defunción PDF')
+                        ->modalHeading('Ver Certificado Medico')
                         ->modalContent(function ($record) {
                             $pdfUrl = Storage::url($record->defuncion_pdf);
                             return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
                         })
                         ->color('primary'),
-
+            
                     Tables\Actions\Action::make('ver_familiares_pdf')
                         ->label('Ver Fotocopia de Familiares')
                         ->icon('heroicon-o-document-text')
@@ -282,11 +366,11 @@ class InhumacionResource extends Resource
                             return view('components.pdf-modal', ['pdfUrls' => $pdfUrls]);
                         })
                         ->color('primary'),
-                    
+            
                     Tables\Actions\Action::make('crear_pdf')
                         ->label('Generar Comprobante')
                         ->icon('heroicon-o-document-text')
-                        ->url(fn (): string => route('pdf.example', ['user' => Auth::user()]))
+                        ->url(fn(): string => route('pdf.example', ['user' => Auth::user()]))
                         ->openUrlInNewTab()
                         ->color('primary'),
                 ])
@@ -295,6 +379,7 @@ class InhumacionResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
+
 
     public static function getRelations(): array
     {
