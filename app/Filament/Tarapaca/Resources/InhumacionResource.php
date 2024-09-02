@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Tarapaca\Resources;
 
-use App\Filament\Resources\InhumacioneResource\Pages;
-use App\Models\Inhumacione;
+use App\Filament\Tarapaca\Resources\InhumacionResource\Pages;
+use App\Models\Inhumacion;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -20,33 +20,10 @@ use Filament\Forms\Components\Wizard\Step;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class InhumacioneResource extends Resource
+class InhumacionResource extends Resource
 {
-    protected static ?string $model = Inhumacione::class;
-    protected static ?string $navigationLabel = 'Inhumaciones';
-    protected static ?string $navigationIcon = 'heroicon-o-exclamation-circle';
-    protected static ?string $navigationGroup = 'Servicios';
-    protected static ?string $activeNavigationIcon = 'heroicon-o-clipboard-document-check';
-
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
-
-    public static function getNavigationBadgeColor(): ?string
-    {
-        $count = static::getModel()::count();
-
-        if ($count > 4) {
-            return 'success'; // Verde
-        } elseif ($count > 3) {
-            return 'warning'; // Amarillo
-        } elseif ($count > 0) {
-            return 'danger'; // Rojo
-        } else {
-            return 'primary'; // Azul por defecto si no hay registros
-        }
-    }
+    protected static ?string $model = Inhumacion::class;
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -204,9 +181,9 @@ class InhumacioneResource extends Resource
                                 ->directory('pdfs')
                                 ->acceptedFileTypes(['application/pdf'])
                                 ->required()
-                                ->multiple() // Permite la carga de múltiples archivos
-                                ->maxFiles(2) // Limita a un máximo de 3 archivos
-                                ->minFiles(1), // Requiere al menos 1 archivo
+                                ->multiple()
+                                ->maxFiles(2)
+                                ->minFiles(1),
                         ]),
                 ])->columnSpanFull()
             ]);
@@ -295,9 +272,9 @@ class InhumacioneResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListInhumaciones::route('/'),
-            'create' => Pages\CreateInhumacione::route('/create'),
-            'edit' => Pages\EditInhumacione::route('/{record}/edit'),
+            'index' => Pages\ListInhumacions::route('/list'),
+            'create' => Pages\CreateInhumacion::route('/create'),
+            'edit' => Pages\EditInhumacion::route('/{record}/edit'),
         ];
     }
 }
