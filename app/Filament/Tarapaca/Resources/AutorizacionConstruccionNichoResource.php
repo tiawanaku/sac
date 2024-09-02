@@ -3,6 +3,7 @@
 namespace App\Filament\Tarapaca\Resources;
 
 use App\Filament\Tarapaca\Resources\AutorizacionConstruccionNichoResource\Pages;
+use App\Models\AutorizacionConstruccionNichosTarapaca;
 use App\Filament\Tarapaca\Resources\AutorizacionConstruccionNichoResource\RelationManagers;
 use App\Models\AutorizacionConstruccionNicho;
 use Filament\Forms;
@@ -17,7 +18,7 @@ use Filament\Forms\Components\Section;
 
 class AutorizacionConstruccionNichoResource extends Resource
 {
-    protected static ?string $model = AutorizacionConstruccionNicho::class;
+    protected static ?string $model = AutorizacionConstruccionNichosTarapaca::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -72,7 +73,6 @@ class AutorizacionConstruccionNichoResource extends Resource
                                     ->directory('comprobantes') // Directorio dentro del disco
                                     ->nullable() // Hace el campo opcional
                                     ->rules('nullable|mimes:pdf|max:2048'), // Solo archivos PDF, tamaño máximo de 2MB
-
 
 
                                 Forms\Components\TextInput::make('costo_formulario')
