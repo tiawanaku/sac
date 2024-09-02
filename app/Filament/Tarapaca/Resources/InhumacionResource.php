@@ -23,8 +23,30 @@ use Illuminate\Support\Facades\Storage;
 class InhumacionResource extends Resource
 {
     protected static ?string $model = Inhumacion::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Inhumaciones';
+    protected static ?string $navigationIcon = 'heroicon-o-exclamation-circle';
+    protected static ?string $navigationGroup = 'Servicios';
+    protected static ?string $activeNavigationIcon = 'heroicon-o-clipboard-document-check';
+    
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
+    public static function getNavigationBadgeColor(): ?string
+    {
+        $count = static::getModel()::count();
+
+        if ($count > 4) {
+            return 'success'; // Verde
+        } elseif ($count > 3) {
+            return 'warning'; // Amarillo
+        } elseif ($count > 0) {
+            return 'danger'; // Rojo
+        } else {
+            return 'primary'; // Azul por defecto si no hay registros
+        }
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -215,49 +237,59 @@ class InhumacionResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-
-                Action::make('ver_comprobante_pdf')
-                    ->label('Ver Carta de Solicitud')
-                    ->icon('heroicon-o-document-text')
-                    ->modalHeading('Ver Carta de Solicitud')
-                    ->modalContent(function ($record) {
-                        $pdfUrl = Storage::url($record->comprobante_pdf);
-                        return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
-                    }),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make()
+                        ->label('Editar')
+                        ->icon('heroicon-o-pencil')
+                        ->color('primary'),
                 
-                Action::make('ver_testigos_pdf')
-                    ->label('Ver Fotocopia de Testigos')
-                    ->icon('heroicon-o-document-text')
-                    ->modalHeading('Ver Fotocopia de Testigos')
-                    ->modalContent(function ($record) {
-                        $pdfUrl = Storage::url($record->testigos_pdf);
-                        return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
-                    }),
+                    Tables\Actions\Action::make('ver_comprobante_pdf')
+                        ->label('Ver Carta de Solicitud')
+                        ->icon('heroicon-o-document-text')
+                        ->modalHeading('Ver Carta de Solicitud')
+                        ->modalContent(function ($record) {
+                            $pdfUrl = Storage::url($record->comprobante_pdf);
+                            return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
+                        })
+                        ->color('primary'),
+                    
+                    Tables\Actions\Action::make('ver_testigos_pdf')
+                        ->label('Ver Fotocopia de Testigos')
+                        ->icon('heroicon-o-document-text')
+                        ->modalHeading('Ver Fotocopia de Testigos')
+                        ->modalContent(function ($record) {
+                            $pdfUrl = Storage::url($record->testigos_pdf);
+                            return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
+                        })
+                        ->color('primary'),
 
-                Action::make('ver_defuncion_pdf')
-                    ->label('Ver Defunción PDF')
-                    ->icon('heroicon-o-document-text')
-                    ->modalHeading('Ver Defunción PDF')
-                    ->modalContent(function ($record) {
-                        $pdfUrl = Storage::url($record->defuncion_pdf);
-                        return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
-                    }),
+                    Tables\Actions\Action::make('ver_defuncion_pdf')
+                        ->label('Ver Defunción PDF')
+                        ->icon('heroicon-o-document-text')
+                        ->modalHeading('Ver Defunción PDF')
+                        ->modalContent(function ($record) {
+                            $pdfUrl = Storage::url($record->defuncion_pdf);
+                            return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
+                        })
+                        ->color('primary'),
 
-                Action::make('ver_familiares_pdf')
-                    ->label('Ver Fotocopia de Familiares')
-                    ->icon('heroicon-o-document-text')
-                    ->modalHeading('Ver Fotocopia de Familiares')
-                    ->modalContent(function ($record) {
-                        $pdfUrls = array_map(fn($path) => Storage::url($path), json_decode($record->familiares_pdf, true) ?? []);
-                        return view('components.pdf-modal', ['pdfUrls' => $pdfUrls]);
-                    }),
-                
-                Action::make('crear_pdf')
-                    ->label('Generar Comprobante')
-                    ->icon('heroicon-o-document-text')
-                    ->url(fn (): string => route('pdf.example', ['user' => Auth::user()]))
-                    ->openUrlInNewTab(),
+                    Tables\Actions\Action::make('ver_familiares_pdf')
+                        ->label('Ver Fotocopia de Familiares')
+                        ->icon('heroicon-o-document-text')
+                        ->modalHeading('Ver Fotocopia de Familiares')
+                        ->modalContent(function ($record) {
+                            $pdfUrls = array_map(fn($path) => Storage::url($path), json_decode($record->familiares_pdf, true) ?? []);
+                            return view('components.pdf-modal', ['pdfUrls' => $pdfUrls]);
+                        })
+                        ->color('primary'),
+                    
+                    Tables\Actions\Action::make('crear_pdf')
+                        ->label('Generar Comprobante')
+                        ->icon('heroicon-o-document-text')
+                        ->url(fn (): string => route('pdf.example', ['user' => Auth::user()]))
+                        ->openUrlInNewTab()
+                        ->color('primary'),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
