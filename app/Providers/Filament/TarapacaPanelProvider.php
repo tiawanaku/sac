@@ -32,7 +32,7 @@ class TarapacaPanelProvider extends PanelProvider
             ->profile(EditProfile::class)
             ->brandName('SAC GAMEA Tarapaca')
             ->colors([
-                'primary' => Color::Orange,
+                'primary' => Color::Blue,
                 'danger' => Color::Rose,
                 'gray' => Color::Gray,
                 'info' => Color::Amber,
