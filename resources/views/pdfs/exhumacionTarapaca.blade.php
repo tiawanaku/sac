@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Exhumacion</title>
+    <title>Formulario de Exhumacion Tarapaca</title>
     <style>
         body {
             width: 21.5cm;

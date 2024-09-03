@@ -105,28 +105,54 @@ class ExhumacionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombre_contribuayente')
+                Tables\Columns\TextColumn::make('nombre_contribuyente')
+                    ->label('Nombre Contribuyente')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('numero_celular')
+                    ->label('N. Celular')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('ci_nit')
+                    ->label('Ci o Nit')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('avenida_calle')
+                    ->label('Avenida o Calle')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('numero_puerta')
+                    ->label('N. Puerta')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('zona')
+                    ->label('Zona')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nombre_difunto')
+                    ->label('Nombre del Difunto')
                     ->searchable(),
 
 
                 Tables\Columns\TextColumn::make('motivo_exhumacion')
-                    ->searchable(),
+                    ->label('Motivo de Exhumacion')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('costo_formulario')
-                    ->searchable(),
+                    ->label('Costo del Formulario')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('costo_servicio')
-                    ->searchable(),
+                    ->label('Costo del Servicio')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\TextColumn::make('costo_total')
+                    ->label('Costo Total')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
 
                 Tables\Columns\TextColumn::make('comprobante_pdf')
                     ->label('Ver Comprobante PDF')
@@ -139,9 +165,17 @@ class ExhumacionResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('fecha_exhumacion')
+                    ->label('Fecha de Exhumacion')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Fecha de Creación')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([

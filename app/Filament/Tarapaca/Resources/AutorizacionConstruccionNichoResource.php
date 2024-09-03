@@ -150,10 +150,11 @@ class AutorizacionConstruccionNichoResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('costo')
-                    ->label('Costo')
+                    ->label('Costo del Servicio')
                     ->sortable()
                     ->numeric()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('costo_total')
                     ->label('Costo Total')
                     ->sortable()
@@ -171,10 +172,6 @@ class AutorizacionConstruccionNichoResource extends Resource
                     ->dateTime()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Fecha de Actualización')
-                    ->dateTime()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
