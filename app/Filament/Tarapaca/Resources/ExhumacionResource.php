@@ -13,7 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
+use Filament\Pages\Actions;
 use Filament\Forms\Components\Section;
 
 class ExhumacionResource extends Resource
@@ -25,6 +25,10 @@ class ExhumacionResource extends Resource
     protected static ?string $navigationGroup = 'Servicios';
     protected static ?string $activeNavigationIcon = 'heroicon-o-clipboard-document-check';
 
+    public static function getPluralLabel(): string
+    {
+        return 'Exhumaciones'; // Update plural label here
+    }
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
