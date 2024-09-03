@@ -1,329 +1,541 @@
 <!DOCTYPE html>
 <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet" />
+        <title>cementerios el alto</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administracion Cementerios</title>
-    <link rel="icon" href="images/logo.png">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link href='https://fonts.googleapis.com/css?family=Merienda' rel='stylesheet'>
-    <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
-</head>
+        <!-- Bootstrap core CSS -->
+        <link href="{{ asset('cementerios_el_alto/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
 
-<body data-spy="scroll" data-target=".navbar" data-offset="50">
+        <!-- Additional CSS Files -->
+        <link rel="stylesheet" href="{{ asset('cementerios_el_alto/assets/css/fontawesome.css') }}" />
+        <link rel="stylesheet" href="{{ asset('cementerios_el_alto/assets/css/templatemo-grad-school.css') }}" />
+        <link rel="stylesheet" href="{{ asset('cementerios_el_alto/assets/css/owl.css') }}" />
+        <link rel="stylesheet" href="{{ asset('cementerios_el_alto/assets/css/lightbox.css') }}" />
 
-    <style>
-        .navbar-red {
-            background-color: #FF0000;
-            /* Fondo rojo */
-        }
+        <style>
+            ul {
+                display: flex;
+                justify-content: center;
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+                flex-wrap: wrap; /* Permite que los elementos se ajusten a varias líneas si es necesario */
+            }
 
-        .navbar-red .navbar-brand {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            flex-grow: 1;
-            /* Permite que la marca ocupe el espacio disponible */
-        }
+            li {
+                margin: 0 20px;
+            }
 
-        .navbar-red .navbar-brand img {
-            margin-right: 10px;
-            /* Espacio entre el logo y el texto */
-            filter: brightness(0) invert(1);
-            /* Logo en blanco si es necesario */
-        }
+            a {
+                text-decoration: none;
+                color: #0cdbf7; /* Ajusta el color según tu diseño */
+            }
 
-        .navbar-red .navbar-title {
-            color: #FFFFFF !important;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 1.75rem;
-            /* Tamaño de fuente aumentado */
-            white-space: nowrap;
-            /* Evita el ajuste de línea del texto */
-        }
+            /* Media Query para pantallas pequeñas */
+            @media (max-width: 768px) {
+                li {
+                    margin: 0 10px; /* Reducir el margen en pantallas más pequeñas */
+                }
+            }
 
-        .navbar-red .nav-link {
-            color: #FFFFFF !important;
-        }
+            /* Media Query para pantallas muy pequeñas, como teléfonos */
+            @media (max-width: 480px) {
+                ul {
+                    flex-direction: column; /* Cambiar la dirección del flex a columna en pantallas muy pequeñas */
+                    align-items: center; /* Alinear los elementos al centro */
+                }
 
-        .navbar-red .nav-link:hover {
-            color: #FFD700 !important;
-            /* Color dorado al pasar el ratón */
-        }
+                li {
+                    margin: 10px 0; /* Ajustar el margen para una disposición en columna */
+                }
+            }
+        </style>
+    </head>
 
-        .navbar-red .navbar-toggler {
-            margin-left: auto;
-        }
-    </style>
-
-    <!-- Start Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light navbar-red fixed-top">
-        <a class="navbar-brand" href="#Welcome">
-            <img src="images/logo2.png" width="150" height="40" class="d-inline-block" alt="">
-        </a>
-        <div class="navbar-title">Cementerios El Alto</div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin">Administración</a>
-                    <a class="nav-link" href="/consulta">Consulta</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <!-- End Navigation Bar -->
-
-
-    <!-- Start Carousel -->
-    <div id="carouselExampleIndicators" class="carousel slide mt-5" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
-        </ol>
-
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100 img-fluid img-slider" src="images/slider1.jpg" alt="First slide">
-                <div class="carousel-caption">
-                    <h2></h2>
-                    <p>...</p>
-                </div>
+    <body>
+        <!--header-->
+        <header class="main-header clearfix" role="header">
+            <div class="logo">
+                <a href="#"><em>Cementerios el</em> Alto</a>
             </div>
+            <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
+            <nav id="menu" class="main-nav" role="navigation">
+                <ul class="main-menu">
+                    <li><a href="#section1">inicio</a></li>
 
-            <div class="carousel-item">
-                <img class="d-block w-100 img-fluid img-slider" src="images/slider2.jpg" alt="Second slide">
-                <div class="carousel-caption">
-                    <h2></h2>
-                    <p>...</p>
-                </div>
+                    <li class="has-submenu">
+                        <a href="#">mercenario</a>
+                        <ul class="sub-menu">
+                            <li><a href="#section2">inhumacion</a></li>
+                            <li><a href="#section2">construc.nicho</a></li>
+                            <li><a href="#section2">renovaciones</a></li>
+                            <li><a href="#section2">exhumacion</a></li>
+                            <li><a class="nav-link" href="{{ url('/admin') }}">Administración</a></li>
+                            <li><a class="nav-link" href="{{ url('/consulta') }}">Consulta</a></li>
+                            <li><a href="https://www.google.com/maps/place/Cementerio+Mercedario/@-16.5298293,-68.2503607,17z/data=!4m6!3m5!1s0x915edc2d3d9f4cb5:0xb83b68d5098a2ff8!8m2!3d-16.5305236!4d-68.2499852!16s%2Fg%2F11c574wwpk?entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D" rel="sponsored" class="external">Ubicación</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="has-submenu">
+                        <a href="">tarapaca</a>
+                        <ul class="sub-menu">
+                            <li><a href="#section2">inhumacion</a></li>
+                            <li><a href="#section2">construc.nicho</a></li>
+                            <li><a href="#section2">renovaciones</a></li>
+                            <li><a href="#section2">exhumacion</a></li>
+                            <li><a class="nav-link" href="{{ url('/tarapaca') }}">Administración</a></li>
+                            <li><a class="nav-link" href="{{ url('/consulta') }}">Consulta</a></li>
+                            <li>
+                                <a
+                                    href="https://www.google.com/maps/place/Cementerio+Tarapac%C3%A1/@-16.5261561,-68.1675157,17.5z/data=!4m10!1m2!2m1!1sCementerio+ingavi!3m6!1s0x915edf731e125ec3:0x1b5174611ed83bbc!8m2!3d-16.525244!4d-68.1651798!15sChFDZW1lbnRlcmlvIGluZ2F2aZIBCGNlbWV0ZXJ54AEA!16s%2Fg%2F1tkc357q?entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D"
+                                    rel="sponsored"
+                                    class="external"
+                                    >Ubicación</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="">Villa Ingenio</a>
+                        <ul class="sub-menu">
+                            <li><a href="#section2">inhumacion</a></li>
+                            <li><a href="#section2">construc.nicho</a></li>
+                            <li><a href="#section2">renovaciones</a></li>
+                            <li><a href="#section2">exhumacion</a></li>
+                            <li>
+                                <a class="nav-link" href="/admin"
+                                    >Administración</a
+                                >
+                            </li>
+                            <li>
+                                <a class="nav-link" href="/consulta"
+                                    >Consulta</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    href="https://www.google.com/maps/place/Cementerio+Villa+Ingenio/@-16.4489812,-68.2135997,17z/data=!3m1!4b1!4m6!3m5!1s0x915ee0e97ac73c9f:0x30c5e6ab82ce128d!8m2!3d-16.4489864!4d-68.2110248!16s%2Fg%2F11dxbn1pw8?entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D"
+                                    rel="sponsored"
+                                    class="external"
+                                    >Ubicación</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- ***** Main Banner Area Start ***** -->
+        <section class="section main-banner" id="top" data-section="section1">
+            <video autoplay muted loop id="bg-video">
+                <source src="{{ asset('cementerios_el_alto/assets/images/course-video.mp4') }}" type="video/mp4" />
+            </video>
+
+            <div class="video-overlay header-text">
+                <div class="caption"></div>
             </div>
+        </section>
+        <!-- ***** Main Banner Area End ***** -->
 
-            <div class="carousel-item">
-                <img class="d-block w-100 img-fluid img-slider" src="images/slider3.jpg" alt="Third slide">
-                <div class="carousel-caption">
-                    <h2></h2>
-                    <p>...</p>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <img class="d-block w-100 img-fluid img-slider" src="images/slider4.jpeg" alt="Fourth slide">
-                <div class="carousel-caption">
-                    <h2></h2>
-                    <p>...</p>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <img class="d-block w-100 img-fluid img-slider" src="images/slider5.jpeg" alt="Fifth slide">
-                <div class="carousel-caption">
-                    <h2></h2>
-                    <p>...</p>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <img class="d-block w-100 img-fluid img-slider" src="images/slider6.jpeg" alt="Sixth slide">
-                <div class="carousel-caption">
-                    <h2></h2>
-                    <p>...</p>
-                </div>
-            </div>
-        </div>
-
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-    <!-- End Carousel -->
-
-    <div class="container mt-5">
-        <h1>Bienvenido a la Aplicación</h1>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalIndex">
-            Consultar
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="modalIndex" tabindex="-1" role="dialog" aria-labelledby="modalIndexLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalIndexLabel">Consulta</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Contenido del modal cargado mediante AJAX -->
-                        <div id="modalContent">
-                            <!-- Aquí se cargará el contenido de index.blade.php -->
+        <section class="features">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-12">
+                        <div class="features-post">
+                            <div class="features-content">
+                                <div class="content-show">
+                                    <h4>
+                                        <i class="fa fa-book"></i>mercenario
+                                    </h4>
+                                </div>
+                                <div class="content-hide">
+                                    <p>
+                                        CEMENTERO “MERCEDARIO” Se encuentra
+                                        ubicada en el Distrito 3 de la ciudad de
+                                        El Alto, en la zona de mercedario, a
+                                        unos 45 minutos de la Ceja tomando el
+                                        microbús 513. Antiguamente el terreno
+                                        era de propiedad de la familia Alcoreza
+                                        ahora de propiedad de la Alcaldía de El
+                                        Alto. Funciona legalmente desde 1992,
+                                        pero funcionaba en forma ilegal desde al
+                                        menos 1980 según las fechas encontradas
+                                        en algunos de los mausoleos más
+                                        antiguos.
+                                    </p>
+                                    <p class="hidden-sm"></p>
+                                    <div class="scroll-to-section">
+                                        <a href="#section2">información</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <div class="col-lg-4 col-12">
+                        <div class="features-post second-features">
+                            <div class="features-content">
+                                <div class="content-show">
+                                    <h4>
+                                        <i class="fa fa-book"></i>TARAPACÁ
+                                        HÉROES DEL GAS SUR
+                                    </h4>
+                                </div>
+                                <div class="content-hide">
+                                    <p>
+                                        CEMENTERO TARAPACÁ O HÉROES DEL GAS SUR
+                                        El cementerio fue creado aproximadamente
+                                        en 1969 hace 41 años y está ubicado en
+                                        el Distrito 2 de la ciudad de El Alto a
+                                        unos 6 km. de la Ceja, carretera a
+                                        Oruro, altura del Regimiento Ingavi.
+                                        Inicialmente se lo conoció como
+                                        cementerio Cupi Lupaca, luego Cementerio
+                                        General de El Alto, posteriormente
+                                        Santiago I o Cementerio Tarapacá y
+                                        actualmente es conocido como el
+                                        “Cementerio Héroes del Gas Sur”.
+                                    </p>
+                                    <p class="hidden-sm"></p>
+                                    <div class="scroll-to-section">
+                                        <a href="#section2">información</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-12">
+                        <div class="features-post third-features">
+                            <div class="features-content">
+                                <div class="content-show">
+                                    <h4>
+                                        <i class="fa fa-book"></i>VILLA INGENIO
+                                        HÉROES DE GAS NORTE”
+                                    </h4>
+                                </div>
+                                <div class="content-hide">
+                                    <p>
+                                        “CEMENTERIO DE LOS HÉROES DE GAS NORTE”.
+                                        Este cementerio fue creado
+                                        aproximadamente en julio del año 1983 y
+                                        esta ubicado al extremo norte del
+                                        Distrito 7 de la ciudad de El Alto al
+                                        lado del Relleno Sanitario (botadero de
+                                        basura). Es un cementerio municipal
+                                        ubicado en un terrero urbano alejado de
+                                        las viviendas de villa Ingenio
+                                    </p>
+                                    <p class="hidden-sm"></p>
+                                    <div class="scroll-to-section">
+                                        <a href="#section2">información</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- Start of Content Sections -->
-    <div class="container">
-        <div class="row" id="Restaurant">
-            <div class="col navMenu">
-                <h2 class="content-title"><i class="fas fa-church icon"></i>Cementerio Mercedario</h2>
-            </div>
-        </div>
-        <div class="row bg-light">
-            <div class="col-md-6">
-                <h3 class="section-title"><i class="fas fa-map-marker-alt icon"></i>Zona Mercedario</h3>
-                <p class="section-text">Recientemente remodelado, el cementerio mercedario brinda seguridad y comodidad
-                    a todos los
-                    visitantes.</p>
-                <h5 class="section-title"><i class="fas fa-tools icon"></i>Trabajando Constantemente</h5>
-                <p class="section-text">En constante crecimiento, estamos en continuo trabajo de refacción y remodelado.
-                </p>
-            </div>
-            <div class="col-md-6" data-aos="fade-up">
-                <img class="img-fluid" src="images/slider1.jpg" alt="Imagen Cementerio Mercedario">
-            </div>
-        </div>
-        <div class="row bg-light">
-            <div class="col-md-6 order-md-1 order-2" data-aos="fade-up">
-                <img class="img-fluid" src="images/slider2.jpg" alt="Imagen Cementerio Tarapaca">
-            </div>
-            <div class="col-md-6 order-md-12 order-1">
-                <h3 class="section-title"><i class="fas fa-city icon"></i>Cementerio Tarapaca</h3>
-                <p class="section-text">Ubicado en el corazón de El Alto, brindando servicio desde 1980.</p>
-                <h5 class="section-title"><i class="fas fa-map-pin icon"></i>Ubicación</h5>
-                <p class="section-text">En pleno centro alteño, brinda constante servicio.</p>
-            </div>
-        </div>
+        <section class="section why-us" data-section="section2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section-heading">
+                            <h2>Gestion Cementerios</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div id="tabs">
+                            <ul>
+                                <li><a href="#tabs-1">Requisitos Inhumación</a></li>
+                                <li><a href="#tabs-2">Construc. Nicho</a></li>
+                                <li><a href="#tabs-3">Requisitos Renovación</a></li>
+                                <li><a href="#tabs-4">Requisitos Exhumación</a></li>
+                            </ul>
 
+                            <section class="tabs-content">
+                                <article id="tabs-1">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img src="{{ asset('cementerios_el_alto/assets/images/inhumacion.png') }}" alt="" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4>Inhumacion</h4>
+                                            <p>
+                                                *CERTIFICADO DE DEFUNCIÓN
+                                                OTORGADO POR EL REGISTRO CIVIL
+                                                *FOTOCOPIA VERIFICADA DEL
+                                                CERTIFICAO MEDICO DE DEFUNCIÓN
+                                                *FOTOCOPIA SIMPLE DE CEDULA DE
+                                                IDENTIDAD DEL FALLECIDO
+                                                *VERIFICADA FOTOCOPIA SIMPLE DE
+                                                CEDULA DE IDENTIDAD DE *FAMILIAR
+                                                O CONTRIBUYENTE VERIFICADO
+                                                FOTOCOPIA SIMPLE DE CEDULA DE
+                                                IDENTIDAD (TESTIGOS)
+                                                VERIFICADA.<br />
+                                                *PAGO EN EFECTIVO DE BS.<br />
+                                                >CEMENTERIO HÉROES DEL GAS SUR (TARAPACÁ):156,00.<a
+                                                    href="https://www.google.com/maps/place/Cementerio+Tarapac%C3%A1/@-16.5261561,-68.1675157,17z/data=!4m10!1m2!2m1!1sCementerio+ingavi!3m6!1s0x915edf731e125ec3:0x1b5174611ed83bbc!8m2!3d-16.525244!4d-68.1651798!15sChFDZW1lbnRlcmlvIGluZ2F2aZIBCGNlbWV0ZXJ54AEA!16s%2Fg%2F1tkc357q?entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D"
+                                                    target="_parent"
+                                                    rel="sponsored"
+                                                >
+                                                    Ubicación</a
+                                                ><br />
+                                                >CEMENTERIO MERCEDARIO:
+                                                101,00.<a
+                                                    href="https://www.google.com/maps/place/Cementerio+Mercedario/@-16.5298293,-68.2503607,17z/data=!4m6!3m5!1s0x915edc2d3d9f4cb5:0xb83b68d5098a2ff8!8m2!3d-16.5305236!4d-68.2499852!16s%2Fg%2F11c574wwpk?entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D"
+                                                    target="_parent"
+                                                    rel="sponsored"
+                                                >
+                                                    Ubicación</a
+                                                ><br />
+                                                >CEMENTERIO HÉROES DE GAS NORTE(VILLA INGENIO):
+                                                101,00.
 
+                                                <a
+                                                    href="https://www.google.com/maps/place/Cementerio+Villa+Ingenio/@-16.4489864,-68.2110248,17z/data=!3m1!4b1!4m6!3m5!1s0x915ee0e97ac73c9f:0x30c5e6ab82ce128d!8m2!3d-16.4489864!4d-68.2110248!16s%2Fg%2F11dxbn1pw8?entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D"
+                                                    target="_parent"
+                                                    rel="sponsored"
+                                                >
+                                                    Ubicación</a
+                                                >
+                                            </p>
+                                        </div>
+                                    </div>
+                                </article>
 
+                                <article id="tabs-2">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img src="{{ asset('cementerios_el_alto/assets/images/contruccion.jpeg') }}" alt="" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4>
+                                                Autorización de Contruccion de
+                                                Nicho
+                                            </h4>
+                                            <p>
+                                                *COMPROBANTE DE ENTIERRO O
+                                                CERTIFICADO DE DEFUNCIÓN
+                                                *FOTOCOPIA DE LA CEDULA DE
+                                                IDENTIDAD DEL USUARIO
+                                                (CONTRIBUYENTE)<br />
+                                                *PAGO EN EFECTIVO DE BS.<br />
+                                                >CEMENTERIO HÉROES DEL GAS SUR (TARAPACÁ): 180,00
+                                                <a
+                                                href="https://www.google.com/maps/place/Cementerio+Tarapac%C3%A1/@-16.5261561,-68.1675157,17z/data=!4m10!1m2!2m1!1sCementerio+ingavi!3m6!1s0x915edf731e125ec3:0x1b5174611ed83bbc!8m2!3d-16.525244!4d-68.1651798!15sChFDZW1lbnRlcmlvIGluZ2F2aZIBCGNlbWV0ZXJ54AEA!16s%2Fg%2F1tkc357q?entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D"
+                                                target="_parent"
+                                                rel="sponsored"
+                                                >
+                                                    Ubicación</a
+                                                ><br />
+                                                >CEMENTERIO MERCEDARIO: 135,00<a
+                                                href="https://www.google.com/maps/place/Cementerio+Mercedario/@-16.5298293,-68.2503607,17z/data=!4m6!3m5!1s0x915edc2d3d9f4cb5:0xb83b68d5098a2ff8!8m2!3d-16.5305236!4d-68.2499852!16s%2Fg%2F11c574wwpk?entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D"
+                                                target="_parent"
+                                                rel="sponsored"
+                                                >
+                                                    Ubicación</a
+                                                ><br />
+                                                >CEMENTERIO HÉROES DE GAS NORTE(VILLA INGENIO):
+                                                135,00
+                                                <a
+                                                href="https://www.google.com/maps/place/Cementerio+Villa+Ingenio/@-16.4489864,-68.2110248,17z/data=!3m1!4b1!4m6!3m5!1s0x915ee0e97ac73c9f:0x30c5e6ab82ce128d!8m2!3d-16.4489864!4d-68.2110248!16s%2Fg%2F11dxbn1pw8?entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D"
+                                                target="_parent"
+                                                rel="sponsored"
+                                                >
+                                                    Ubicación</a
+                                                >
+                                            </p>
+                                        </div>
+                                    </div>
+                                </article>
 
+                                <article id="tabs-3">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img src="{{ asset('cementerios_el_alto/assets/images/tarapaca.jpeg') }}" alt="" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4>Renovación</h4>
+                                            <p>
+                                                * FOTOCOPIA DE CERTIFICADO DE
+                                                DEFUNCIÓN <br />
+                                                *PAGO EN EFECTIVO DE BS.<br />
+                                                >CEMENTERIO HÉROES DEL GAS SUR (TARAPACÁ): 180,00
+                                                <a
+                                                href="https://www.google.com/maps/place/Cementerio+Tarapac%C3%A1/@-16.5261561,-68.1675157,17z/data=!4m10!1m2!2m1!1sCementerio+ingavi!3m6!1s0x915edf731e125ec3:0x1b5174611ed83bbc!8m2!3d-16.525244!4d-68.1651798!15sChFDZW1lbnRlcmlvIGluZ2F2aZIBCGNlbWV0ZXJ54AEA!16s%2Fg%2F1tkc357q?entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D"
+                                                target="_parent"
+                                                rel="sponsored"
+                                                >
+                                                    Ubicación</a
+                                                ><br />
+                                                >CEMENTERIO MERCEDARIO: 135,00<a
+                                                href="https://www.google.com/maps/place/Cementerio+Mercedario/@-16.5298293,-68.2503607,17z/data=!4m6!3m5!1s0x915edc2d3d9f4cb5:0xb83b68d5098a2ff8!8m2!3d-16.5305236!4d-68.2499852!16s%2Fg%2F11c574wwpk?entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D"
+                                                target="_parent"
+                                                rel="sponsored"
+                                                >
+                                                    Ubicación</a
+                                                ><br />
+                                                CEMENTERIO HÉROES DE GAS NORTE(VILLA INGENIO):
+                                                135,00
+                                                <a
+                                                href="https://www.google.com/maps/place/Cementerio+Villa+Ingenio/@-16.4489864,-68.2110248,17z/data=!3m1!4b1!4m6!3m5!1s0x915ee0e97ac73c9f:0x30c5e6ab82ce128d!8m2!3d-16.4489864!4d-68.2110248!16s%2Fg%2F11dxbn1pw8?entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D"
+                                                target="_parent"
+                                                rel="sponsored"
+                                                >
+                                                    Ubicación</a
+                                                >
+                                            </p>
+                                        </div>
+                                    </div>
+                                </article>
 
-        <!-- Services Section -->
-        <div class="row" id="Menu">
-            <div class="col navMenu">
-                <h2 class="content-title"><i class="fas fa-concierge-bell icon"></i> Servicios</h2>
-            </div>
-        </div>
-        <div class="row bg-light">
-            <div class="col-md-3" data-aos="slide-up">
-                <div class="card view zoom">
-                    <img class="card-img-top img-fluid" src="images/inhumacion.jpg" alt="Servicio de Inhumación">
-                    <div class="card-body">
-                        <h5 class="card-title"><i class="fas fa-cross icon"></i> Inhumación</h5>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Certificado de defunción otorgado por el registro civil</li>
-                            <li class="list-group-item">Fotocopia legalizada del médico de defunción</li>
-                            <li class="list-group-item">Fotocopia simple de cédula de identidad del fallecido legalizada
-                            </li>
-                            <li class="list-group-item">Fotocopia simple de cédula de identidad de familiar o
-                                contribuyente legalizada</li>
-                            <li class="list-group-item">Fotocopia simple de cédula de identidad (testigos) legalizada
-                            </li>
-                            <li class="list-group-item">Pago en efectivo de BS 101</li>
-                        </ul>
+                                <article id="tabs-4">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img src="{{ asset('cementerios_el_alto/assets/images/exhumacion.png') }}" alt="" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4>Exhumación</h4>
+                                            <p>
+                                                *NOTA DE AUTORIZACIÓN EMITIDA
+                                                POR LA AUTORIDAD DEL LUGAR Y/O
+                                                COMUNIDAD DE DONDE SE VA A
+                                                TRASLADAR LOS RESTOS OSEOS,
+                                                ESPECIFICANDO EL NOMBRE DEL
+                                                CEMENTERIO <br />
+                                                *FOTOCOPIA DE CERTIFICADO DE
+                                                DEFUNCION<br />
+                                                *FOTOCOPIA DE CEDULA DE
+                                                IDENTIDAD DEL SOLICITANTE
+                                                *FOTOCOPIA DE CEDULA DE
+                                                IDENTIDAD DE FAMILIARES DE
+                                                PRIMER GRADO (con firma de
+                                                autorización) ULTIMO COMPROBANTE
+                                                DE PAGO <br />
+                                                *NOTA DE AUTORIZACIÓN EMITIDA
+                                                POR LA AUTORIDAD DEL LUGAR Y/O
+                                                COMUNIDAD DE DONDE SE VA A
+                                                TRASLADAR LOS RESTOS OSEOS,
+                                                ESPECIFICANDO EL NOMBRE DEL
+                                                CEMENTERIO
+
+                                                <br />
+                                                *PAGO EN EFECTIVO DE BS.<br />
+                                                >CEMENTERIO HÉROES DEL GAS SUR (TARAPACÁ): 224,00
+                                                <a
+                                                href="https://www.google.com/maps/place/Cementerio+Tarapac%C3%A1/@-16.5261561,-68.1675157,17z/data=!4m10!1m2!2m1!1sCementerio+ingavi!3m6!1s0x915edf731e125ec3:0x1b5174611ed83bbc!8m2!3d-16.525244!4d-68.1651798!15sChFDZW1lbnRlcmlvIGluZ2F2aZIBCGNlbWV0ZXJ54AEA!16s%2Fg%2F1tkc357q?entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D"
+                                                target="_parent"
+                                                rel="sponsored"
+                                                >
+                                                    Ubicación</a
+                                                ><br />
+                                                >CEMENTERIO MERCEDARIO: 224,00<a
+                                                href="https://www.google.com/maps/place/Cementerio+Mercedario/@-16.5298293,-68.2503607,17z/data=!4m6!3m5!1s0x915edc2d3d9f4cb5:0xb83b68d5098a2ff8!8m2!3d-16.5305236!4d-68.2499852!16s%2Fg%2F11c574wwpk?entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D"
+                                                target="_parent"
+                                                rel="sponsored"
+                                                >
+                                                    Ubicación</a
+                                                ><br />
+                                                >CEMENTERIO HÉROES DE GAS NORTE(VILLA INGENIO):
+                                                224,00
+                                                <a
+                                                href="https://www.google.com/maps/place/Cementerio+Villa+Ingenio/@-16.4489864,-68.2110248,17z/data=!3m1!4b1!4m6!3m5!1s0x915ee0e97ac73c9f:0x30c5e6ab82ce128d!8m2!3d-16.4489864!4d-68.2110248!16s%2Fg%2F11dxbn1pw8?entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D"
+                                                target="_parent"
+                                                rel="sponsored"
+                                                >
+                                                    Ubicación</a
+                                                >
+                                            </p>
+                                        </div>
+                                    </div>
+                                </article>
+                            </section>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3" data-aos="slide-up">
-                <div class="card">
-                    <img class="card-img-top img-fluid" src="images/renovacion.jpg" alt="Servicio de Renovación">
-                    <div class="card-body">
-                        <h5 class="card-title"><i class="fas fa-redo icon"></i> Renovación</h5>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Fotocopia de certificado de defunción</li>
-                            <li class="list-group-item">Pago en efectivo de BS 135</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3" data-aos="slide-up">
-                <div class="card">
-                    <img class="card-img-top img-fluid" src="images/servicio2.jpg" alt="Servicio de Exhumación">
-                    <div class="card-body">
-                        <h5 class="card-title"><i class="fas fa-skeleton icon"></i> Exhumación</h5>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Fotocopia de certificado de defunción</li>
-                            <li class="list-group-item">Fotocopia de cédula de identidad</li>
-                            <li class="list-group-item">Fotocopia de cédula de identidad del familiar de primer grado
-                                (con firma de autorización)</li>
-                            <li class="list-group-item">Último comprobante de pago</li>
-                            <li class="list-group-item">Nota de autorización emitida por la autoridad del lugar y/o
-                                comunidad de donde se va a trasladar los restos óseos, especificando el nombre del
-                                cementerio</li>
-                            <li class="list-group-item">Pago en efectivo de BS 224</li>
-                            <li class="list-group-item">En caso de cremación, una nota de autorización de la funeraria
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3" data-aos="slide-up">
-                <div class="card">
-                    <img class="card-img-top img-fluid" src="images/construccion.jpeg"
-                        alt="Servicio de Autorización de Construcción de Nicho">
-                    <div class="card-body">
-                        <h5 class="card-title"><i class="fas fa-hammer icon"></i> Autorización de Construcción de Nicho
-                        </h5>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Comprobante de inhumación o certificado de defunción</li>
-                            <li class="list-group-item">Fotocopia de cédula de identidad del familiar o contribuyente
-                            </li>
-                            <li class="list-group-item">Pago en efectivo de BS 135</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </section>
 
-
-
-        <!-- Start Footer -->
-        <footer class="footer bg-dark text-light text-center">
-            <p>&copy; 2024 Cementerios El Alto. Todos los derechos reservados.</p>
-            <div class="social-icons">
-                <a href="#" class="text-light mx-2"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="text-light mx-2"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="text-light mx-2"><i class="fab fa-instagram"></i></a>
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12"></div>
+                </div>
             </div>
         </footer>
-        <!-- End Footer -->
 
-        <!-- Scripts -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
-        <script>
-            AOS.init();
-        </script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="../js/modal.js"></script>
+
+ <!-- Scripts -->
+<script src="{{ asset('cementerios_el_alto/vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('cementerios_el_alto/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('cementerios_el_alto/assets/js/isotope.min.js') }}"></script>
+<script src="{{ asset('cementerios_el_alto/assets/js/owl-carousel.js') }}"></script>
+<script src="{{ asset('cementerios_el_alto/assets/js/lightbox.js') }}"></script>
+<script src="{{ asset('cementerios_el_alto/assets/js/tabs.js') }}"></script>
+<script src="{{ asset('cementerios_el_alto/assets/js/video.js') }}"></script>
+<script src="{{ asset('cementerios_el_alto/assets/js/slick-slider.js') }}"></script>
+<script src="{{ asset('cementerios_el_alto/assets/js/custom.js') }}"></script>
+
+
+<script>
+    $(".nav li:first").addClass("active");
+
+    var showSection = function(section, isAnimate) {
+        var direction = section.replace(/#/, ""), // Asegurarse de eliminar solo el '#'
+            reqSection = $(".section").filter('[data-section="' + direction + '"]');
+
+        if (reqSection.length > 0) {
+            var reqSectionPos = reqSection.offset().top;
+
+            if (isAnimate) {
+                $("body, html").animate({ scrollTop: reqSectionPos }, 800);
+            } else {
+                $("body, html").scrollTop(reqSectionPos);
+            }
+        } else {
+            console.warn('Sección no encontrada: ' + direction);
+        }
+    };
+
+    var checkSection = function() {
+        $(".section").each(function() {
+            var $this = $(this),
+                topEdge = $this.offset().top - 80,
+                bottomEdge = topEdge + $this.height(),
+                wScroll = $(window).scrollTop();
+
+            if (topEdge < wScroll && bottomEdge > wScroll) {
+                var currentId = $this.data("section"),
+                    reqLink = $("a[href='#" + currentId + "']");
+
+                reqLink.closest("li").addClass("active").siblings().removeClass("active");
+            }
+        });
+    };
+
+    $(".main-menu, .scroll-to-section").on("click", "a", function(e) {
+        if ($(e.target).hasClass("external") || $(this).attr("href").startsWith('http')) {
+            // Ignorar enlaces externos
+            return;
+        }
+        e.preventDefault();
+        $("#menu").removeClass("active");
+        showSection($(this).attr("href"), true);
+    });
+
+    $(window).scroll(function() {
+        checkSection();
+    });
+</script>
+
 
 </body>
-
 </html>
