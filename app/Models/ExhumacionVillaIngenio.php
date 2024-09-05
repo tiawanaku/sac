@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ExhumacioneTarapaca extends Model
+class ExhumacionVillaIngenio extends Model
 {
     // Especificar la conexión de base de datos para este modelo
-    protected $connection = 'tarapaca';
-    protected $table = 'exhumacione_tarapacas'; // Especificar el nombre de la tabla
+    protected $connection = 'ingenio';
+    protected $table = 'exhumacione_villa_ingenio'; // Especificar el nombre de la tabla
 
     use HasFactory;
 

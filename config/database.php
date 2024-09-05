@@ -108,6 +108,7 @@ return [
             ]) : [],
         ],
 
+
         // Nueva conexión para 'ingenio'
         'ingenio' => [
             'driver' => 'mysql',
