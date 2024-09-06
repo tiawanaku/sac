@@ -43,6 +43,7 @@ class AutorizacionConstruccionNichoResource extends Resource
             return 'primary'; // Azul por defecto si no hay registros
         }
     }
+    
     public static function form(Form $form): Form
     {
         return $form
