@@ -30,6 +30,7 @@ class TarapacaPanelProvider extends PanelProvider
             ->path('tarapaca')
             ->login()
             ->profile(EditProfile::class)
+            ->topNavigation()
             ->brandName('SAC GAMEA Tarapaca')
             ->colors([
                 'primary' => Color::Blue,
