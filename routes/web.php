@@ -9,10 +9,7 @@ use App\Filament\Resources\ExhumacionResource;
 use App\Http\Controllers\PdfConstruccionController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\RenovacionController;
-
 use App\Http\Controllers\ExhumacionTarapacaController;
-
-
 
 // Ruta principal
 Route::get('/', function () {
@@ -81,12 +78,18 @@ Route::middleware('auth')->group(function () {
         ->name('filament.resources.exhumacions.edit');
 });
 
+// **Grupo de rutas protegidas con middleware 'role:admin'**
+Route::middleware(['role:admin'])->group(function () {
+    // Agrega aquí otras rutas que solo deberían ser accesibles por usuarios con el rol 'admin'
+    // Por ejemplo:
+    // Route::get('/admin/another-route', [SomeController::class, 'someMethod'])->name('admin.someMethod');
+});
+
 // Rutas adicionales para exhumaciones y PDFs
 Route::get('/exhumacion/{id}/pdf', [ExhumacionController::class, 'downloadPdf'])->name('exhumacion.pdf');
 Route::get('/exhumacion/preview/{id}', [ExhumacionController::class, 'previewPdf'])->name('exhumacion.preview');
 Route::get('pdf/download/{id}', [PdfController::class, 'download'])->name('pdf.download');
 Route::get('/construccion/preview/{id}', [PdfConstruccionController::class, 'previewPdfConstruccion'])->name('construccion.preview');
-
 
 // Ruta para la descarga de un PDF de ejemplo
 Route::get('/comprobante/{user}', function () {
@@ -102,6 +105,5 @@ Route::get('inhumaciones/{id}/ver-pdf/{type}', [InhumacionController::class, 've
 // Ruta para visualizar un archivo relacionado con una renovación
 Route::get('/renovacion/{id}/archivo', [RenovacionController::class, 'verArchivo'])->name('renovacion.verArchivo');
 
-
-// rutapara crear comprovante de exhumaciones tarapaca
-route::get('exhumacion/{id}/preview-pdf', [ExhumacionTarapacaController::class, 'previewPdf']);
+// Ruta para crear comprobante de exhumaciones tarapaca
+Route::get('exhumacion/{id}/preview-pdf', [ExhumacionTarapacaController::class, 'previewPdf']);

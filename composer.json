@@ -13,7 +13,9 @@
         "filament/filament": "^3.2",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
-        "laraveldaily/laravel-invoices": "^4.0"
+        "laraveldaily/laravel-invoices": "^4.0",
+        "shanerbaner82/panel-roles": "^0.0.3",
+        "spatie/laravel-permission": "^6.9"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
