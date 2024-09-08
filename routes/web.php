@@ -10,6 +10,8 @@ use App\Http\Controllers\PdfConstruccionController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\RenovacionController;
 use App\Http\Controllers\ExhumacionTarapacaController;
+use App\Http\Controllers\ObitoController;
+use App\Http\Controllers\LegalizacionController; // Importación del controlador Legalizacion
 
 // Ruta principal
 Route::get('/', function () {
@@ -107,3 +109,13 @@ Route::get('/renovacion/{id}/archivo', [RenovacionController::class, 'verArchivo
 
 // Ruta para crear comprobante de exhumaciones tarapaca
 Route::get('exhumacion/{id}/preview-pdf', [ExhumacionTarapacaController::class, 'previewPdf']);
+
+// Rutas para visualizar los diferentes tipos de PDFs en Óbitos
+Route::get('/obito/{id}/ver-archivo/{type}', [ObitoController::class, 'verArchivo'])
+    ->name('obito.verArchivo')
+    ->where('type', 'nota_director_servicios_municipales|fotocopias_comprobantes_entierro_ultima_renovacion|fotocopia_cedula_identidad_fallecido|fotocopia_cedula_identidad_solicitante|orden_judicial');
+
+// **Rutas para visualizar los diferentes tipos de PDFs en Legalizaciones**
+Route::get('/legalizacion/{id}/ver-archivo/{type}', [LegalizacionController::class, 'verArchivo'])
+    ->name('legalizacion.verArchivo')
+    ->where('type', 'nota_director_servicios_municipales|fotocopia_cedula_identidad_usuario|fotocopia_documento_legalizar');
