@@ -12,6 +12,7 @@
         "dompdf/dompdf": "^2.0",
         "filament/filament": "^3.2",
         "flowframe/laravel-trend": "^0.2.0",
+        "guava/calendar": "^1.6",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "laraveldaily/laravel-invoices": "^4.0",
