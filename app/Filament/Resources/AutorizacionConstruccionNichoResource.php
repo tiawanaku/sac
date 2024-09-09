@@ -92,6 +92,7 @@ class AutorizacionConstruccionNichoResource extends Resource
                                     ->label('Comprobante PDF')
                                     ->disk('public') // Especifica el disco de almacenamiento
                                     ->directory('comprobantes') // Directorio dentro del disco
+                                    ->acceptedFileTypes(['application/pdf'])
                                     ->nullable(), // Hacerlo opcional si es necesario
 
                                 Forms\Components\TextInput::make('costo_formulario')
@@ -157,11 +158,14 @@ class AutorizacionConstruccionNichoResource extends Resource
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
+
                 Tables\Columns\TextColumn::make('fecha_autorizacion')
                     ->label('Fecha de Autorización')
                     ->date()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
+
 
                 Tables\Columns\TextColumn::make('costo_formulario')
                     ->label('Costo Formulario')
