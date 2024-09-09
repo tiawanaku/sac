@@ -125,11 +125,6 @@ class ExhumacionResource extends Resource
             ]);
     }
 
-
-
-
-
-
     public static function table(Tables\Table $table): Tables\Table
     {
         return $table
