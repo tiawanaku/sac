@@ -17,7 +17,30 @@ class ObitoResource extends Resource
     protected static ?string $model = Obito::class;
     protected static ?string $navigationLabel = 'Óbitos';
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    protected static ?string $navigationGroup = 'Servicios';
+    protected static ?string $navigationGroup = 'Legalizaciones';
+    public static function getPluralLabel(): string
+    {
+        return 'Óbitos';
+    }
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        $count = static::getModel()::count();
+
+        if ($count > 4) {
+            return 'success'; // Verde
+        } elseif ($count > 3) {
+            return 'warning'; // Amarillo
+        } elseif ($count > 0) {
+            return 'danger'; // Rojo
+        } else {
+            return 'primary'; // Azul por defecto si no hay registros
+        }
+    }
 
     public static function form(Form $form): Form
     {
