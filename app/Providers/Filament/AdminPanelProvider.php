@@ -19,6 +19,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin; // Añadir la importación del plugin
+use Filament\Livewire\DatabaseNotifications;
 
 class AdminPanelProvider extends PanelProvider
 {
