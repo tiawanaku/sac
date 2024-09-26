@@ -15,6 +15,7 @@ class Inhumacione extends Model
         'apellido_paterno_difunto',
         'apellido_materno_difunto',
         'apellido_esposa_difunto',
+        'numero_carnet_difunto', // Añadido: Número de carnet del difunto
         'sexo',
         'edad',
         'estado_civil',
@@ -31,21 +32,22 @@ class Inhumacione extends Model
         'fila_ubicacion',
         'nro_ubicacion',
         'sector_ubicacion',
-        'nombres_solicitante',
-        'apellido_paterno_solicitante',
-        'apellido_materno_solicitante',
-        'apellido_esposa_solicitante',
+        'nombres_solicitante', // Cambiado: 'nombres_solicitante' a 'nombres_contribuyente'
+        'apellido_paterno_solicitante', // Cambiado: 'apellido_paterno_solicitante' a 'apellido_paterno_contribuyente'
+        'apellido_materno_solicitante', // Cambiado: 'apellido_materno_solicitante' a 'apellido_materno_contribuyente'
+        'apellido_esposa_solicitante',  // Cambiado: 'apellido_esposa_solicitante' a 'apellido_esposa_contribuyente'
         'carnet_identidad',
         'celular',
         'direccion',
         'numero',
         'zona',
-        'numero_comprobante', // Añadido 'numero_comprobante'
+        'numero_comprobante', // Añadido: 'numero_comprobante'
         'comprobante_pdf',
         'testigos_pdf',
         'familiares_pdf',
         'defuncion_pdf',
     ];
+    
     
     
 

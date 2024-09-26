@@ -116,6 +116,12 @@ class InhumacioneResource extends Resource
                             ->label('Folio')
                             ->required(),
     
+                        // Nuevo campo: Número de Carnet del Difunto
+                        TextInput::make('numero_carnet_difunto')
+                            ->label('Número de Carnet del Difunto')
+                            ->required()
+                            ->maxLength(255),
+    
                         FileUpload::make('defuncion_pdf')
                             ->label('Defunción PDF')
                             ->disk('public')
@@ -238,6 +244,7 @@ class InhumacioneResource extends Resource
                     ]),
             ])->columnSpanFull()
         ]);
+    
     
     }
 

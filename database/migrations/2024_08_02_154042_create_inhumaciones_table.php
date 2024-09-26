@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('apellido_paterno_difunto');
             $table->string('apellido_materno_difunto')->nullable();
             $table->string('apellido_esposa_difunto')->nullable();
+            $table->string('numero_carnet_difunto')->nullable(); // Nuevo campo
             $table->enum('sexo', ['masculino', 'femenino']);
             $table->integer('edad')->unsigned();
             $table->enum('estado_civil', ['soltero', 'casado', 'divorciado', 'viudo']);
@@ -30,11 +31,11 @@ return new class extends Migration
             $table->string('dia');
             $table->text('descripcion_nicho');
         
-            // Campos del solicitante
-            $table->string('nombres_solicitante');
-            $table->string('apellido_paterno_solicitante');
-            $table->string('apellido_materno_solicitante')->nullable();
-            $table->string('apellido_esposa_solicitante')->nullable();
+            // Campos del contribuyente (anteriormente solicitante)
+            $table->string('nombres_contribuyente'); // Actualizado
+            $table->string('apellido_paterno_solicitante'); // Actualizado
+            $table->string('apellido_materno_solicitante')->nullable(); // Actualizado
+            $table->string('apellido_esposa_solicitante')->nullable(); // Actualizado
             $table->string('carnet_identidad');
             $table->string('celular');
             $table->string('direccion');
@@ -57,6 +58,7 @@ return new class extends Migration
         
             $table->timestamps();
         });
+        
         
     }
 
