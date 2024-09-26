@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Storage;
+use Filament\Forms\Components\Section;
 
 class CertificacionResource extends Resource
 {
@@ -23,54 +24,123 @@ class CertificacionResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                // Campos de datos
-                Forms\Components\TextInput::make('ci_nit')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('nombre_contribuyente')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('direccion')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('numero_casa')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('zona')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('numero_comprobante')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('difunto')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('monto')
-                    ->numeric()
-                    ->required()
-                    ->maxLength(10),
-
-                // Campos para PDF
-                Forms\Components\FileUpload::make('nota_director_servicios_municipales')
-                    ->label('Nota al Director')
-                    ->disk('public')
-                    ->directory('certificaciones/notas')
-                    ->acceptedFileTypes(['application/pdf'])
-                    ->required(),
-                Forms\Components\FileUpload::make('fotocopia_cedula_identidad_usuario')
-                    ->label('Fotocopia Cédula de Identidad')
-                    ->disk('public')
-                    ->directory('certificaciones/cedulas')
-                    ->acceptedFileTypes(['application/pdf'])
-                    ->required(),
-                Forms\Components\FileUpload::make('fotocopia_documento_certificacion')
-                    ->label('Documento a Legalizar')
-                    ->disk('public')
-                    ->directory('certificaciones/documentos')
-                    ->acceptedFileTypes(['application/pdf'])
-                    ->required(),
-            ]);
+        ->schema([
+            // Sección: Datos del Contribuyente
+            Section::make('Datos del Contribuyente')
+                ->schema([
+                    Forms\Components\Grid::make(2) // Dividir en 2 columnas
+                        ->schema([
+                            Forms\Components\TextInput::make('ci_nit')
+                                ->label('CI o NIT')
+                                ->required()
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('nombre_contribuyente')
+                                ->label('Nombre del Contribuyente')
+                                ->required()
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('apellido_paterno_contribuyente')
+                                ->label('Apellido Paterno del Contribuyente')
+                                ->required()
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('apellido_materno_contribuyente')
+                                ->label('Apellido Materno del Contribuyente')
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('apellido_esposa_contribuyente')
+                                ->label('Apellido de Esposa del Contribuyente')
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('direccion')
+                                ->label('Dirección')
+                                ->required()
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('numero_casa')
+                                ->label('Número de Casa')
+                                ->required()
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('zona')
+                                ->label('Zona')
+                                ->required()
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('numero_celular')
+                                ->label('Número Celular')
+                                ->nullable()
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('numero_comprobante')
+                                ->label('Número de Comprobante')
+                                ->required()
+                                ->maxLength(255),
+                        ]),
+                ]),
+    
+            // Sección: Datos del Difunto
+            Section::make('Datos del Difunto')
+                ->schema([
+                    Forms\Components\Grid::make(2) // Dividir en 2 columnas
+                        ->schema([
+                            Forms\Components\TextInput::make('nombre_difunto')
+                                ->label('Nombre del Difunto')
+                                ->required()
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('apellido_paterno_difunto')
+                                ->label('Apellido Paterno del Difunto')
+                                ->required()
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('apellido_materno_difunto')
+                                ->label('Apellido Materno del Difunto')
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('apellido_esposa_difunto')
+                                ->label('Apellido de Esposa del Difunto')
+                                ->maxLength(255),
+                        ]),
+                ]),
+    
+            // Sección: Otros Datos
+            Section::make('Otros Datos')
+                ->schema([
+                    Forms\Components\TextInput::make('monto')
+                        ->label('Monto')
+                        ->numeric()
+                        ->required()
+                        ->maxLength(10),
+                ]),
+    
+            // Sección: Archivos PDF
+            Section::make('Archivos PDF')
+                ->schema([
+                    Forms\Components\FileUpload::make('nota_director_servicios_municipales')
+                        ->label('Nota al Director')
+                        ->disk('public')
+                        ->directory('certificaciones/notas')
+                        ->acceptedFileTypes(['application/pdf'])
+                        ->required(),
+    
+                    Forms\Components\FileUpload::make('fotocopia_cedula_identidad_usuario')
+                        ->label('Fotocopia Cédula de Identidad')
+                        ->disk('public')
+                        ->directory('certificaciones/cedulas')
+                        ->acceptedFileTypes(['application/pdf'])
+                        ->required(),
+    
+                    Forms\Components\FileUpload::make('fotocopia_documento_certificacion')
+                        ->label('Documento a Legalizar')
+                        ->disk('public')
+                        ->directory('certificaciones/documentos')
+                        ->acceptedFileTypes(['application/pdf'])
+                        ->required(),
+                ]),
+        ]);
+    
     }
 
     public static function table(Table $table): Table

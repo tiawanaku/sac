@@ -24,6 +24,15 @@ class AutorizacionConstruccionNicho extends Model
         'nombre_difunto',
         'fecha_autorizacion',
         'comprobante_pdf',
+    
+        // Campos adicionales
+        'apellido_paterno_difunto',
+        'apellido_materno_difunto',
+        'apellido_esposa_difunto',
+        'apellido_paterno_solicitante',
+        'apellido_materno_solicitante',
+        'apellido_esposa_solicitante',
     ];
+    
     public $timestamps = true;
 }

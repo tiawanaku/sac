@@ -11,7 +11,10 @@ class Inhumacione extends Model
 
     // Los atributos que son asignables en masa
     protected $fillable = [
-        'nombre_difunto',
+        'nombres_difunto',
+        'apellido_paterno_difunto',
+        'apellido_materno_difunto',
+        'apellido_esposa_difunto',
         'sexo',
         'edad',
         'estado_civil',
@@ -25,20 +28,26 @@ class Inhumacione extends Model
         'fecha_vencimiento',
         'dia',
         'descripcion_nicho',
-        'nombre_apellido_solicitante',
+        'fila_ubicacion',
+        'nro_ubicacion',
+        'sector_ubicacion',
+        'nombres_solicitante',
+        'apellido_paterno_solicitante',
+        'apellido_materno_solicitante',
+        'apellido_esposa_solicitante',
         'carnet_identidad',
         'celular',
         'direccion',
         'numero',
         'zona',
-        'fila_ubicacion',
-        'sector_ubicacion',
-        'nro_ubicacion',
+        'numero_comprobante', // Añadido 'numero_comprobante'
         'comprobante_pdf',
         'testigos_pdf',
         'familiares_pdf',
         'defuncion_pdf',
     ];
+    
+    
 
     // Los atributos que deberían ser tratados como fechas
     protected $dates = [

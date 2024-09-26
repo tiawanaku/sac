@@ -22,14 +22,24 @@ class CreateObitosTable extends Migration
             $table->string('zona')->nullable();
             $table->string('numero_comprobante')->nullable();
             $table->string('difunto')->nullable();
-            $table->decimal('monto', 10, 2)->nullable();
-            $table->text('nota_director_servicios_municipales')->nullable();
-            $table->text('fotocopias_comprobantes_entierro_ultima_renovacion')->nullable();
-            $table->text('fotocopia_cedula_identidad_fallecido')->nullable();
-            $table->text('fotocopia_cedula_identidad_solicitante')->nullable();
-            $table->text('orden_judicial')->nullable();
+            
+            // Campos adicionales
+            $table->string('apellido_paterno_difunto');
+            $table->string('apellido_materno_difunto')->nullable();
+            $table->string('apellido_esposa_difunto')->nullable();
+            $table->string('apellido_paterno_solicitante');
+            $table->string('apellido_materno_solicitante')->nullable();
+            $table->string('apellido_esposa_solicitante')->nullable();
+            
+            $table->decimal('monto', 10, 2);
+            $table->text('nota_director_servicios_municipales');
+            $table->text('fotocopias_comprobantes_entierro_ultima_renovacion');
+            $table->text('fotocopia_cedula_identidad_fallecido');
+            $table->text('fotocopia_cedula_identidad_solicitante');
+            $table->text('orden_judicial');
             $table->timestamps();
         });
+        
     }
 
     /**

@@ -55,9 +55,19 @@ class InhumacioneResource extends Resource
                 Wizard::make([
                     Step::make('Información del Difunto')
                         ->schema([
-                            TextInput::make('nombre_difunto')
-                                ->label('Nombre Difunto(a)')
+                            TextInput::make('nombres_difunto')
+                                ->label('Nombre(s) Difunto(a)')
                                 ->required(),
+
+                            TextInput::make('apellido_paterno_difunto')
+                                ->label('Apellido Paterno')
+                                ->required(),
+
+                            TextInput::make('apellido_materno_difunto')
+                                ->label('Apellido Materno'),
+
+                            TextInput::make('apellido_esposa_difunto')
+                                ->label('Apellido de Esposa'),
 
                             Select::make('sexo')
                                 ->label('Sexo')
@@ -158,9 +168,19 @@ class InhumacioneResource extends Resource
 
                     Step::make('Información del Solicitante')
                         ->schema([
-                            TextInput::make('nombre_apellido_solicitante')
-                                ->label('Nombre y Apellido del Solicitante')
+                            TextInput::make('nombres_solicitante')
+                                ->label('Nombre(s) del Solicitante')
                                 ->required(),
+
+                            TextInput::make('apellido_paterno_solicitante')
+                                ->label('Apellido Paterno')
+                                ->required(),
+
+                            TextInput::make('apellido_materno_solicitante')
+                                ->label('Apellido Materno'),
+
+                            TextInput::make('apellido_esposa_solicitante')
+                                ->label('Apellido de Esposa'),
 
                             TextInput::make('carnet_identidad')
                                 ->label('Carnet Identidad o NIT')
@@ -185,41 +205,62 @@ class InhumacioneResource extends Resource
                                 ->label('Zona')
                                 ->required(),
 
+                            TextInput::make('Numero de Comprobante')
+                                ->label('Número de Comprobante')
+                                ->required(),
+
                             FileUpload::make('comprobante_pdf')
                                 ->label('Carta de Solicitud o comprobante')
                                 ->disk('public')
                                 ->directory('pdfs')
-                                ->acceptedFileTypes(['application/pdf']),
+                                ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/jpg'])
+                                ->extraAttributes(['accept' => '.pdf, .jpg, .jpeg']),
 
                             FileUpload::make('testigos_pdf')
-                                ->label('Certificado medico')
+                                ->label('Certificado médico')
                                 ->disk('public')
                                 ->directory('pdfs')
-                                ->acceptedFileTypes(['application/pdf'])
-                                ->required(),
+                                ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/jpg'])
+                                ->required()
+                                ->extraAttributes(['accept' => '.pdf, .jpg, .jpeg']),
 
                             FileUpload::make('familiares_pdf')
-                                ->label('Fotocopia de Familiares 1 o 2 pdfs')
+                                ->label('Fotocopia de Familiares 1 o 2 pdfs o JPGs')
                                 ->disk('public')
                                 ->directory('pdfs')
-                                ->acceptedFileTypes(['application/pdf'])
+                                ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/jpg'])
                                 ->required()
-                                ->multiple() // Permite la carga de múltiples archivos
-                                ->maxFiles(2) // Limita a un máximo de 3 archivos
-                                ->minFiles(1), // Requiere al menos 1 archivo
+                                ->multiple()
+                                ->maxFiles(2)
+                                ->minFiles(1)
+                                ->extraAttributes(['accept' => '.pdf, .jpg, .jpeg']),
                         ]),
                 ])->columnSpanFull()
             ]);
     }
 
+
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('nombre_difunto')
-                    ->label('Nombre Difunto')
+                TextColumn::make('nombres_difunto')
+                    ->label('Nombre(s) Difunto')
                     ->searchable()
                     ->sortable(),
+
+                TextColumn::make('apellido_paterno_difunto')
+                    ->label('Apellido Paterno Difunto')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('apellido_materno_difunto')
+                    ->label('Apellido Materno Difunto')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('apellido_esposa_difunto')
+                    ->label('Apellido de Esposa Difunto')
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('sexo')
                     ->label('Sexo')
@@ -238,15 +279,15 @@ class InhumacioneResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('diagnostico_fallecimiento')
-                    ->label('Diagnistico de Fallecimiento')
+                    ->label('Diagnóstico de Fallecimiento')
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                TextColumn::make('Medico')
-                    ->label('Medico')
+                TextColumn::make('medico')
+                    ->label('Médico')
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('orc')
-                    ->label('Oficialia de Registro Civil')
+                    ->label('Oficialía de Registro Civil')
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('libro')
@@ -271,12 +312,24 @@ class InhumacioneResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('descripcion_nicho')
-                    ->label('Descripcion del Nicho')
+                    ->label('Descripción del Nicho')
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                TextColumn::make('nombre_apellido_solicitante')
-                    ->label('Nombre del Solicitante')
+                TextColumn::make('nombres_solicitante')
+                    ->label('Nombre(s) del Solicitante')
                     ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('apellido_paterno_solicitante')
+                    ->label('Apellido Paterno Solicitante')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('apellido_materno_solicitante')
+                    ->label('Apellido Materno Solicitante')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('apellido_esposa_solicitante')
+                    ->label('Apellido de Esposa Solicitante')
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('carnet_identidad')
@@ -285,32 +338,32 @@ class InhumacioneResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('celular')
-                    ->label('Celular del Familiar')
+                    ->label('Celular del Solicitante')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('direccion')
-                    ->label('Direccion del Familiar')
+                    ->label('Dirección del Solicitante')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('zona')
-                    ->label('Zona del Familiar')
+                    ->label('Zona del Solicitante')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('sector_ubicacion')
-                    ->label('Ubicacion del Difunto')
+                    ->label('Ubicación del Difunto')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('created_at')
-                    ->label('fecha de creacion')
+                    ->label('Fecha de Creación')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('updated_at')
-                    ->label('fecha de actualizacion')
+                    ->label('Fecha de Actualización')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
@@ -327,17 +380,17 @@ class InhumacioneResource extends Resource
                         ->label('Editar')
                         ->icon('heroicon-o-pencil')
                         ->color('primary'),
-            
+
                     Tables\Actions\Action::make('ver_comprobante_pdf')
-                        ->label('Ver Defuncion')
+                        ->label('Ver Defunción')
                         ->icon('heroicon-o-document-text')
-                        ->modalHeading('Ver Defuncion')
+                        ->modalHeading('Ver Defunción')
                         ->modalContent(function ($record) {
                             $pdfUrl = Storage::url($record->comprobante_pdf);
                             return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
                         })
                         ->color('primary'),
-            
+
                     Tables\Actions\Action::make('ver_testigos_pdf')
                         ->label('Ver Comprobante')
                         ->icon('heroicon-o-document-text')
@@ -347,17 +400,17 @@ class InhumacioneResource extends Resource
                             return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
                         })
                         ->color('primary'),
-            
+
                     Tables\Actions\Action::make('ver_defuncion_pdf')
-                        ->label('Ver Certificado Medico')
+                        ->label('Ver Certificado Médico')
                         ->icon('heroicon-o-document-text')
-                        ->modalHeading('Ver Certificado Medico')
+                        ->modalHeading('Ver Certificado Médico')
                         ->modalContent(function ($record) {
                             $pdfUrl = Storage::url($record->defuncion_pdf);
                             return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
                         })
                         ->color('primary'),
-            
+
                     Tables\Actions\Action::make('ver_familiares_pdf')
                         ->label('Ver Fotocopia de Familiares')
                         ->icon('heroicon-o-document-text')
@@ -367,7 +420,7 @@ class InhumacioneResource extends Resource
                             return view('components.pdf-modal', ['pdfUrls' => $pdfUrls]);
                         })
                         ->color('primary'),
-            
+
                     Tables\Actions\Action::make('crear_pdf')
                         ->label('Generar Comprobante')
                         ->icon('heroicon-o-document-text')
@@ -380,6 +433,7 @@ class InhumacioneResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
+
 
     public static function getRelations(): array
     {

@@ -24,9 +24,20 @@ class CreateRenovacionsTable extends Migration
             $table->string('monto');
             $table->date('fecha_renovacion');
             $table->date('fecha_vencimiento');
-            $table->string('comprobante_renovacion')->nullable(); // Añadir la columna para el archivo
+        
+            // Campos adicionales agregados
+            $table->string('numero_comprobante');
+            $table->string('apellido_paterno_difunto');
+            $table->string('apellido_materno_difunto')->nullable();
+            $table->string('apellido_esposa_difunto')->nullable();
+            $table->string('apellido_paterno_solicitante');
+            $table->string('apellido_materno_solicitante')->nullable();
+            $table->string('apellido_esposa_solicitante')->nullable();
+        
+            $table->string('comprobante_renovacion')->nullable(); // Campo para el archivo
             $table->timestamps();
         });
+        
     }
 
     /**

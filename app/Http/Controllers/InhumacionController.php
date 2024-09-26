@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Storage;
 
 class InhumacionController extends Controller
 {
-    // Método para visualizar un PDF individual
-    public function verPdf($id, $type)
+    // Método para visualizar un archivo (PDF o imagen)
+    public function verArchivo($id, $type)
     {
         $registro = Inhumacione::findOrFail($id);
 
@@ -17,37 +17,66 @@ class InhumacionController extends Controller
         if ($registro && $registro->$type) {
             if ($type === 'familiares_pdf') {
                 // Si se solicita un archivo específico de 'familiares_pdf', redirige a la función adecuada
-                return $this->verFamiliaresPdf($id);
+                return $this->verFamiliaresArchivo($id);
             }
 
-            $pdfPath = storage_path('app/public/' . $registro->$type);
+            $filePath = storage_path('app/public/' . $registro->$type);
 
-            if (file_exists($pdfPath)) {
-                return response()->file($pdfPath);
+            if (file_exists($filePath)) {
+                // Verifica si es una imagen o un PDF para manejarlo adecuadamente
+                $mimeType = mime_content_type($filePath);
+                
+                // Acepta archivos PDF y de imágenes
+                if (in_array($mimeType, ['image/jpeg', 'image/jpg', 'application/pdf'])) {
+                    // Si es una imagen, retorna la imagen como respuesta
+                    if (strpos($mimeType, 'image') !== false) {
+                        return response()->file($filePath, [
+                            'Content-Type' => $mimeType
+                        ]);
+                    }
+                    
+                    // Si es un PDF, retorna el archivo PDF
+                    if ($mimeType === 'application/pdf') {
+                        return response()->file($filePath);
+                    }
+                } else {
+                    return redirect()->back()->with('error', 'Tipo de archivo no soportado.');
+                }
             } else {
-                return redirect()->back()->with('error', 'Archivo PDF no encontrado.');
+                return redirect()->back()->with('error', 'Archivo no encontrado.');
             }
         } else {
-            return redirect()->back()->with('error', 'PDF no encontrado.');
+            return redirect()->back()->with('error', 'Archivo no encontrado.');
         }
     }
 
-    // Método para visualizar múltiples PDFs de 'familiares_pdf'
-    public function verFamiliaresPdf($id)
+    // Método para visualizar múltiples archivos de 'familiares_pdf' (PDFs o imágenes)
+    public function verFamiliaresArchivo($id)
     {
         $registro = Inhumacione::findOrFail($id);
 
         if ($registro && $registro->familiares_pdf) {
-            $pdfs = json_decode($registro->familiares_pdf, true);
+            $archivos = json_decode($registro->familiares_pdf, true);
 
-            $pdfPaths = array_map(function ($pdf) {
-                return storage_path('app/public/' . $pdf);
-            }, $pdfs);
+            $filePaths = array_map(function ($archivo) {
+                return storage_path('app/public/' . $archivo);
+            }, $archivos);
+
+            // Verifica si los archivos son imágenes o PDFs
+            foreach ($filePaths as $filePath) {
+                if (file_exists($filePath)) {
+                    $mimeType = mime_content_type($filePath);
+                    
+                    if (!in_array($mimeType, ['image/jpeg', 'image/jpg', 'application/pdf'])) {
+                        return redirect()->back()->with('error', 'Uno o más archivos tienen un tipo no soportado.');
+                    }
+                }
+            }
 
             // Renderiza la vista desde la carpeta 'components'
-            return view('components.verFamiliaresPdf', compact('pdfPaths'));
+            return view('components.verFamiliaresArchivo', compact('filePaths'));
         } else {
-            return redirect()->back()->with('error', 'PDF no encontrado.');
+            return redirect()->back()->with('error', 'Archivos no encontrados.');
         }
     }
 }

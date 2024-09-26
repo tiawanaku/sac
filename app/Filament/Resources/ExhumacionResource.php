@@ -50,80 +50,104 @@ class ExhumacionResource extends Resource
     {
         return $form
             ->schema([
-                Section::make('')  // Usamos un componente Card para agrupar los campos
+                Section::make('')
                     ->schema([
                         Forms\Components\Grid::make(3)  // Dividimos en 3 columnas
                             ->schema([
+                                // Campos del contribuyente
                                 Forms\Components\TextInput::make('nombre_contribuyente')
                                     ->label('Nombre del Contribuyente')
                                     ->required(),
-
+    
                                 Forms\Components\TextInput::make('numero_celular')
                                     ->label('Número de Celular')
                                     ->required(),
-
+    
                                 Forms\Components\TextInput::make('ci_nit')
                                     ->label('CI o NIT')
                                     ->required(),
-
+    
                                 Forms\Components\TextInput::make('avenida_calle')
                                     ->label('Avenida o Calle')
                                     ->required(),
-
+    
                                 Forms\Components\TextInput::make('numero_puerta')
                                     ->label('Número de Puerta')
                                     ->required(),
-
+    
                                 Forms\Components\TextInput::make('zona')
                                     ->label('Zona')
                                     ->required(),
-
+    
+                                // Campos del difunto
                                 Forms\Components\TextInput::make('nombre_difunto')
-                                    ->label('Nombre del Difunto')
+                                    ->label('Nombre(s) del Difunto')
                                     ->required(),
-
+    
+                                Forms\Components\TextInput::make('apellido_paterno_difunto')
+                                    ->label('Apellido Paterno del Difunto')
+                                    ->required(),
+    
+                                Forms\Components\TextInput::make('apellido_materno_difunto')
+                                    ->label('Apellido Materno del Difunto'),
+    
+                                Forms\Components\TextInput::make('apellido_esposa_difunto')
+                                    ->label('Apellido de Esposa del Difunto'),
+    
+                                // Campos del solicitante
+                                Forms\Components\TextInput::make('apellido_paterno_solicitante')
+                                    ->label('Apellido Paterno del Solicitante')
+                                    ->required(),
+    
+                                Forms\Components\TextInput::make('apellido_materno_solicitante')
+                                    ->label('Apellido Materno del Solicitante'),
+    
+                                Forms\Components\TextInput::make('apellido_esposa_solicitante')
+                                    ->label('Apellido de Esposa del Solicitante'),
+    
+                                // Campos adicionales
                                 Forms\Components\TextInput::make('motivo_exhumacion')
                                     ->label('Motivo de Exhumación')
                                     ->required(),
-
+    
                                 Forms\Components\TextInput::make('nombre_servicio')
                                     ->label('Nombre del Servicio')
                                     ->default('Exhumación')
                                     ->disabled(),
-
-                                Forms\Components\TextInput::make('costo_formulario')
+    
+                                Forms\Components\TextInput::make('Numero de Formulario')
                                     ->label('Costo de Formulario')
                                     ->required()
                                     ->numeric(),
-
+    
                                 Forms\Components\TextInput::make('costo_servicio')
                                     ->label('Costo Servicio')
                                     ->required()
                                     ->numeric(),
-
+    
                                 Forms\Components\DateTimePicker::make('fecha_exhumacion')
                                     ->label('Fecha de Exhumación'),
-
+    
                                 Forms\Components\FileUpload::make('comprobante_pdf')
                                     ->label('Comprobante PDF')
                                     ->disk('public')
                                     ->directory('pdfs')
-                                    ->acceptedFileTypes(['application/pdf'])
+                                    ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/jpg'])
                                     ->required(),
-
+    
                                 Forms\Components\FileUpload::make('autorizacion_pdf')
                                     ->label('Autorización PDF')
                                     ->disk('public')
                                     ->directory('pdfs')
-                                    ->acceptedFileTypes(['application/pdf'])
+                                    ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/jpg'])
                                     ->required(),
-
                             ])
                             ->columns(3),  // Dividir en 3 columnas
                     ])
                     ->extraAttributes(['class' => 'p-4 rounded-lg shadow-sm']), // Estilo del contenedor
             ]);
     }
+    
 
     public static function table(Tables\Table $table): Tables\Table
     {

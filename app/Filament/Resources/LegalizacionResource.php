@@ -46,54 +46,91 @@ class LegalizacionResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                // Campos de datos
-                Forms\Components\TextInput::make('ci_nit')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('nombre_contribuyente')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('direccion')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('numero_casa')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('zona')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('numero_comprobante')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('difunto')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('monto')
-                    ->numeric()
-                    ->required()
-                    ->maxLength(10),
-                
-                // Campos para PDF
-                Forms\Components\FileUpload::make('nota_director_servicios_municipales')
-                    ->label('Nota al Director')
-                    ->disk('public')
-                    ->directory('legalizaciones/notas')
-                    ->acceptedFileTypes(['application/pdf'])
-                    ->required(),
-                Forms\Components\FileUpload::make('fotocopia_cedula_identidad_usuario')
-                    ->label('Fotocopia Cédula de Identidad')
-                    ->disk('public')
-                    ->directory('legalizaciones/cedulas')
-                    ->acceptedFileTypes(['application/pdf'])
-                    ->required(),
-                Forms\Components\FileUpload::make('fotocopia_documento_legalizar')
-                    ->label('Documento a Legalizar')
-                    ->disk('public')
-                    ->directory('legalizaciones/documentos')
-                    ->acceptedFileTypes(['application/pdf'])
-                    ->required(),
-            ]);
+    ->schema([
+        // Campos de datos existentes
+        Forms\Components\TextInput::make('ci_nit')
+            ->required()
+            ->maxLength(255),
+
+        Forms\Components\TextInput::make('nombre_contribuyente')
+            ->required()
+            ->maxLength(255),
+
+        Forms\Components\TextInput::make('direccion')
+            ->required()
+            ->maxLength(255),
+
+        Forms\Components\TextInput::make('numero_casa')
+            ->required()
+            ->maxLength(255),
+
+        Forms\Components\TextInput::make('zona')
+            ->required()
+            ->maxLength(255),
+
+        Forms\Components\TextInput::make('numero_comprobante')
+            ->required()
+            ->maxLength(255),
+
+        Forms\Components\TextInput::make('difunto')
+            ->required()
+            ->maxLength(255),
+
+        Forms\Components\TextInput::make('monto')
+            ->numeric()
+            ->required()
+            ->maxLength(10),
+
+        // Campos adicionales agregados
+        Forms\Components\TextInput::make('apellido_paterno_difunto')
+            ->label('Apellido Paterno del Difunto')
+            ->required()
+            ->maxLength(255),
+
+        Forms\Components\TextInput::make('apellido_materno_difunto')
+            ->label('Apellido Materno del Difunto')
+            ->maxLength(255),
+
+        Forms\Components\TextInput::make('apellido_esposa_difunto')
+            ->label('Apellido de Esposa del Difunto')
+            ->maxLength(255),
+
+        Forms\Components\TextInput::make('apellido_paterno_solicitante')
+            ->label('Apellido Paterno del Solicitante')
+            ->required()
+            ->maxLength(255),
+
+        Forms\Components\TextInput::make('apellido_materno_solicitante')
+            ->label('Apellido Materno del Solicitante')
+            ->maxLength(255),
+
+        Forms\Components\TextInput::make('apellido_esposa_solicitante')
+            ->label('Apellido de Esposa del Solicitante')
+            ->maxLength(255),
+
+        // Campos para PDF
+        Forms\Components\FileUpload::make('nota_director_servicios_municipales')
+            ->label('Nota al Director')
+            ->disk('public')
+            ->directory('legalizaciones/notas')
+            ->acceptedFileTypes(['application/pdf'])
+            ->required(),
+
+        Forms\Components\FileUpload::make('fotocopia_cedula_identidad_usuario')
+            ->label('Fotocopia Cédula de Identidad')
+            ->disk('public')
+            ->directory('legalizaciones/cedulas')
+            ->acceptedFileTypes(['application/pdf'])
+            ->required(),
+
+        Forms\Components\FileUpload::make('fotocopia_documento_legalizar')
+            ->label('Documento a Legalizar')
+            ->disk('public')
+            ->directory('legalizaciones/documentos')
+            ->acceptedFileTypes(['application/pdf'])
+            ->required(),
+    ]);
+
     }
 
     public static function table(Table $table): Table

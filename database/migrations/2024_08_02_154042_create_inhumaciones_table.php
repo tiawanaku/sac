@@ -10,7 +10,12 @@ return new class extends Migration
     {
         Schema::create('inhumaciones', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre_difunto');
+        
+            // Campos del difunto
+            $table->string('nombres_difunto');
+            $table->string('apellido_paterno_difunto');
+            $table->string('apellido_materno_difunto')->nullable();
+            $table->string('apellido_esposa_difunto')->nullable();
             $table->enum('sexo', ['masculino', 'femenino']);
             $table->integer('edad')->unsigned();
             $table->enum('estado_civil', ['soltero', 'casado', 'divorciado', 'viudo']);
@@ -24,22 +29,35 @@ return new class extends Migration
             $table->date('fecha_vencimiento');
             $table->string('dia');
             $table->text('descripcion_nicho');
-            $table->string('nombre_apellido_solicitante');
+        
+            // Campos del solicitante
+            $table->string('nombres_solicitante');
+            $table->string('apellido_paterno_solicitante');
+            $table->string('apellido_materno_solicitante')->nullable();
+            $table->string('apellido_esposa_solicitante')->nullable();
             $table->string('carnet_identidad');
             $table->string('celular');
             $table->string('direccion');
             $table->string('numero');
             $table->string('zona');
-            // Nuevos campos con valores nulos permitidos
+        
+            // Campo número de comprobante
+            $table->string('numero_comprobante')->nullable();
+        
+            // Campos de ubicación
             $table->string('fila_ubicacion')->nullable();
             $table->string('sector_ubicacion')->nullable();
             $table->string('nro_ubicacion')->nullable();
+        
+            // Campos de archivos
+            $table->string('comprobante_pdf')->nullable();
+            $table->string('testigos_pdf')->nullable();
+            $table->string('familiares_pdf')->nullable();
+            $table->string('defuncion_pdf')->nullable();
+        
             $table->timestamps();
-
-            // Si tienes una relación con otra tabla, añade la clave foránea aquí
-            // $table->foreign('ubicacion_id')->references('id')->on('ubicaciones')->onDelete('cascade');
-            // $table->unsignedBigInteger('ubicacion_id');
         });
+        
     }
 
     public function down(): void

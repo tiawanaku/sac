@@ -24,6 +24,15 @@ class Certificacion extends Model
         'monto',
         'nota_director_servicios_municipales',
         'fotocopia_cedula_identidad_usuario',
-        'fotocopia_documento_certificacion'
+        'fotocopia_documento_certificacion',
+    
+        // Campos adicionales
+        'apellido_paterno_difunto',
+        'apellido_materno_difunto',
+        'apellido_esposa_difunto',
+        'apellido_paterno_contribuyente',
+        'apellido_materno_contribuyente',
+        'apellido_esposa_contribuyente',
     ];
+    
 }

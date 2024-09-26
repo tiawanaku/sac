@@ -21,6 +21,15 @@ return new class extends Migration
             $table->string('numero_celular')->nullable();
             $table->string('actividad');
             $table->string('nombre_difunto');
+        
+            // Campos adicionales agregados
+            $table->string('apellido_paterno_difunto')->nullable();
+            $table->string('apellido_materno_difunto')->nullable();
+            $table->string('apellido_esposa_difunto')->nullable();
+            $table->string('apellido_paterno_solicitante')->nullable();
+            $table->string('apellido_materno_solicitante')->nullable();
+            $table->string('apellido_esposa_solicitante')->nullable();
+        
             $table->timestamp('fecha_autorizacion');
             $table->string('comprobante_pdf')->nullable();
             $table->decimal('costo_formulario', 10, 2);
@@ -28,6 +37,7 @@ return new class extends Migration
             $table->decimal('costo_total', 10, 2); // Asegúrate de que esta columna esté aquí
             $table->timestamps();
         });
+        
     }
 
 

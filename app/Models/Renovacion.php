@@ -19,6 +19,16 @@ class Renovacion extends Model
         'fecha_vencimiento',
         'difunto',
         'monto',
-        'comprobante_renovacion',  // Añadir el campo para el archivo
+        'comprobante_renovacion', // Campo para el archivo
+    
+        // Campos adicionales agregados
+        'numero_comprobante',
+        'apellido_paterno_difunto',
+        'apellido_materno_difunto',
+        'apellido_esposa_difunto',
+        'apellido_paterno_solicitante',
+        'apellido_materno_solicitante',
+        'apellido_esposa_solicitante',
     ];
+    
 }

@@ -28,39 +28,82 @@ class RenovacionResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('ci_nit')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('nombre_contribuyente')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('direccion')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('numero_casa')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('zona')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('difunto')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('monto')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('fecha_renovacion')
-                    ->required(),
-                Forms\Components\DatePicker::make('fecha_vencimiento')
-                    ->required(),
-                Forms\Components\FileUpload::make('comprobante_renovacion')
-                    ->label('Comprobante Renovacion')
-                    ->disk('public')
-                    ->directory('comprobantes')
-                    ->acceptedFileTypes(['application/pdf'])
-                    ->required(),
-            ]);
+        ->schema([
+            // Campos adicionales solicitados
+            Forms\Components\TextInput::make('numero_comprobante')
+                ->label('Número de Comprobante')
+                ->required()
+                ->maxLength(255),
+    
+            Forms\Components\TextInput::make('apellido_paterno_difunto')
+                ->label('Apellido Paterno del Difunto')
+                ->required()
+                ->maxLength(255),
+    
+            Forms\Components\TextInput::make('apellido_materno_difunto')
+                ->label('Apellido Materno del Difunto')
+                ->maxLength(255),
+    
+            Forms\Components\TextInput::make('apellido_esposa_difunto')
+                ->label('Apellido de Esposa del Difunto')
+                ->maxLength(255),
+    
+            Forms\Components\TextInput::make('apellido_paterno_solicitante')
+                ->label('Apellido Paterno del Solicitante')
+                ->required()
+                ->maxLength(255),
+    
+            Forms\Components\TextInput::make('apellido_materno_solicitante')
+                ->label('Apellido Materno del Solicitante')
+                ->maxLength(255),
+    
+            Forms\Components\TextInput::make('apellido_esposa_solicitante')
+                ->label('Apellido de Esposa del Solicitante')
+                ->maxLength(255),
+    
+            // Campos existentes
+            Forms\Components\TextInput::make('ci_nit')
+                ->required()
+                ->maxLength(255),
+    
+            Forms\Components\TextInput::make('nombre_contribuyente')
+                ->required()
+                ->maxLength(255),
+    
+            Forms\Components\TextInput::make('direccion')
+                ->required()
+                ->maxLength(255),
+    
+            Forms\Components\TextInput::make('numero_casa')
+                ->required()
+                ->maxLength(255),
+    
+            Forms\Components\TextInput::make('zona')
+                ->required()
+                ->maxLength(255),
+    
+            Forms\Components\TextInput::make('difunto')
+                ->required()
+                ->maxLength(255),
+    
+            Forms\Components\TextInput::make('monto')
+                ->required()
+                ->maxLength(255),
+    
+            Forms\Components\DatePicker::make('fecha_renovacion')
+                ->required(),
+    
+            Forms\Components\DatePicker::make('fecha_vencimiento')
+                ->required(),
+    
+            Forms\Components\FileUpload::make('comprobante_renovacion')
+                ->label('Comprobante Renovación')
+                ->disk('public')
+                ->directory('comprobantes')
+                ->acceptedFileTypes(['application/pdf'])
+                ->required(),
+        ]);
+    
     }
 
     public static function table(Table $table): Table
