@@ -18,8 +18,31 @@ use Filament\Forms\Components\Section;
 class CertificacionResource extends Resource
 {
     protected static ?string $model = Certificacion::class;
+    protected static ?string $navigationLabel = 'Certificaciones';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Servicios';
+    protected static ?string $activeNavigationIcon = 'heroicon-o-clipboard-document-check';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        $count = static::getModel()::count();
+
+        if ($count > 4) {
+            return 'success'; // Verde
+        } elseif ($count > 3) {
+            return 'warning'; // Amarillo
+        } elseif ($count > 0) {
+            return 'danger'; // Rojo
+        } else {
+            return 'primary'; // Azul por defecto si no hay registros
+        }
+    }
 
     public static function form(Form $form): Form
     {

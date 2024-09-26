@@ -11,6 +11,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
+use Filament\Forms\Components\Section;
 
 class LegalizacionResource extends Resource
 {
@@ -46,90 +47,136 @@ class LegalizacionResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-    ->schema([
-        // Campos de datos existentes
-        Forms\Components\TextInput::make('ci_nit')
-            ->required()
-            ->maxLength(255),
-
-        Forms\Components\TextInput::make('nombre_contribuyente')
-            ->required()
-            ->maxLength(255),
-
-        Forms\Components\TextInput::make('direccion')
-            ->required()
-            ->maxLength(255),
-
-        Forms\Components\TextInput::make('numero_casa')
-            ->required()
-            ->maxLength(255),
-
-        Forms\Components\TextInput::make('zona')
-            ->required()
-            ->maxLength(255),
-
-        Forms\Components\TextInput::make('numero_comprobante')
-            ->required()
-            ->maxLength(255),
-
-        Forms\Components\TextInput::make('difunto')
-            ->required()
-            ->maxLength(255),
-
-        Forms\Components\TextInput::make('monto')
-            ->numeric()
-            ->required()
-            ->maxLength(10),
-
-        // Campos adicionales agregados
-        Forms\Components\TextInput::make('apellido_paterno_difunto')
-            ->label('Apellido Paterno del Difunto')
-            ->required()
-            ->maxLength(255),
-
-        Forms\Components\TextInput::make('apellido_materno_difunto')
-            ->label('Apellido Materno del Difunto')
-            ->maxLength(255),
-
-        Forms\Components\TextInput::make('apellido_esposa_difunto')
-            ->label('Apellido de Esposa del Difunto')
-            ->maxLength(255),
-
-        Forms\Components\TextInput::make('apellido_paterno_solicitante')
-            ->label('Apellido Paterno del Solicitante')
-            ->required()
-            ->maxLength(255),
-
-        Forms\Components\TextInput::make('apellido_materno_solicitante')
-            ->label('Apellido Materno del Solicitante')
-            ->maxLength(255),
-
-        Forms\Components\TextInput::make('apellido_esposa_solicitante')
-            ->label('Apellido de Esposa del Solicitante')
-            ->maxLength(255),
-
-        // Campos para PDF
-        Forms\Components\FileUpload::make('nota_director_servicios_municipales')
-            ->label('Nota al Director')
-            ->disk('public')
-            ->directory('legalizaciones/notas')
-            ->acceptedFileTypes(['application/pdf'])
-            ->required(),
-
-        Forms\Components\FileUpload::make('fotocopia_cedula_identidad_usuario')
-            ->label('Fotocopia Cédula de Identidad')
-            ->disk('public')
-            ->directory('legalizaciones/cedulas')
-            ->acceptedFileTypes(['application/pdf'])
-            ->required(),
-
-        Forms\Components\FileUpload::make('fotocopia_documento_legalizar')
-            ->label('Documento a Legalizar')
-            ->disk('public')
-            ->directory('legalizaciones/documentos')
-            ->acceptedFileTypes(['application/pdf'])
-            ->required(),
-    ]);
+        ->schema([
+            // Sección: Información del Contribuyente
+            Section::make('Información del Contribuyente')
+                ->schema([
+                    Forms\Components\Grid::make(3) // Dividir en 3 columnas
+                        ->schema([
+                            Forms\Components\TextInput::make('ci_nit')
+                                ->label('CI o NIT')
+                                ->required()
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('nombre_contribuyente')
+                                ->label('Nombre del Contribuyente')
+                                ->required()
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('apellido_paterno_contribuyente')
+                                ->label('Apellido Paterno del Contribuyente')
+                                ->required()
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('apellido_materno_contribuyente')
+                                ->label('Apellido Materno del Contribuyente')
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('apellido_esposa_contribuyente')
+                                ->label('Apellido de Esposa del Contribuyente')
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('direccion')
+                                ->label('Dirección')
+                                ->required()
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('numero_casa')
+                                ->label('Número de Casa')
+                                ->required()
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('zona')
+                                ->label('Zona')
+                                ->required()
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('numero_comprobante')
+                                ->label('Número de Comprobante')
+                                ->required()
+                                ->maxLength(255),
+                        ]),
+                ])
+                ->extraAttributes(['class' => 'p-4 rounded-lg shadow-sm']), // Estilo del contenedor
+    
+            // Sección: Información del Difunto
+            Section::make('Información del Difunto')
+                ->schema([
+                    Forms\Components\Grid::make(3) // Dividir en 3 columnas
+                        ->schema([
+                            Forms\Components\TextInput::make('difunto')
+                                ->label('Nombre del Difunto')
+                                ->required()
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('apellido_paterno_difunto')
+                                ->label('Apellido Paterno del Difunto')
+                                ->required()
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('apellido_materno_difunto')
+                                ->label('Apellido Materno del Difunto')
+                                ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('apellido_esposa_difunto')
+                                ->label('Apellido de Esposa del Difunto')
+                                ->maxLength(255),
+                        ]),
+                ])
+                ->extraAttributes(['class' => 'p-4 rounded-lg shadow-sm']), // Estilo del contenedor
+    
+            // Sección: Detalles de la Renovación
+            Section::make('Detalles de la Renovación')
+                ->schema([
+                    Forms\Components\Grid::make(2) // Dividir en 2 columnas
+                        ->schema([
+                            Forms\Components\TextInput::make('monto')
+                                ->label('Monto')
+                                ->numeric()
+                                ->required()
+                                ->maxLength(10),
+    
+                            Forms\Components\DatePicker::make('fecha_renovacion')
+                                ->label('Fecha de Renovación')
+                                ->required(),
+    
+                            Forms\Components\DatePicker::make('fecha_vencimiento')
+                                ->label('Fecha de Vencimiento')
+                                ->required(),
+                        ]),
+                ])
+                ->extraAttributes(['class' => 'p-4 rounded-lg shadow-sm']), // Estilo del contenedor
+    
+            // Sección: Archivos PDF
+            Section::make('Archivos PDF')
+                ->schema([
+                    Forms\Components\Grid::make(2) // Dividir en 2 columnas
+                        ->schema([
+                            Forms\Components\FileUpload::make('nota_director_servicios_municipales')
+                                ->label('Nota al Director')
+                                ->disk('public')
+                                ->directory('legalizaciones/notas')
+                                ->acceptedFileTypes(['application/pdf'])
+                                ->required(),
+    
+                            Forms\Components\FileUpload::make('fotocopia_cedula_identidad_usuario')
+                                ->label('Fotocopia Cédula de Identidad')
+                                ->disk('public')
+                                ->directory('legalizaciones/cedulas')
+                                ->acceptedFileTypes(['application/pdf'])
+                                ->required(),
+    
+                            Forms\Components\FileUpload::make('fotocopia_documento_legalizar')
+                                ->label('Documento a Legalizar')
+                                ->disk('public')
+                                ->directory('legalizaciones/documentos')
+                                ->acceptedFileTypes(['application/pdf'])
+                                ->required(),
+                        ]),
+                ])
+                ->extraAttributes(['class' => 'p-4 rounded-lg shadow-sm']), // Estilo del contenedor
+        ]);
+    
 
     }
 

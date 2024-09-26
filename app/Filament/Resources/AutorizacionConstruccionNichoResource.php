@@ -47,47 +47,66 @@ class AutorizacionConstruccionNichoResource extends Resource
     {
         return $form
     ->schema([
-        Section::make('') // Agregar un marco con el componente Card
+        // Sección: Datos del Contribuyente
+        Section::make('Datos del Contribuyente')
             ->schema([
                 Forms\Components\Grid::make(3) // Dividir en 3 columnas
                     ->schema([
                         Forms\Components\TextInput::make('nombre_contribuyente')
-                            ->required()
-                            ->label('Nombre del Contribuyente'),
+                            ->label('Nombre del Contribuyente')
+                            ->required(),
+
+                        Forms\Components\TextInput::make('apellido_paterno_contribuyente')
+                            ->label('Apellido Paterno del Contribuyente')
+                            ->required(),
+
+                        Forms\Components\TextInput::make('apellido_materno_contribuyente')
+                            ->label('Apellido Materno del Contribuyente')
+                            ->nullable(),
+
+                        Forms\Components\TextInput::make('apellido_esposa_contribuyente')
+                            ->label('Apellido de Esposa del Contribuyente')
+                            ->nullable(),
 
                         Forms\Components\TextInput::make('ci_nit')
-                            ->required()
-                            ->label('CI o NIT'),
+                            ->label('CI o NIT')
+                            ->required(),
 
                         Forms\Components\TextInput::make('avenida_calle')
-                            ->required()
-                            ->label('Avenida o Calle'),
+                            ->label('Avenida o Calle')
+                            ->required(),
 
                         Forms\Components\TextInput::make('numero')
-                            ->required()
-                            ->label('N.Puerta'),
+                            ->label('N. Puerta')
+                            ->required(),
 
                         Forms\Components\TextInput::make('zona')
-                            ->required()
-                            ->label('Zona'),
+                            ->label('Zona')
+                            ->required(),
 
                         Forms\Components\TextInput::make('numero_celular')
                             ->label('Número Celular')
-                            ->nullable(), // Hacerlo opcional si es necesario
+                            ->nullable(),
 
-                        Forms\Components\TextInput::make('actividad')
-                            ->required()
-                            ->label('Servicio')
-                            ->default('Autorización de Construcción de Nicho'),
+                        Forms\Components\TextInput::make('numero_comprobante')
+                            ->label('Número de Comprobante')
+                            ->required(),
+                    ]),
+            ])
+            ->extraAttributes(['class' => 'p-4 rounded-lg shadow-sm']),
 
+        // Sección: Datos del Difunto
+        Section::make('Datos del Difunto')
+            ->schema([
+                Forms\Components\Grid::make(3) // Dividir en 3 columnas
+                    ->schema([
                         Forms\Components\TextInput::make('nombre_difunto')
                             ->label('Nombre del Difunto')
-                            ->nullable(), // Hacerlo opcional si es necesario
+                            ->required(),
 
-                        // Campos adicionales agregados para los apellidos del difunto
                         Forms\Components\TextInput::make('apellido_paterno_difunto')
                             ->label('Apellido Paterno del Difunto')
-                            ->nullable(), // Hacerlo opcional si es necesario
+                            ->required(),
 
                         Forms\Components\TextInput::make('apellido_materno_difunto')
                             ->label('Apellido Materno del Difunto')
@@ -96,45 +115,49 @@ class AutorizacionConstruccionNichoResource extends Resource
                         Forms\Components\TextInput::make('apellido_esposa_difunto')
                             ->label('Apellido de Esposa del Difunto')
                             ->nullable(),
+                    ]),
+            ])
+            ->extraAttributes(['class' => 'p-4 rounded-lg shadow-sm']),
 
-                        // Campos adicionales agregados para los apellidos del solicitante
-                        Forms\Components\TextInput::make('apellido_paterno_solicitante')
-                            ->label('Apellido Paterno del Solicitante')
-                            ->nullable(), // Hacerlo opcional si es necesario
-
-                        Forms\Components\TextInput::make('apellido_materno_solicitante')
-                            ->label('Apellido Materno del Solicitante')
-                            ->nullable(),
-
-                        Forms\Components\TextInput::make('apellido_esposa_solicitante')
-                            ->label('Apellido de Esposa del Solicitante')
-                            ->nullable(),
+        // Sección: Detalles del Servicio
+        Section::make('Detalles del Servicio')
+            ->schema([
+                Forms\Components\Grid::make(2) // Dividir en 2 columnas
+                    ->schema([
+                        Forms\Components\TextInput::make('actividad')
+                            ->label('Servicio')
+                            ->required()
+                            ->default('Autorización de Construcción de Nicho'),
 
                         Forms\Components\DatePicker::make('fecha_autorizacion')
                             ->label('Fecha de Autorización')
                             ->required(),
 
-                        Forms\Components\FileUpload::make('comprobante_pdf')
-                            ->label('Comprobante PDF')
-                            ->disk('public') // Especifica el disco de almacenamiento
-                            ->directory('comprobantes') // Directorio dentro del disco
-                            ->acceptedFileTypes(['application/pdf'])
-                            ->nullable(), // Hacerlo opcional si es necesario
-
                         Forms\Components\TextInput::make('costo_formulario')
+                            ->label('Costo Formulario')
                             ->required()
-                            ->numeric()
-                            ->label('Costo Formulario'),
+                            ->numeric(),
 
                         Forms\Components\TextInput::make('costo')
+                            ->label('Costo')
                             ->required()
-                            ->numeric()
-                            ->label('Costo'),
+                            ->numeric(),
                     ]),
             ])
-            ->extraAttributes(['class' => 'p-4 rounded-lg shadow-sm']), // Estilo del contenedor
-    ]);
+            ->extraAttributes(['class' => 'p-4 rounded-lg shadow-sm']),
 
+        // Sección: Archivos PDF
+        Section::make('Archivos PDF')
+            ->schema([
+                Forms\Components\FileUpload::make('comprobante_pdf')
+                    ->label('Comprobante PDF')
+                    ->disk('public')
+                    ->directory('comprobantes')
+                    ->acceptedFileTypes(['application/pdf'])
+                    ->required(),
+            ])
+            ->extraAttributes(['class' => 'p-4 rounded-lg shadow-sm']),
+    ]);
     }
 
 

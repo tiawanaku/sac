@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Section;
 
 class RenovacionResource extends Resource
 {
@@ -29,80 +30,112 @@ class RenovacionResource extends Resource
     {
         return $form
         ->schema([
-            // Campos adicionales solicitados
-            Forms\Components\TextInput::make('numero_comprobante')
-                ->label('Número de Comprobante')
-                ->required()
-                ->maxLength(255),
+            // Sección: Información del Contribuyente
+            Section::make('Información del Contribuyente')
+                ->schema([
+                    Forms\Components\Grid::make(3) // Dividir en 3 columnas
+                        ->schema([
+                            Forms\Components\TextInput::make('nombre_contribuyente')
+                                ->label('Nombre del Contribuyente')
+                                ->required()
+                                ->maxLength(255),
     
-            Forms\Components\TextInput::make('apellido_paterno_difunto')
-                ->label('Apellido Paterno del Difunto')
-                ->required()
-                ->maxLength(255),
+                            Forms\Components\TextInput::make('apellido_paterno_contribuyente')
+                                ->label('Apellido Paterno del Contribuyente')
+                                ->required()
+                                ->maxLength(255),
     
-            Forms\Components\TextInput::make('apellido_materno_difunto')
-                ->label('Apellido Materno del Difunto')
-                ->maxLength(255),
+                            Forms\Components\TextInput::make('apellido_materno_contribuyente')
+                                ->label('Apellido Materno del Contribuyente')
+                                ->maxLength(255),
     
-            Forms\Components\TextInput::make('apellido_esposa_difunto')
-                ->label('Apellido de Esposa del Difunto')
-                ->maxLength(255),
+                            Forms\Components\TextInput::make('apellido_esposa_contribuyente')
+                                ->label('Apellido de Esposa del Contribuyente')
+                                ->maxLength(255),
     
-            Forms\Components\TextInput::make('apellido_paterno_solicitante')
-                ->label('Apellido Paterno del Solicitante')
-                ->required()
-                ->maxLength(255),
+                            Forms\Components\TextInput::make('ci_nit')
+                                ->label('CI o NIT')
+                                ->required()
+                                ->maxLength(255),
     
-            Forms\Components\TextInput::make('apellido_materno_solicitante')
-                ->label('Apellido Materno del Solicitante')
-                ->maxLength(255),
+                            Forms\Components\TextInput::make('numero_comprobante')
+                                ->label('Número de Comprobante')
+                                ->required()
+                                ->maxLength(255),
     
-            Forms\Components\TextInput::make('apellido_esposa_solicitante')
-                ->label('Apellido de Esposa del Solicitante')
-                ->maxLength(255),
+                            Forms\Components\TextInput::make('numero_casa')
+                                ->label('Número de Casa')
+                                ->required()
+                                ->maxLength(255),
     
-            // Campos existentes
-            Forms\Components\TextInput::make('ci_nit')
-                ->required()
-                ->maxLength(255),
+                            Forms\Components\TextInput::make('direccion')
+                                ->label('Dirección')
+                                ->required()
+                                ->maxLength(255),
     
-            Forms\Components\TextInput::make('nombre_contribuyente')
-                ->required()
-                ->maxLength(255),
+                            Forms\Components\TextInput::make('zona')
+                                ->label('Zona')
+                                ->required()
+                                ->maxLength(255),
+                        ]),
+                ])
+                ->extraAttributes(['class' => 'p-4 rounded-lg shadow-sm']), // Estilo del contenedor
     
-            Forms\Components\TextInput::make('direccion')
-                ->required()
-                ->maxLength(255),
+            // Sección: Información del Difunto
+            Section::make('Información del Difunto')
+                ->schema([
+                    Forms\Components\Grid::make(3) // Dividir en 3 columnas
+                        ->schema([
+                            Forms\Components\TextInput::make('difunto')
+                                ->label('Nombre del Difunto')
+                                ->required()
+                                ->maxLength(255),
     
-            Forms\Components\TextInput::make('numero_casa')
-                ->required()
-                ->maxLength(255),
+                            Forms\Components\TextInput::make('apellido_paterno_difunto')
+                                ->label('Apellido Paterno del Difunto')
+                                ->required()
+                                ->maxLength(255),
     
-            Forms\Components\TextInput::make('zona')
-                ->required()
-                ->maxLength(255),
+                            Forms\Components\TextInput::make('apellido_materno_difunto')
+                                ->label('Apellido Materno del Difunto')
+                                ->maxLength(255),
     
-            Forms\Components\TextInput::make('difunto')
-                ->required()
-                ->maxLength(255),
+                            Forms\Components\TextInput::make('apellido_esposa_difunto')
+                                ->label('Apellido de Esposa del Difunto')
+                                ->maxLength(255),
+                        ]),
+                ])
+                ->extraAttributes(['class' => 'p-4 rounded-lg shadow-sm']), // Estilo del contenedor
     
-            Forms\Components\TextInput::make('monto')
-                ->required()
-                ->maxLength(255),
+            // Sección: Información de Renovación
+            Section::make('Información de Renovación')
+                ->schema([
+                    Forms\Components\Grid::make(2) // Dividir en 2 columnas
+                        ->schema([
+                            Forms\Components\TextInput::make('monto')
+                                ->label('Monto')
+                                ->required()
+                                ->maxLength(255),
     
-            Forms\Components\DatePicker::make('fecha_renovacion')
-                ->required(),
+                            Forms\Components\DatePicker::make('fecha_renovacion')
+                                ->label('Fecha de Renovación')
+                                ->required(),
     
-            Forms\Components\DatePicker::make('fecha_vencimiento')
-                ->required(),
+                            Forms\Components\DatePicker::make('fecha_vencimiento')
+                                ->label('Fecha de Vencimiento')
+                                ->required(),
     
-            Forms\Components\FileUpload::make('comprobante_renovacion')
-                ->label('Comprobante Renovación')
-                ->disk('public')
-                ->directory('comprobantes')
-                ->acceptedFileTypes(['application/pdf'])
-                ->required(),
+                            Forms\Components\FileUpload::make('comprobante_renovacion')
+                                ->label('Comprobante Renovación')
+                                ->disk('public')
+                                ->directory('comprobantes')
+                                ->acceptedFileTypes(['application/pdf'])
+                                ->required(),
+                        ]),
+                ])
+                ->extraAttributes(['class' => 'p-4 rounded-lg shadow-sm']), // Estilo del contenedor
         ]);
+    
     
     }
 

@@ -23,8 +23,8 @@ use Illuminate\Support\Facades\Storage;
 class InhumacioneResource extends Resource
 {
     protected static ?string $model = Inhumacione::class;
-    protected static ?string $navigationLabel = 'Inhumaciones';
-    protected static ?string $navigationIcon = 'heroicon-o-exclamation-circle';
+    protected static ?string $navigationLabel = 'Inhumaciones';  
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationGroup = 'Servicios';
     protected static ?string $activeNavigationIcon = 'heroicon-o-clipboard-document-check';
 
@@ -51,192 +51,194 @@ class InhumacioneResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Wizard::make([
-                    Step::make('Información del Difunto')
-                        ->schema([
-                            TextInput::make('nombres_difunto')
-                                ->label('Nombre(s) Difunto(a)')
-                                ->required(),
-
-                            TextInput::make('apellido_paterno_difunto')
-                                ->label('Apellido Paterno')
-                                ->required(),
-
-                            TextInput::make('apellido_materno_difunto')
-                                ->label('Apellido Materno'),
-
-                            TextInput::make('apellido_esposa_difunto')
-                                ->label('Apellido de Esposa'),
-
-                            Select::make('sexo')
-                                ->label('Sexo')
-                                ->options([
-                                    'masculino' => 'Masculino',
-                                    'femenino' => 'Femenino',
-                                ])
-                                ->required(),
-
-                            TextInput::make('edad')
-                                ->label('Edad')
-                                ->required()
-                                ->numeric(),
-
-                            Select::make('estado_civil')
-                                ->label('Estado Civil')
-                                ->options([
-                                    'soltero' => 'Soltero(a)',
-                                    'casado' => 'Casado(a)',
-                                    'divorciado' => 'Divorciado(a)',
-                                    'viudo' => 'Viudo(a)',
-                                ])
-                                ->required(),
-
-                            TextInput::make('nacionalidad')
-                                ->label('Nacionalidad')
-                                ->required(),
-
-                            TextInput::make('diagnostico_fallecimiento')
-                                ->label('Diagnóstico Fallecimiento')
-                                ->required(),
-
-                            TextInput::make('medico')
-                                ->label('Médico')
-                                ->required(),
-
-                            TextInput::make('orc')
-                                ->label('ORC')
-                                ->required(),
-
-                            TextInput::make('libro')
-                                ->label('Libro')
-                                ->required(),
-
-                            TextInput::make('folio')
-                                ->label('Folio')
-                                ->required(),
-
-                            FileUpload::make('defuncion_pdf')
-                                ->label('Defunción PDF')
-                                ->disk('public')
-                                ->directory('pdfs')
-                                ->acceptedFileTypes(['application/pdf'])
-                                ->required(),
-                        ]),
-
-                    Step::make('Detalles del Registro')
-                        ->schema([
-                            DatePicker::make('fecha_inhumacion')
-                                ->label('Fecha Inhumación')
-                                ->required(),
-
-                            DatePicker::make('fecha_vencimiento')
-                                ->label('Fecha Vencimiento')
-                                ->required(),
-
-                            TextInput::make('dia')
-                                ->label('Monto')
-                                ->required(),
-
-                            Select::make('descripcion_nicho')
-                                ->label('Descripción de Nicho')
-                                ->options([
-                                    'nicho menor' => 'Nicho Menor hasta 70cm',
-                                    'nicho mayor' => 'Nicho Mayor mayor a 70cm',
-                                    'tumba' => 'Tumba',
-                                ])
-                                ->required(),
-                        ]),
-
-                    Step::make('Ubicación')
-                        ->schema([
-                            TextInput::make('fila_ubicacion')
-                                ->label('Fila Ubicación')
-                                ->required()
-                                ->maxLength(255),
-
-                            TextInput::make('nro_ubicacion')
-                                ->label('Columna Ubicación')
-                                ->required()
-                                ->maxLength(255),
-
-                            TextInput::make('sector_ubicacion')
-                                ->label('Sector Ubicación')
-                                ->required()
-                                ->maxLength(255),
-                        ]),
-
-                    Step::make('Información del Solicitante')
-                        ->schema([
-                            TextInput::make('nombres_solicitante')
-                                ->label('Nombre(s) del Solicitante')
-                                ->required(),
-
-                            TextInput::make('apellido_paterno_solicitante')
-                                ->label('Apellido Paterno')
-                                ->required(),
-
-                            TextInput::make('apellido_materno_solicitante')
-                                ->label('Apellido Materno'),
-
-                            TextInput::make('apellido_esposa_solicitante')
-                                ->label('Apellido de Esposa'),
-
-                            TextInput::make('carnet_identidad')
-                                ->label('Carnet Identidad o NIT')
-                                ->required(),
-
-                            TextInput::make('celular')
-                                ->label('Celular')
-                                ->required()
-                                ->numeric()
-                                ->minLength(8)
-                                ->maxLength(8),
-
-                            TextInput::make('direccion')
-                                ->label('Dirección')
-                                ->required(),
-
-                            TextInput::make('numero')
-                                ->label('Número de Domicilio')
-                                ->required(),
-
-                            TextInput::make('zona')
-                                ->label('Zona')
-                                ->required(),
-
-                            TextInput::make('Numero de Comprobante')
-                                ->label('Número de Comprobante')
-                                ->required(),
-
-                            FileUpload::make('comprobante_pdf')
-                                ->label('Carta de Solicitud o comprobante')
-                                ->disk('public')
-                                ->directory('pdfs')
-                                ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/jpg'])
-                                ->extraAttributes(['accept' => '.pdf, .jpg, .jpeg']),
-
-                            FileUpload::make('testigos_pdf')
-                                ->label('Certificado médico')
-                                ->disk('public')
-                                ->directory('pdfs')
-                                ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/jpg'])
-                                ->required()
-                                ->extraAttributes(['accept' => '.pdf, .jpg, .jpeg']),
-
-                            FileUpload::make('familiares_pdf')
-                                ->label('Fotocopia de Familiares 1 o 2 pdfs o JPGs')
-                                ->disk('public')
-                                ->directory('pdfs')
-                                ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/jpg'])
-                                ->required()
-                                ->multiple()
-                                ->maxFiles(2)
-                                ->minFiles(1)
-                                ->extraAttributes(['accept' => '.pdf, .jpg, .jpeg']),
-                        ]),
-                ])->columnSpanFull()
-            ]);
+        ->schema([
+            Wizard::make([
+                Step::make('Información del Difunto')
+                    ->schema([
+                        TextInput::make('nombres_difunto')
+                            ->label('Nombre(s) Difunto(a)')
+                            ->required(),
+    
+                        TextInput::make('apellido_paterno_difunto')
+                            ->label('Apellido Paterno')
+                            ->required(),
+    
+                        TextInput::make('apellido_materno_difunto')
+                            ->label('Apellido Materno'),
+    
+                        TextInput::make('apellido_esposa_difunto')
+                            ->label('Apellido de Esposa'),
+    
+                        Select::make('sexo')
+                            ->label('Sexo')
+                            ->options([
+                                'masculino' => 'Masculino',
+                                'femenino' => 'Femenino',
+                            ])
+                            ->required(),
+    
+                        TextInput::make('edad')
+                            ->label('Edad')
+                            ->required()
+                            ->numeric(),
+    
+                        Select::make('estado_civil')
+                            ->label('Estado Civil')
+                            ->options([
+                                'soltero' => 'Soltero(a)',
+                                'casado' => 'Casado(a)',
+                                'divorciado' => 'Divorciado(a)',
+                                'viudo' => 'Viudo(a)',
+                            ])
+                            ->required(),
+    
+                        TextInput::make('nacionalidad')
+                            ->label('Nacionalidad')
+                            ->required(),
+    
+                        TextInput::make('diagnostico_fallecimiento')
+                            ->label('Diagnóstico Fallecimiento')
+                            ->required(),
+    
+                        TextInput::make('medico')
+                            ->label('Médico')
+                            ->required(),
+    
+                        TextInput::make('orc')
+                            ->label('ORC')
+                            ->required(),
+    
+                        TextInput::make('libro')
+                            ->label('Libro')
+                            ->required(),
+    
+                        TextInput::make('folio')
+                            ->label('Folio')
+                            ->required(),
+    
+                        FileUpload::make('defuncion_pdf')
+                            ->label('Defunción PDF')
+                            ->disk('public')
+                            ->directory('pdfs')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->required(),
+                    ]),
+    
+                Step::make('Detalles del Registro')
+                    ->schema([
+                        DatePicker::make('fecha_inhumacion')
+                            ->label('Fecha Inhumación')
+                            ->required(),
+    
+                        DatePicker::make('fecha_vencimiento')
+                            ->label('Fecha Vencimiento')
+                            ->required(),
+    
+                        TextInput::make('dia')
+                            ->label('Monto')
+                            ->required(),
+    
+                        Select::make('descripcion_nicho')
+                            ->label('Descripción de Nicho')
+                            ->options([
+                                'nicho menor' => 'Nicho Menor hasta 70cm',
+                                'nicho mayor' => 'Nicho Mayor mayor a 70cm',
+                                'tumba' => 'Tumba',
+                            ])
+                            ->required(),
+                    ]),
+    
+                Step::make('Ubicación')
+                    ->schema([
+                        TextInput::make('fila_ubicacion')
+                            ->label('Fila Ubicación')
+                            ->required()
+                            ->maxLength(255),
+    
+                        TextInput::make('nro_ubicacion')
+                            ->label('Columna Ubicación')
+                            ->required()
+                            ->maxLength(255),
+    
+                        TextInput::make('sector_ubicacion')
+                            ->label('Sector Ubicación')
+                            ->required()
+                            ->maxLength(255),
+                    ]),
+    
+                Step::make('Información del Contribuyente')
+                    ->schema([
+                        TextInput::make('nombres_contribuyente')
+                            ->label('Nombre(s) del Contribuyente')
+                            ->required(),
+    
+                        TextInput::make('apellido_paterno_contribuyente')
+                            ->label('Apellido Paterno')
+                            ->required(),
+    
+                        TextInput::make('apellido_materno_contribuyente')
+                            ->label('Apellido Materno'),
+    
+                        TextInput::make('apellido_esposa_contribuyente')
+                            ->label('Apellido de Esposa'),
+    
+                        TextInput::make('carnet_identidad')
+                            ->label('Carnet Identidad o NIT')
+                            ->required(),
+    
+                        TextInput::make('celular')
+                            ->label('Celular')
+                            ->required()
+                            ->numeric()
+                            ->minLength(8)
+                            ->maxLength(8),
+    
+                        TextInput::make('direccion')
+                            ->label('Dirección')
+                            ->required(),
+    
+                        TextInput::make('numero')
+                            ->label('Número de Domicilio')
+                            ->required(),
+    
+                        TextInput::make('zona')
+                            ->label('Zona')
+                            ->required(),
+    
+                        // Campo Número de Comprobante
+                        TextInput::make('numero_comprobante')
+                            ->label('Número de Comprobante')
+                            ->required(),
+    
+                        FileUpload::make('comprobante_pdf')
+                            ->label('Carta de Solicitud o comprobante')
+                            ->disk('public')
+                            ->directory('pdfs')
+                            ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/jpg'])
+                            ->extraAttributes(['accept' => '.pdf, .jpg, .jpeg']),
+    
+                        FileUpload::make('testigos_pdf')
+                            ->label('Certificado médico')
+                            ->disk('public')
+                            ->directory('pdfs')
+                            ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/jpg'])
+                            ->required()
+                            ->extraAttributes(['accept' => '.pdf, .jpg, .jpeg']),
+    
+                        FileUpload::make('familiares_pdf')
+                            ->label('Fotocopia de Familiares 1 o 2 pdfs o JPGs')
+                            ->disk('public')
+                            ->directory('pdfs')
+                            ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/jpg'])
+                            ->required()
+                            ->multiple()
+                            ->maxFiles(2)
+                            ->minFiles(1)
+                            ->extraAttributes(['accept' => '.pdf, .jpg, .jpeg']),
+                    ]),
+            ])->columnSpanFull()
+        ]);
+    
     }
 
 
