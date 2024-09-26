@@ -125,6 +125,11 @@ class CertificacionResource extends Resource
                             Forms\Components\TextInput::make('apellido_esposa_difunto')
                                 ->label('Apellido de Esposa del Difunto')
                                 ->maxLength(255),
+    
+                            Forms\Components\TextInput::make('numero_carnet_difunto') // Nuevo campo
+                                ->label('Número de Carnet del Difunto')
+                                ->required()
+                                ->maxLength(255),
                         ]),
                 ]),
     
@@ -169,87 +174,147 @@ class CertificacionResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('ci_nit')
-                    ->label('C.I o NIT')
-                    ->searchable()
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('nombre_contribuyente')
-                    ->label('Nombre del Contribuyente')
-                    ->searchable()
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('direccion')
-                    ->label('Dirección')
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->searchable(),
-
-                Tables\Columns\TextColumn::make('numero_casa')
-                    ->label('Número de Casa')
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('zona')
-                    ->label('Zona')
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('monto')
-                    ->label('Monto')
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Fecha de Creación')
-                    ->formatStateUsing(fn($state) => \Illuminate\Support\Facades\Date::parse($state)->format('d/m/Y H:i:s'))
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Fecha de Actualización')
-                    ->formatStateUsing(fn($state) => \Illuminate\Support\Facades\Date::parse($state)->format('d/m/Y H:i:s'))
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->actions([
-                Tables\Actions\ActionGroup::make([
-                    Tables\Actions\EditAction::make()
-                        ->label('Editar')
-                        ->icon('heroicon-o-pencil')
-                        ->color('primary'),
-
-                    Tables\Actions\Action::make('ver_nota_director')
-                        ->label('Ver Nota al Director')
-                        ->icon('heroicon-o-document-text')
-                        ->modalHeading('Ver Nota al Director')
-                        ->modalContent(function ($record) {
-                            $pdfUrl = Storage::url($record->nota_director_servicios_municipales);
-                            return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
-                        })
-                        ->color('primary'),
-
-                    Tables\Actions\Action::make('ver_cedula_identidad')
-                        ->label('Ver Cédula de Identidad')
-                        ->icon('heroicon-o-document-text')
-                        ->modalHeading('Ver Cédula de Identidad')
-                        ->modalContent(function ($record) {
-                            $pdfUrl = Storage::url($record->fotocopia_cedula_identidad_usuario);
-                            return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
-                        })
-                        ->color('primary'),
-
-                    Tables\Actions\Action::make('ver_documento_certificar')
-                        ->label('Ver Documento a Certificar')
-                        ->icon('heroicon-o-document-text')
-                        ->modalHeading('Ver Documento a Certificar')
-                        ->modalContent(function ($record) {
-                            $pdfUrl = Storage::url($record->fotocopia_documento_certificacion);
-                            return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
-                        })
-                        ->color('primary'),
-                ]),
-            ])
-            ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
-            ]);
+        ->columns([
+            Tables\Columns\TextColumn::make('ci_nit')
+                ->label('C.I o NIT')
+                ->searchable()
+                ->sortable(),
+    
+            Tables\Columns\TextColumn::make('nombre_contribuyente')
+                ->label('Nombre del Contribuyente')
+                ->searchable()
+                ->sortable(),
+    
+            Tables\Columns\TextColumn::make('apellido_paterno_contribuyente')
+                ->label('Apellido Paterno del Contribuyente')
+                ->searchable()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true), // Nuevo campo
+    
+            Tables\Columns\TextColumn::make('apellido_materno_contribuyente')
+                ->label('Apellido Materno del Contribuyente')
+                ->searchable()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true), // Nuevo campo
+    
+            Tables\Columns\TextColumn::make('apellido_esposa_contribuyente')
+                ->label('Apellido de Esposa del Contribuyente')
+                ->searchable()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true), // Nuevo campo
+    
+            Tables\Columns\TextColumn::make('direccion')
+                ->label('Dirección')
+                ->toggleable(isToggledHiddenByDefault: true)
+                ->searchable(),
+    
+            Tables\Columns\TextColumn::make('numero_casa')
+                ->label('Número de Casa')
+                ->toggleable(isToggledHiddenByDefault: true)
+                ->sortable(),
+    
+            Tables\Columns\TextColumn::make('zona')
+                ->label('Zona')
+                ->toggleable(isToggledHiddenByDefault: true)
+                ->sortable(),
+    
+            Tables\Columns\TextColumn::make('numero_celular')
+                ->label('Número Celular')
+                ->toggleable(isToggledHiddenByDefault: true)
+                ->searchable()
+                ->sortable(), // Nuevo campo
+    
+            Tables\Columns\TextColumn::make('numero_comprobante')
+                ->label('Número de Comprobante')
+                ->toggleable(isToggledHiddenByDefault: true)
+                ->sortable(), // Nuevo campo
+    
+            Tables\Columns\TextColumn::make('nombre_difunto')
+                ->label('Nombre del Difunto')
+                ->searchable()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+    
+            Tables\Columns\TextColumn::make('apellido_paterno_difunto')
+                ->label('Apellido Paterno del Difunto')
+                ->searchable()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true), // Nuevo campo
+    
+            Tables\Columns\TextColumn::make('apellido_materno_difunto')
+                ->label('Apellido Materno del Difunto')
+                ->searchable()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true), // Nuevo campo
+    
+            Tables\Columns\TextColumn::make('apellido_esposa_difunto')
+                ->label('Apellido de Esposa del Difunto')
+                ->searchable()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true), // Nuevo campo
+    
+            Tables\Columns\TextColumn::make('numero_carnet_difunto')
+                ->label('Número de Carnet del Difunto')
+                ->searchable()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true), // Nuevo campo
+    
+            Tables\Columns\TextColumn::make('monto')
+                ->label('Monto')
+                ->sortable(),
+    
+            Tables\Columns\TextColumn::make('created_at')
+                ->label('Fecha de Creación')
+                ->formatStateUsing(fn($state) => \Illuminate\Support\Facades\Date::parse($state)->format('d/m/Y H:i:s'))
+                ->toggleable(isToggledHiddenByDefault: true),
+    
+            Tables\Columns\TextColumn::make('updated_at')
+                ->label('Fecha de Actualización')
+                ->formatStateUsing(fn($state) => \Illuminate\Support\Facades\Date::parse($state)->format('d/m/Y H:i:s'))
+                ->toggleable(isToggledHiddenByDefault: true),
+        ])
+        ->actions([
+            Tables\Actions\ActionGroup::make([
+                Tables\Actions\EditAction::make()
+                    ->label('Editar')
+                    ->icon('heroicon-o-pencil')
+                    ->color('primary'),
+    
+                Tables\Actions\Action::make('ver_nota_director')
+                    ->label('Ver Nota al Director')
+                    ->icon('heroicon-o-document-text')
+                    ->modalHeading('Ver Nota al Director')
+                    ->modalContent(function ($record) {
+                        $pdfUrl = Storage::url($record->nota_director_servicios_municipales);
+                        return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
+                    })
+                    ->color('primary'),
+    
+                Tables\Actions\Action::make('ver_cedula_identidad')
+                    ->label('Ver Cédula de Identidad')
+                    ->icon('heroicon-o-document-text')
+                    ->modalHeading('Ver Cédula de Identidad')
+                    ->modalContent(function ($record) {
+                        $pdfUrl = Storage::url($record->fotocopia_cedula_identidad_usuario);
+                        return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
+                    })
+                    ->color('primary'),
+    
+                Tables\Actions\Action::make('ver_documento_certificar')
+                    ->label('Ver Documento a Certificar')
+                    ->icon('heroicon-o-document-text')
+                    ->modalHeading('Ver Documento a Certificar')
+                    ->modalContent(function ($record) {
+                        $pdfUrl = Storage::url($record->fotocopia_documento_certificacion);
+                        return view('components.pdf-modal', ['pdfUrl' => $pdfUrl]);
+                    })
+                    ->color('primary'),
+            ]),
+        ])
+        ->bulkActions([
+            Tables\Actions\DeleteBulkAction::make(),
+        ]);
+    
     }
 
     public static function getRelations(): array

@@ -16,19 +16,19 @@ return new class extends Migration
         
             $table->string('ci_nit')->nullable();
             $table->string('nombre_contribuyente')->nullable();
+            $table->string('apellido_paterno_contribuyente')->nullable(); // Campo adicional
+            $table->string('apellido_materno_contribuyente')->nullable(); // Campo adicional
+            $table->string('apellido_esposa_contribuyente')->nullable();  // Campo adicional
             $table->string('direccion')->nullable();
-            $table->string('numero_puerta')->nullable();
+            $table->string('numero_casa')->nullable(); // Actualizado: anteriormente 'numero_puerta'
             $table->string('zona')->nullable();
+            $table->string('numero_celular')->nullable(); // Campo adicional
             $table->string('numero_comprobante')->nullable();
-            $table->string('difunto')->nullable();
-            
-            // Campos adicionales agregados
+            $table->string('nombre_difunto')->nullable(); // Actualizado: anteriormente 'difunto'
             $table->string('apellido_paterno_difunto')->nullable();
             $table->string('apellido_materno_difunto')->nullable();
             $table->string('apellido_esposa_difunto')->nullable();
-            $table->string('apellido_paterno_contribuyente')->nullable();
-            $table->string('apellido_materno_contribuyente')->nullable();
-            $table->string('apellido_esposa_contribuyente')->nullable();
+            $table->string('numero_carnet_difunto')->nullable(); // Campo adicional
         
             $table->decimal('monto', 10, 2)->nullable();
             $table->text('nota_director_servicios_municipales')->nullable();
@@ -37,6 +37,7 @@ return new class extends Migration
         
             $table->timestamps();
         });
+        
         
     }
 

@@ -13,26 +13,27 @@ class AutorizacionConstruccionNicho extends Model
 
     protected $fillable = [
         'nombre_contribuyente',
+        'apellido_paterno_contribuyente', // Actualizado
+        'apellido_materno_contribuyente', // Nuevo campo
+        'apellido_esposa_contribuyente',  // Nuevo campo
         'ci_nit',
         'avenida_calle',
         'numero',
         'zona',
+        'numero_celular',
+        'numero_comprobante', // Nuevo campo
+        'nombre_difunto',
+        'apellido_paterno_difunto', 
+        'apellido_materno_difunto',
+        'apellido_esposa_difunto',
+        'numero_carnet_difunto', // Nuevo campo
         'actividad',
         'costo_formulario',
         'costo',
-        'numero_celular',
-        'nombre_difunto',
         'fecha_autorizacion',
         'comprobante_pdf',
-    
-        // Campos adicionales
-        'apellido_paterno_difunto',
-        'apellido_materno_difunto',
-        'apellido_esposa_difunto',
-        'apellido_paterno_solicitante',
-        'apellido_materno_solicitante',
-        'apellido_esposa_solicitante',
     ];
+    
     
     public $timestamps = true;
 }
