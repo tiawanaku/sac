@@ -33,9 +33,9 @@ return new class extends Migration
         
             // Campos del contribuyente (anteriormente solicitante)
             $table->string('nombres_contribuyente'); // Actualizado
-            $table->string('apellido_paterno_solicitante'); // Actualizado
-            $table->string('apellido_materno_solicitante')->nullable(); // Actualizado
-            $table->string('apellido_esposa_solicitante')->nullable(); // Actualizado
+            $table->string('apellido_paterno_contribuyente')->nullable(); // Actualizado y marcado como nullable
+            $table->string('apellido_materno_contribuyente')->nullable(); // Actualizado y marcado como nullable
+            $table->string('apellido_esposa_contribuyente')->nullable(); // Actualizado y marcado como nullable
             $table->string('carnet_identidad');
             $table->string('celular');
             $table->string('direccion');
@@ -58,6 +58,7 @@ return new class extends Migration
         
             $table->timestamps();
         });
+        
         
         
     }

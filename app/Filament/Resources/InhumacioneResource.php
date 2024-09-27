@@ -220,14 +220,14 @@ class InhumacioneResource extends Resource
                             ->label('Carta de Solicitud o comprobante')
                             ->disk('public')
                             ->directory('pdfs')
-                            ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/jpg'])
+                            ->acceptedFileTypes(['application/pdf'])
                             ->extraAttributes(['accept' => '.pdf, .jpg, .jpeg']),
     
                         FileUpload::make('testigos_pdf')
                             ->label('Certificado médico')
                             ->disk('public')
                             ->directory('pdfs')
-                            ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/jpg'])
+                            ->acceptedFileTypes(['application/pdf'])
                             ->required()
                             ->extraAttributes(['accept' => '.pdf, .jpg, .jpeg']),
     
@@ -235,7 +235,7 @@ class InhumacioneResource extends Resource
                             ->label('Fotocopia de Familiares 1 o 2 pdfs o JPGs')
                             ->disk('public')
                             ->directory('pdfs')
-                            ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/jpg'])
+                            ->acceptedFileTypes(['application/pdf'])
                             ->required()
                             ->multiple()
                             ->maxFiles(2)
