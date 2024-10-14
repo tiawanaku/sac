@@ -11,7 +11,8 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\RenovacionController;
 use App\Http\Controllers\ExhumacionTarapacaController;
 use App\Http\Controllers\ObitoController;
-use App\Http\Controllers\LegalizacionController; // Importación del controlador Legalizacion
+use App\Http\Controllers\LegalizacionController; 
+use App\Http\Controllers\InhumacionComprobanteController;
 
 // Ruta principal
 Route::get('/', function () {
@@ -119,3 +120,6 @@ Route::get('/obito/{id}/ver-archivo/{type}', [ObitoController::class, 'verArchiv
 Route::get('/legalizacion/{id}/ver-archivo/{type}', [LegalizacionController::class, 'verArchivo'])
     ->name('legalizacion.verArchivo')
     ->where('type', 'nota_director_servicios_municipales|fotocopia_cedula_identidad_usuario|fotocopia_documento_legalizar');
+
+    // Ruta para la vista previa del PDF de inhumaciones
+Route::get('/inhumacion/preview/{id}', [InhumacionComprobanteController::class, 'previewPdf'])->name('inhumacion.preview');

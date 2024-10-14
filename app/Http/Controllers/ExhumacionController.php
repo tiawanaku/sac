@@ -13,7 +13,7 @@ class ExhumacionController extends Controller
     {
         $exhumacion = Exhumacion::findOrFail($id);
 
-        $nombre_contribuayente = $exhumacion->nombre_contribuayente;
+        $nombre_contribuyente = $exhumacion->nombre_contribuyente;
         $numero_celular = $exhumacion->numero_celular;
         $ci_nit = $exhumacion->ci_nit;
         $avenida_calle = $exhumacion->avenida_calle;
@@ -32,7 +32,7 @@ class ExhumacionController extends Controller
             [
                 'exhumacion' => $exhumacion,
 
-                'nombre_contribuayente' => $nombre_contribuayente,
+                'nombre_contribuyente' => $nombre_contribuyente,
                 'numero_celular' => $numero_celular,
                 'ci_nit' => $ci_nit,
                 'avenida_calle' => $avenida_calle,

@@ -430,12 +430,16 @@ class InhumacioneResource extends Resource
                         })
                         ->color('primary'),
 
-                    Tables\Actions\Action::make('crear_pdf')
+                    // Reemplazo del botón "Generar Comprobante"
+                    Tables\Actions\Action::make('preview_pdf')
                         ->label('Generar Comprobante')
                         ->icon('heroicon-o-document-text')
-                        ->url(fn(): string => route('pdf.example', ['user' => Auth::user()]))
-                        ->openUrlInNewTab()
-                        ->color('primary'),
+                        ->color('primary')
+                        ->modalHeading('Vista previa del PDF')
+                        ->modalContent(function ($record) {
+                            $pdfUrl = route('inhumacion.preview', $record->id);
+                            return view('filament.modals.view-pdf-ver', ['pdfUrl' => $pdfUrl]);
+                        }),
                 ])
             ])
             ->bulkActions([
