@@ -99,16 +99,6 @@
             top: 9.5cm;
         }
 
-        .item17 {
-            left: 4.9cm;
-            top: 12.1cm;
-        }
-
-        .item18 {
-            left: 4.9cm;
-            top: 12.9cm;
-        }
-
         .item19 {
             left: 3.5cm;
             top: 10.1cm;
@@ -117,11 +107,6 @@
         .item20 {
             left: 17cm;
             top: 16.5cm;
-        }
-
-        .item21 {
-            left: 7.3cm;
-            top: 15.1cm;
         }
 
         .item22 {
@@ -143,27 +128,27 @@
         </div>
     </div>
     <div class="positioned item2">{{ $numero_carnet_difunto }}</div>
-    <div class="positioned item3">{{ $nombres_difunto }} {{ $apellido_paterno_difunto }} {{ $apellido_materno_difunto }}</div>
+    <div class="positioned item3">{{ $nombres_contribuyente }}</div>
     <div class="positioned item4">{{ $celular }}</div>
     <div class="positioned item5">{{ $direccion }}</div>
     <div class="positioned item6">{{ $fecha_inhumacion }}</div>
     <div class="positioned item7">{{ $fecha_vencimiento }}</div>
     <div class="positioned item8">Inhumación de Restos</div>
     <div class="positioned item9">DIFUNTO(A):</div>
-    <div class="positioned item10">{{ $nombres_difunto }}</div>
+    <div class="positioned item10">{{ $nombres_difunto }} {{ $apellido_paterno_difunto }} {{ $apellido_materno_difunto }}</div>
     <div class="positioned item11">PAGO POR:</div>
     <div class="positioned item12">INHUMACIÓN DE RESTOS</div>
-    <div class="positioned item13">{{ $nombres_contribuyente }}</div>
+    <div class="positioned item13">{{ $costo_servicio }}</div>
 
     <div class="positioned item14">4,17</div>
 
     <div class="positioned item15">AUTORIZADO EL:</div>
     <div class="positioned item16">{{ $fecha_inhumacion }}</div>
     <div class="positioned item19">INHUMACIÓN TEMPORAL</div>
-    <div class="positioned item20">{{ $fecha_vencimiento }}</div>
+    <div class="positioned item20">{{ $costo_total }}</div>
 
     <div class="positioned item22">Motivo de Inhumación</div>
-    <div class="positioned item23"> {{ $nombres_contribuyente }} </div>
+    <div class="positioned item23">{{ $costo_total_literal }} 00/100</div>
 </body>
 
 </html>
