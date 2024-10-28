@@ -140,7 +140,7 @@ class InhumacioneResource extends Resource
                             ->label('Fecha Vencimiento')
                             ->required(),
     
-                        TextInput::make('dia')
+                        TextInput::make('monto')
                             ->label('Monto')
                             ->required(),
     

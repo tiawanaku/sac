@@ -80,7 +80,7 @@
         }
 
         .item13 {
-            left: 17cm;
+            left: 18cm;
             top: 8.8cm;
         }
 
@@ -105,7 +105,7 @@
         }
 
         .item20 {
-            left: 17cm;
+            left: 18cm;
             top: 16.5cm;
         }
 
@@ -117,6 +117,18 @@
         .item23 {
             left: 2cm;
             top: 16.4cm;
+        }
+
+        .item7-title {
+            position: absolute;
+            left: 3.5cm; /* Ajusta según sea necesario */
+            top: 11.5cm; /* Ajusta según sea necesario */
+        }
+
+        .item7 {
+            position: absolute;
+            left: 9.2cm; /* Ajusta según sea necesario */
+            top: 11.5cm; /* Ajusta según sea necesario */
         }
     </style>
 </head>
@@ -132,6 +144,7 @@
     <div class="positioned item4">{{ $celular }}</div>
     <div class="positioned item5">{{ $direccion }}</div>
     <div class="positioned item6">{{ $fecha_inhumacion }}</div>
+    <div class="positioned item7-title">FECHA DE VENCIMIENTO:</div>
     <div class="positioned item7">{{ $fecha_vencimiento }}</div>
     <div class="positioned item8">Inhumación de Restos</div>
     <div class="positioned item9">DIFUNTO(A):</div>
@@ -144,7 +157,8 @@
 
     <div class="positioned item15">AUTORIZADO EL:</div>
     <div class="positioned item16">{{ $fecha_inhumacion }}</div>
-    <div class="positioned item19">INHUMACIÓN TEMPORAL</div>
+    <div class="positioned item7">{{ $fecha_vencimiento }}</div>
+    <div class="positioned item19">INHUMACIÓN TEMPORAL MAXIMO 3 AÑOS</div>
     <div class="positioned item20">{{ $costo_total }}</div>
 
     <div class="positioned item22">Motivo de Inhumación</div>

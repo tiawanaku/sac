@@ -5,18 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\Inhumacione;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
-use App\Helpers\NumberToWords;
 
 class InhumacionComprobanteController extends Controller
 {
+    // Función personalizada para convertir números a palabras en español
+    private function convertNumberToWords($number) {
+        $f = new \NumberFormatter("es", \NumberFormatter::SPELLOUT);
+        return $f->format($number);
+    }
+
     public function previewPdf($id)
     {
         $inhumacion = Inhumacione::findOrFail($id);
-
-        // Asigna el costo del servicio
-        $costo_servicio = 100; // Cambia este valor según sea necesario
-        $costo_total = 150; // Ejemplo de costo total
-        $costo_total_literal = NumberToWords::convert($costo_total); // Convierte el total a palabras
+        
+        // Obtén el costo del servicio de una fuente dinámica
+        $costo_servicio = $inhumacion->monto;
+        $costo_total = $costo_servicio + 2;
+        
+        // Convierte el costo total a palabras
+        $costo_total_literal = $this->convertNumberToWords($costo_total);
 
         $pdf = Pdf::loadView(
             'pdfs.inhumacion',
