@@ -19,6 +19,7 @@ use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Wizard\Step;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Filament\Tables\Grouping\Group;
 
 class InhumacioneResource extends Resource
 {
@@ -252,132 +253,136 @@ class InhumacioneResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->groups([
+                Group::make('nombres_difunto')
+                    ->label('Nombre(s) Difunto'),
+            ])
             ->columns([
                 TextColumn::make('nombres_difunto')
                     ->label('Nombre(s) Difunto')
                     ->searchable()
                     ->sortable(),
-
+    
                 TextColumn::make('apellido_paterno_difunto')
                     ->label('Apellido Paterno Difunto')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('apellido_materno_difunto')
                     ->label('Apellido Materno Difunto')
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('apellido_esposa_difunto')
                     ->label('Apellido de Esposa Difunto')
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('sexo')
                     ->label('Sexo')
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('edad')
                     ->label('Edad')
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('estado_civil')
                     ->label('Estado Civil')
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('nacionalidad')
                     ->label('Nacionalidad')
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('diagnostico_fallecimiento')
                     ->label('Diagnóstico de Fallecimiento')
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('medico')
                     ->label('Médico')
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('orc')
                     ->label('Oficialía de Registro Civil')
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('libro')
                     ->label('Nro de Libro')
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('folio')
                     ->label('Nro de Folio')
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('fecha_inhumacion')
                     ->label('Fecha Inhumación')
                     ->formatStateUsing(fn($state) => \Illuminate\Support\Facades\Date::parse($state)->format('d/m/Y'))
                     ->sortable(),
-
+    
                 TextColumn::make('fecha_vencimiento')
                     ->label('Fecha Vencimiento')
                     ->formatStateUsing(fn($state) => \Illuminate\Support\Facades\Date::parse($state)->format('d/m/Y')),
-
+    
                 TextColumn::make('dia')
                     ->label('Costo del Servicio')
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('descripcion_nicho')
                     ->label('Descripción del Nicho')
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('nombres_solicitante')
                     ->label('Nombre(s) del Solicitante')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('apellido_paterno_solicitante')
                     ->label('Apellido Paterno Solicitante')
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('apellido_materno_solicitante')
                     ->label('Apellido Materno Solicitante')
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('apellido_esposa_solicitante')
                     ->label('Apellido de Esposa Solicitante')
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('carnet_identidad')
                     ->label('C.I. Solicitante')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('celular')
                     ->label('Celular del Solicitante')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('direccion')
                     ->label('Dirección del Solicitante')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('zona')
                     ->label('Zona del Solicitante')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('sector_ubicacion')
                     ->label('Ubicación del Difunto')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('created_at')
                     ->label('Fecha de Creación')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('updated_at')
                     ->label('Fecha de Actualización')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
+    
                 TextColumn::make('estado'),
-
+    
                 TextColumn::make('comprobante_pdf')
                     ->label('Ver PDF')
                     ->sortable()
